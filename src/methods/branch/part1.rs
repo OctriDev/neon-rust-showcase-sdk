@@ -5,8 +5,9 @@ use crate::client::ClientConfig;
 use crate::client::{sdk_request, RequestOptions, RequestOpts};
 use crate::errors::{SdkError, SdkNetworkError};
 use crate::types::{
-    BranchAnonymizedCreateRequest, BranchCreateRequest, BranchOperations, BranchResponse,
-    BranchUpdateRequestBranch, BranchesCountResponse, BranchesResponse,
+    BranchAnonymizedCreateRequest, BranchCreateRequest, BranchOperations,
+    BranchUpdateRequestBranch, BranchesCountResponse, CreateBranchResponse, GetBranchResponse,
+    ListBranchResponse,
 };
 use crate::validation::{validate_pattern, validate_range, RangeOpts};
 
@@ -117,7 +118,7 @@ pub fn create_branch(
     project_id: String,
     body: Option<BranchCreateRequest>,
     options: Option<&RequestOptions>,
-) -> Result<BranchResponse, SdkError> {
+) -> Result<CreateBranchResponse, SdkError> {
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
 
     let __body = serde_json::to_value(body).map_err(|e| {
@@ -127,7 +128,7 @@ pub fn create_branch(
         })
     })?;
 
-    Ok(sdk_request::<BranchResponse>(
+    Ok(sdk_request::<CreateBranchResponse>(
         "POST",
         &format!(
             "/projects/{}/branches",
@@ -179,7 +180,7 @@ pub fn list_branch(
     config: &ClientConfig,
     params: ListBranchParams,
     options: Option<&RequestOptions>,
-) -> Result<BranchesResponse, SdkError> {
+) -> Result<ListBranchResponse, SdkError> {
     let ListBranchParams {
         project_id,
         search,
@@ -222,7 +223,7 @@ pub fn list_branch(
         __query.push(("include_deleted", crate::client::query_value(v)));
     }
 
-    Ok(sdk_request::<BranchesResponse>(
+    Ok(sdk_request::<ListBranchResponse>(
         "GET",
         &format!(
             "/projects/{}/branches",
@@ -253,7 +254,7 @@ pub fn create_branch_anonymized(
     project_id: String,
     body: BranchAnonymizedCreateRequest,
     options: Option<&RequestOptions>,
-) -> Result<BranchResponse, SdkError> {
+) -> Result<CreateBranchResponse, SdkError> {
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
 
     let __body = serde_json::to_value(body).map_err(|e| {
@@ -263,7 +264,7 @@ pub fn create_branch_anonymized(
         })
     })?;
 
-    Ok(sdk_request::<BranchResponse>(
+    Ok(sdk_request::<CreateBranchResponse>(
         "POST",
         &format!(
             "/projects/{}/branch_anonymized",
@@ -331,11 +332,11 @@ pub fn get_branch(
     project_id: String,
     branch_id: String,
     options: Option<&RequestOptions>,
-) -> Result<BranchResponse, SdkError> {
+) -> Result<GetBranchResponse, SdkError> {
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
-    Ok(sdk_request::<BranchResponse>(
+    Ok(sdk_request::<GetBranchResponse>(
         "GET",
         &format!(
             "/projects/{}/branches/{}",

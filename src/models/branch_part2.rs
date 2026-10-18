@@ -110,6 +110,42 @@ impl ConnectionURIsOptionalResponse {
     }
 }
 
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct CreateBranchResponse {
+    #[serde(flatten)]
+    pub member_0: BranchResponse,
+    #[serde(flatten)]
+    pub member_1: EndpointsResponse,
+    #[serde(flatten)]
+    pub member_2: OperationsResponse,
+    #[serde(flatten)]
+    pub member_3: RolesResponse,
+    #[serde(flatten)]
+    pub member_4: DatabasesResponse,
+    #[serde(flatten)]
+    pub member_5: ConnectionURIsOptionalResponse,
+}
+
+impl CreateBranchResponse {
+    pub fn new(
+        member_0: BranchResponse,
+        member_1: EndpointsResponse,
+        member_2: OperationsResponse,
+        member_3: RolesResponse,
+        member_4: DatabasesResponse,
+        member_5: ConnectionURIsOptionalResponse,
+    ) -> Self {
+        Self {
+            member_0,
+            member_1,
+            member_2,
+            member_3,
+            member_4,
+            member_5,
+        }
+    }
+}
+
 /// Configuration for the new Postgres database.
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 pub struct DatabaseCreateRequestDatabase {
@@ -196,6 +232,44 @@ pub struct DatabaseUpdateRequest {
 impl DatabaseUpdateRequest {
     pub fn new(database: DatabaseUpdateRequestDatabase) -> Self {
         Self { database }
+    }
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct GetBranchResponse {
+    #[serde(flatten)]
+    pub member_0: BranchResponse,
+    #[serde(flatten)]
+    pub member_1: AnnotationResponse,
+}
+
+impl GetBranchResponse {
+    pub fn new(member_0: BranchResponse, member_1: AnnotationResponse) -> Self {
+        Self { member_0, member_1 }
+    }
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct ListBranchResponse {
+    #[serde(flatten)]
+    pub member_0: BranchesResponse,
+    #[serde(flatten)]
+    pub member_1: AnnotationsMapResponse,
+    #[serde(flatten)]
+    pub member_2: CursorPaginationResponse,
+}
+
+impl ListBranchResponse {
+    pub fn new(
+        member_0: BranchesResponse,
+        member_1: AnnotationsMapResponse,
+        member_2: CursorPaginationResponse,
+    ) -> Self {
+        Self {
+            member_0,
+            member_1,
+            member_2,
+        }
     }
 }
 

@@ -3,6 +3,22 @@
 
 // organizations domain models (part 2)
 
+/// Typed representation of the `VPCEndpointDetails` API schema.
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct VPCEndpointDetails {
+    /// Cloud provider identifier for the VPC endpoint.
+    pub vpc_endpoint_id: String,
+    /// A descriptive label for the VPC endpoint
+    pub label: String,
+    /// The current state of the VPC endpoint. `new` means the endpoint has just been configured and is pending acceptance by Neon. `accepted` means the VPC connection has been accepted by Neon.
+    pub state: String,
+    /// The number of projects that are restricted to use this VPC endpoint.
+    pub num_restricted_projects: i64,
+    /// A list of example projects that are restricted to use this VPC endpoint.
+    /// There are at most 3 projects in the list, even if more projects are restricted.
+    pub example_restricted_projects: Vec<String>,
+}
+
 impl VPCEndpointDetails {
     pub fn new(
         vpc_endpoint_id: String,

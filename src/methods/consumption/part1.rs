@@ -5,8 +5,8 @@ use crate::client::ClientConfig;
 use crate::client::{sdk_request, RequestOptions, RequestOpts};
 use crate::errors::SdkError;
 use crate::types::{
-    ConsumptionHistoryGranularity, ConsumptionHistoryPerProjectResponse,
-    ConsumptionHistoryPerProjectV2Response, ConsumptionHistoryQueryMetrics,
+    ConsumptionHistoryGranularity, ConsumptionHistoryQueryMetrics,
+    GetConsumptionHistoryPerProjectResponse, GetConsumptionHistoryPerProjectV2Response,
 };
 use crate::validation::{
     validate_date_time, validate_items, validate_pattern, validate_range, LengthOpts, RangeOpts,
@@ -83,7 +83,7 @@ pub fn get_consumption_history_per_project(
     config: &ClientConfig,
     params: GetConsumptionHistoryPerProjectParams,
     options: Option<&RequestOptions>,
-) -> Result<ConsumptionHistoryPerProjectResponse, SdkError> {
+) -> Result<GetConsumptionHistoryPerProjectResponse, SdkError> {
     let GetConsumptionHistoryPerProjectParams {
         from,
         to,
@@ -147,7 +147,7 @@ pub fn get_consumption_history_per_project(
         __query.push(("metrics", crate::client::query_value(v)));
     }
 
-    Ok(sdk_request::<ConsumptionHistoryPerProjectResponse>(
+    Ok(sdk_request::<GetConsumptionHistoryPerProjectResponse>(
         "GET",
         "/consumption_history/projects",
         config,
@@ -231,7 +231,7 @@ pub fn get_consumption_history_per_project_v2(
     config: &ClientConfig,
     params: GetConsumptionHistoryPerProjectV2Params,
     options: Option<&RequestOptions>,
-) -> Result<ConsumptionHistoryPerProjectV2Response, SdkError> {
+) -> Result<GetConsumptionHistoryPerProjectV2Response, SdkError> {
     let GetConsumptionHistoryPerProjectV2Params {
         from,
         to,
@@ -285,7 +285,7 @@ pub fn get_consumption_history_per_project_v2(
         }
     }
 
-    Ok(sdk_request::<ConsumptionHistoryPerProjectV2Response>(
+    Ok(sdk_request::<GetConsumptionHistoryPerProjectV2Response>(
         "GET",
         "/consumption_history/v2/projects",
         config,

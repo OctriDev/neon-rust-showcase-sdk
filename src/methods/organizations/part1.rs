@@ -5,8 +5,8 @@ use crate::client::ClientConfig;
 use crate::client::{sdk_request, RequestOptions, RequestOpts};
 use crate::errors::{SdkError, SdkNetworkError};
 use crate::types::{
-    EmptyResponse, Member, MemberRole, OrgApiKeyCreateRequest, OrgApiKeyCreateResponse,
-    OrgApiKeyRevokeResponse, OrgApiKeysListResponseItem, Organization, OrganizationMembersResponse,
+    EmptyResponse, ListOrganizationsMembersResponse, Member, MemberRole, OrgApiKeyCreateRequest,
+    OrgApiKeyCreateResponse, OrgApiKeyRevokeResponse, OrgApiKeysListResponseItem, Organization,
     SpendingLimitResponse,
 };
 use crate::validation::{validate_pattern, validate_range, validate_uuid, RangeOpts};
@@ -384,7 +384,7 @@ pub fn list_organizations_members(
     config: &ClientConfig,
     params: ListOrganizationsMembersParams,
     options: Option<&RequestOptions>,
-) -> Result<OrganizationMembersResponse, SdkError> {
+) -> Result<ListOrganizationsMembersResponse, SdkError> {
     let ListOrganizationsMembersParams {
         org_id,
         sort_by,
@@ -419,7 +419,7 @@ pub fn list_organizations_members(
         __query.push(("limit", crate::client::query_value(v)));
     }
 
-    Ok(sdk_request::<OrganizationMembersResponse>(
+    Ok(sdk_request::<ListOrganizationsMembersResponse>(
         "GET",
         &format!(
             "/organizations/{}/members",

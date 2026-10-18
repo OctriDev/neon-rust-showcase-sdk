@@ -5,8 +5,8 @@ use crate::client::ClientConfig;
 use crate::client::{sdk_request, RequestOptions, RequestOpts};
 use crate::errors::SdkError;
 use crate::types::{
-    ConsumptionHistoryGranularity, ConsumptionHistoryPerBranchV2Response,
-    ConsumptionHistoryQueryMetrics,
+    ConsumptionHistoryGranularity, ConsumptionHistoryQueryMetrics,
+    GetConsumptionHistoryPerBranchV2Response,
 };
 use crate::validation::{
     validate_date_time, validate_items, validate_pattern, validate_range, LengthOpts, RangeOpts,
@@ -81,7 +81,7 @@ pub fn get_consumption_history_per_branch_v2(
     config: &ClientConfig,
     params: GetConsumptionHistoryPerBranchV2Params,
     options: Option<&RequestOptions>,
-) -> Result<ConsumptionHistoryPerBranchV2Response, SdkError> {
+) -> Result<GetConsumptionHistoryPerBranchV2Response, SdkError> {
     let GetConsumptionHistoryPerBranchV2Params {
         project_ids,
         from,
@@ -147,7 +147,7 @@ pub fn get_consumption_history_per_branch_v2(
         }
     }
 
-    Ok(sdk_request::<ConsumptionHistoryPerBranchV2Response>(
+    Ok(sdk_request::<GetConsumptionHistoryPerBranchV2Response>(
         "GET",
         "/consumption_history/v2/branches",
         config,

@@ -59,6 +59,20 @@ impl Invitation {
     }
 }
 
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct ListOrganizationsMembersResponse {
+    #[serde(flatten)]
+    pub member_0: OrganizationMembersResponse,
+    #[serde(flatten)]
+    pub member_1: CursorPaginationResponse,
+}
+
+impl ListOrganizationsMembersResponse {
+    pub fn new(member_0: OrganizationMembersResponse, member_1: CursorPaginationResponse) -> Self {
+        Self { member_0, member_1 }
+    }
+}
+
 /// Typed representation of the `Member` API schema.
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 pub struct Member {
@@ -502,20 +516,4 @@ impl SpendingLimitUpdateRequest {
         value.validate_constraints()?;
         Ok(value)
     }
-}
-
-/// Typed representation of the `VPCEndpointDetails` API schema.
-#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-pub struct VPCEndpointDetails {
-    /// Cloud provider identifier for the VPC endpoint.
-    pub vpc_endpoint_id: String,
-    /// A descriptive label for the VPC endpoint
-    pub label: String,
-    /// The current state of the VPC endpoint. `new` means the endpoint has just been configured and is pending acceptance by Neon. `accepted` means the VPC connection has been accepted by Neon.
-    pub state: String,
-    /// The number of projects that are restricted to use this VPC endpoint.
-    pub num_restricted_projects: i64,
-    /// A list of example projects that are restricted to use this VPC endpoint.
-    /// There are at most 3 projects in the list, even if more projects are restricted.
-    pub example_restricted_projects: Vec<String>,
 }

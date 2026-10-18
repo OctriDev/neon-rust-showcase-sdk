@@ -3,6 +3,50 @@
 
 // functions domain models (part 3)
 
+impl Trigger {
+    fn unknown_member<'de, D: serde::Deserializer<'de>>(
+        deserializer: D,
+    ) -> Result<serde_json::Value, D::Error> {
+        crate::client::unknown_union_member(
+            deserializer,
+            "type",
+            &["schedule", "storage_object_created"],
+        )
+    }
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[serde(untagged)]
+pub enum TriggerCreateRequest {
+    ScheduleTriggerCreateRequest(Box<ScheduleTriggerCreateRequest>),
+    StorageObjectCreatedTriggerCreateRequest(Box<StorageObjectCreatedTriggerCreateRequest>),
+    /// A member whose `type` names no branch this SDK knows, kept as received.
+    #[serde(deserialize_with = "TriggerCreateRequest::unknown_member")]
+    Unknown(serde_json::Value),
+}
+
+impl TriggerCreateRequest {
+    fn unknown_member<'de, D: serde::Deserializer<'de>>(
+        deserializer: D,
+    ) -> Result<serde_json::Value, D::Error> {
+        crate::client::unknown_union_member(
+            deserializer,
+            "type",
+            &["schedule", "storage_object_created"],
+        )
+    }
+}
+
+pub type TriggerID = String;
+
+/// Typed representation of the `TriggerResponse` API schema.
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct TriggerResponse {
+    /// A branch-effective trigger discriminated by `type`. The supported trigger
+    /// types are `schedule` and `storage_object_created`.
+    pub trigger: Trigger,
+}
+
 impl TriggerResponse {
     pub fn new(trigger: Trigger) -> Self {
         Self { trigger }

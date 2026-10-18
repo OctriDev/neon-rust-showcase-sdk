@@ -4,7 +4,7 @@
 use crate::client::ClientConfig;
 use crate::client::{sdk_request, RequestOptions, RequestOpts};
 use crate::errors::SdkError;
-use crate::types::CustomDomainsListResponse;
+use crate::types::ListFunctionsCustomDomainsResponse;
 use crate::validation::{validate_length, validate_pattern, validate_range, LengthOpts, RangeOpts};
 
 /// Lists all custom domains registered on the branch, across every target entity. \*\*Note\*\*: This endpoint is currently in Beta.
@@ -25,7 +25,7 @@ pub fn list_functions_custom_domains(
     cursor: Option<String>,
     limit: Option<i64>,
     options: Option<&RequestOptions>,
-) -> Result<CustomDomainsListResponse, SdkError> {
+) -> Result<ListFunctionsCustomDomainsResponse, SdkError> {
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
     if let Some(ref limit_v) = limit {
@@ -48,7 +48,7 @@ pub fn list_functions_custom_domains(
         __query.push(("limit", crate::client::query_value(v)));
     }
 
-    Ok(sdk_request::<CustomDomainsListResponse>(
+    Ok(sdk_request::<ListFunctionsCustomDomainsResponse>(
         "GET",
         &format!(
             "/projects/{}/branches/{}/custom-domains",

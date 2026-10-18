@@ -311,6 +311,9 @@ pub fn list_buckets_objects_paginated(
             }
         }
         let _next = _page.next_cursor.clone();
+        if !_page.is_truncated {
+            return Ok(());
+        }
         match _next {
             None => return Ok(()),
             Some(_next) => _cursor = Some(_next),
@@ -360,7 +363,7 @@ pub fn list_buckets_objects_pages(
             return Ok(());
         }
         let _next = _page.next_cursor.clone();
-        let _has_more = _next.is_some();
+        let _has_more = _page.is_truncated && _next.is_some();
         if !yield_page(ListBucketsObjectsPage {
             data: &_page,
             items: _items,

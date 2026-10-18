@@ -495,13 +495,10 @@ impl RolesResponse {
     }
 }
 
-/// Typed representation of the `SharedEmailServer` API schema.
-#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-pub struct SharedEmailServer {
-    /// Email address used as the sender for outgoing messages from this shared email server.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub sender_email: Option<String>,
-    /// Display name shown as the sender in outgoing emails.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub sender_name: Option<String>,
+/// Optional enumerated value serialized in the `type` wire field.
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize)]
+pub enum SharedEmailServerTypeEnum {
+    #[serde(rename = "shared")]
+    #[default]
+    Shared,
 }

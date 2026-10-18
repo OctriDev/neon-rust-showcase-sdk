@@ -382,3 +382,54 @@ impl ConsumptionMetricValue {
         Self { metric_name, value }
     }
 }
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct GetConsumptionHistoryPerBranchV2Response {
+    #[serde(flatten)]
+    pub member_0: ConsumptionHistoryPerBranchV2Response,
+    #[serde(flatten)]
+    pub member_1: PaginationResponse,
+}
+
+impl GetConsumptionHistoryPerBranchV2Response {
+    pub fn new(
+        member_0: ConsumptionHistoryPerBranchV2Response,
+        member_1: PaginationResponse,
+    ) -> Self {
+        Self { member_0, member_1 }
+    }
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct GetConsumptionHistoryPerProjectResponse {
+    #[serde(flatten)]
+    pub member_0: ConsumptionHistoryPerProjectResponse,
+    #[serde(flatten)]
+    pub member_1: PaginationResponse,
+}
+
+impl GetConsumptionHistoryPerProjectResponse {
+    pub fn new(
+        member_0: ConsumptionHistoryPerProjectResponse,
+        member_1: PaginationResponse,
+    ) -> Self {
+        Self { member_0, member_1 }
+    }
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct GetConsumptionHistoryPerProjectV2Response {
+    #[serde(flatten)]
+    pub member_0: ConsumptionHistoryPerProjectV2Response,
+    #[serde(flatten)]
+    pub member_1: PaginationResponse,
+}
+
+impl GetConsumptionHistoryPerProjectV2Response {
+    pub fn new(
+        member_0: ConsumptionHistoryPerProjectV2Response,
+        member_1: PaginationResponse,
+    ) -> Self {
+        Self { member_0, member_1 }
+    }
+}

@@ -84,156 +84,6 @@ impl AddProjectJWKSRequest {
     }
 }
 
-/// Category of an advisor issue
-#[derive(Debug, Clone, PartialEq, Default)]
-pub enum AdvisorCategory {
-    #[default]
-    Security,
-    Performance,
-    Unknown(String),
-}
-
-impl AdvisorCategory {
-    pub fn as_str(&self) -> &str {
-        match self {
-            Self::Security => "SECURITY",
-            Self::Performance => "PERFORMANCE",
-            Self::Unknown(value) => value.as_str(),
-        }
-    }
-}
-
-impl serde::Serialize for AdvisorCategory {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        serializer.serialize_str(self.as_str())
-    }
-}
-
-impl<'de> serde::Deserialize<'de> for AdvisorCategory {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let value = <String as serde::Deserialize>::deserialize(deserializer)?;
-        Ok(match value.as_str() {
-            "SECURITY" => Self::Security,
-            "PERFORMANCE" => Self::Performance,
-            _ => Self::Unknown(value),
-        })
-    }
-}
-
-impl std::fmt::Display for AdvisorCategory {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(self.as_str())
-    }
-}
-
-/// Whether this issue affects external API exposure or is internal only
-#[derive(Debug, Clone, PartialEq, Default)]
-pub enum AdvisorIssueFacingEnum {
-    #[default]
-    External,
-    Internal,
-    Unknown(String),
-}
-
-impl AdvisorIssueFacingEnum {
-    pub fn as_str(&self) -> &str {
-        match self {
-            Self::External => "EXTERNAL",
-            Self::Internal => "INTERNAL",
-            Self::Unknown(value) => value.as_str(),
-        }
-    }
-}
-
-impl serde::Serialize for AdvisorIssueFacingEnum {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        serializer.serialize_str(self.as_str())
-    }
-}
-
-impl<'de> serde::Deserialize<'de> for AdvisorIssueFacingEnum {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let value = <String as serde::Deserialize>::deserialize(deserializer)?;
-        Ok(match value.as_str() {
-            "EXTERNAL" => Self::External,
-            "INTERNAL" => Self::Internal,
-            _ => Self::Unknown(value),
-        })
-    }
-}
-
-impl std::fmt::Display for AdvisorIssueFacingEnum {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(self.as_str())
-    }
-}
-
-/// Typed representation of the `AdvisorIssue` API schema.
-#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-pub struct AdvisorIssue {
-    /// Unique identifier for the issue type
-    pub name: String,
-    /// Human-readable title
-    pub title: String,
-    /// Severity level of the issue
-    pub level: String,
-    /// Whether this issue affects external API exposure or is internal only
-    pub facing: AdvisorIssueFacingEnum,
-    /// Categories this issue belongs to
-    pub categories: Vec<AdvisorCategory>,
-    /// Detailed description of what this check detects
-    pub description: String,
-    /// Specific details about this instance of the issue
-    pub detail: String,
-    /// URL to documentation on how to fix this issue
-    pub remediation: String,
-    /// Additional context-specific metadata
-    pub metadata: std::collections::HashMap<String, serde_json::Value>,
-    /// Unique key for caching this issue result
-    pub cache_key: String,
-}
-
-impl AdvisorIssue {
-    #[allow(clippy::too_many_arguments)]
-    pub fn new(
-        name: String,
-        title: String,
-        level: String,
-        facing: AdvisorIssueFacingEnum,
-        categories: Vec<AdvisorCategory>,
-        description: String,
-        detail: String,
-        remediation: String,
-        metadata: std::collections::HashMap<String, serde_json::Value>,
-        cache_key: String,
-    ) -> Self {
-        Self {
-            name,
-            title,
-            level,
-            facing,
-            categories,
-            description,
-            detail,
-            remediation,
-            metadata,
-            cache_key,
-        }
-    }
-}
-
 /// A list of IP addresses that are allowed to connect to the compute endpoint.
 /// If the list is empty or not set, all IP addresses are allowed.
 /// If protected_branches_only is true, the list will be applied only to protected branches.
@@ -311,77 +161,43 @@ impl std::fmt::Display for ApplicationType {
     }
 }
 
-/// Typed representation of the `AvailablePreloadLibraries` API schema.
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-pub struct AvailablePreloadLibraries {
-    /// Preload libraries available for the project's Postgres version. Each entry includes `library_name`, `description`, `is_default`, `is_experimental`, and `version`.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub libraries: Option<Vec<AvailablePreloadLibrary>>,
+pub struct CreateProjectResponse {
+    #[serde(flatten)]
+    pub member_0: ProjectResponse,
+    #[serde(flatten)]
+    pub member_1: ConnectionURIsResponse,
+    #[serde(flatten)]
+    pub member_2: RolesResponse,
+    #[serde(flatten)]
+    pub member_3: DatabasesResponse,
+    #[serde(flatten)]
+    pub member_4: OperationsResponse,
+    #[serde(flatten)]
+    pub member_5: BranchResponse,
+    #[serde(flatten)]
+    pub member_6: EndpointsResponse,
 }
 
-impl AvailablePreloadLibraries {
-    #[allow(clippy::new_without_default)]
-    pub fn new() -> Self {
-        Self { libraries: None }
-    }
-}
-
-/// Typed representation of the `AvailablePreloadLibrary` API schema.
-#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-pub struct AvailablePreloadLibrary {
-    /// Name of the Postgres shared preload library as it appears in the `shared_preload_libraries` parameter (for example, `pg_stat_statements`).
-    pub library_name: String,
-    /// Human-readable explanation of the library's purpose and behavior.
-    pub description: String,
-    /// Whether this library is loaded by default in the `shared_preload_libraries` configuration for new compute endpoints.
-    pub is_default: bool,
-    /// Marks the library as experimental. Experimental libraries may be unstable, subject to breaking changes, or not recommended for production use.
-    pub is_experimental: bool,
-    /// Version of the preload library.
-    pub version: String,
-}
-
-impl AvailablePreloadLibrary {
+impl CreateProjectResponse {
     pub fn new(
-        library_name: String,
-        description: String,
-        is_default: bool,
-        is_experimental: bool,
-        version: String,
+        member_0: ProjectResponse,
+        member_1: ConnectionURIsResponse,
+        member_2: RolesResponse,
+        member_3: DatabasesResponse,
+        member_4: OperationsResponse,
+        member_5: BranchResponse,
+        member_6: EndpointsResponse,
     ) -> Self {
         Self {
-            library_name,
-            description,
-            is_default,
-            is_experimental,
-            version,
+            member_0,
+            member_1,
+            member_2,
+            member_3,
+            member_4,
+            member_5,
+            member_6,
         }
-    }
-}
-
-/// Typed representation of the `ConnectionURIResponse` API schema.
-#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-pub struct ConnectionURIResponse {
-    /// The connection URI.
-    pub uri: String,
-}
-
-impl ConnectionURIResponse {
-    pub fn new(uri: String) -> Self {
-        Self { uri }
-    }
-}
-
-/// Typed representation of the `ConnectionURIsResponse` API schema.
-#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-pub struct ConnectionURIsResponse {
-    /// Connection URIs for the project. Each entry contains credentials and should be treated as sensitive.
-    pub connection_uris: Vec<ConnectionDetails>,
-}
-
-impl ConnectionURIsResponse {
-    pub fn new(connection_uris: Vec<ConnectionDetails>) -> Self {
-        Self { connection_uris }
     }
 }
 
@@ -507,4 +323,140 @@ pub struct JWKS {
     /// Database role names that are permitted to authenticate using this JWKS configuration.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub role_names: Option<Vec<String>>,
+}
+
+impl JWKS {
+    pub(super) fn validate_constraints(&self) -> Result<(), crate::errors::SdkError> {
+        crate::validation::validate_pattern("project_id", &self.project_id, "^[a-z0-9-]{1,60}$")?;
+        if let Some(value) = self.branch_id.as_ref() {
+            crate::validation::validate_pattern("branch_id", value, "^[a-z0-9-]{1,60}$")?;
+        }
+        crate::validation::validate_model_date_time("created_at", &self.created_at)?;
+        crate::validation::validate_model_date_time("updated_at", &self.updated_at)?;
+        Ok(())
+    }
+
+    pub fn new(
+        id: String,
+        project_id: String,
+        jwks_url: String,
+        provider_name: String,
+        created_at: String,
+        updated_at: String,
+    ) -> Result<Self, crate::errors::SdkError> {
+        let value = Self {
+            id,
+            project_id,
+            branch_id: None,
+            jwks_url,
+            provider_name,
+            created_at,
+            updated_at,
+            jwt_audience: None,
+            role_names: None,
+        };
+        value.validate_constraints()?;
+        Ok(value)
+    }
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct JWKSCreationOperation {
+    #[serde(flatten)]
+    pub member_0: JWKSResponse,
+    #[serde(flatten)]
+    pub member_1: OperationsResponse,
+}
+
+impl JWKSCreationOperation {
+    pub fn new(member_0: JWKSResponse, member_1: OperationsResponse) -> Self {
+        Self { member_0, member_1 }
+    }
+}
+
+/// Typed representation of the `JWKSResponse` API schema.
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct JWKSResponse {
+    /// JWKS configuration associated with the project.
+    pub jwks: JWKS,
+}
+
+impl JWKSResponse {
+    pub fn new(jwks: JWKS) -> Self {
+        Self { jwks }
+    }
+}
+
+/// A maintenance window is a time period during which Neon may perform maintenance on the project's infrastructure.
+/// During this time, the project's compute endpoints may be unavailable and existing connections can be
+/// interrupted.
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct MaintenanceWindow {
+    /// A list of weekdays when the maintenance window is active.
+    /// Encoded as ints, where 1 \- Monday, and 7 \- Sunday.
+    pub weekdays: Vec<i64>,
+    /// Start time of the maintenance window, in the format of "HH:MM". Uses UTC.
+    pub start_time: String,
+    /// End time of the maintenance window, in the format of "HH:MM". Uses UTC.
+    pub end_time: String,
+}
+
+impl MaintenanceWindow {
+    pub fn new(weekdays: Vec<i64>, start_time: String, end_time: String) -> Self {
+        Self {
+            weekdays,
+            start_time,
+            end_time,
+        }
+    }
+}
+
+pub type PgVersion = i64;
+
+/// Typed representation of the `ProjectsResponse` API schema.
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct ProjectsResponse {
+    /// List of projects accessible to the caller. Projects that exist but could not be retrieved are identified in `unavailable_project_ids`.
+    pub projects: Vec<ProjectListItem>,
+    /// A list of project IDs indicating which projects are known to exist, but whose details could not
+    /// be fetched within the requested (or implicit) time limit
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub unavailable_project_ids: Option<Vec<String>>,
+}
+
+impl ProjectsResponse {
+    pub fn new(projects: Vec<ProjectListItem>) -> Self {
+        Self {
+            projects,
+            unavailable_project_ids: None,
+        }
+    }
+}
+
+/// Typed representation of the `SetProjectMemberRoleRequest` API schema.
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct SetProjectMemberRoleRequest {
+    /// Per-project role. `viewer` maps to `VIEWER`, `editor` maps to `EDITOR`,
+    /// and `admin` maps to `ADMIN`.
+    pub role: ProjectRole,
+}
+
+impl SetProjectMemberRoleRequest {
+    pub fn new(role: ProjectRole) -> Self {
+        Self { role }
+    }
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct UpdateProjectResponse {
+    #[serde(flatten)]
+    pub member_0: ProjectResponse,
+    #[serde(flatten)]
+    pub member_1: OperationsResponse,
+}
+
+impl UpdateProjectResponse {
+    pub fn new(member_0: ProjectResponse, member_1: OperationsResponse) -> Self {
+        Self { member_0, member_1 }
+    }
 }
