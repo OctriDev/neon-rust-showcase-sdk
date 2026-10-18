@@ -4,7 +4,7 @@
 use crate::client::ClientConfig;
 use crate::client::{sdk_request, RequestOptions, RequestOpts};
 use crate::errors::SdkError;
-use crate::types::{OperationResponse, OperationsResponse};
+use crate::types::{ListOperationResponse, OperationResponse};
 use crate::validation::{validate_pattern, validate_range, validate_uuid, RangeOpts};
 
 /// Retrieves details for the specified operation. An operation is an action performed on a Neon project resource.
@@ -56,7 +56,7 @@ pub fn list_operation(
     cursor: Option<String>,
     limit: Option<i64>,
     options: Option<&RequestOptions>,
-) -> Result<OperationsResponse, SdkError> {
+) -> Result<ListOperationResponse, SdkError> {
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     if let Some(ref limit_v) = limit {
         validate_range(
@@ -78,7 +78,7 @@ pub fn list_operation(
         __query.push(("limit", crate::client::query_value(v)));
     }
 
-    Ok(sdk_request::<OperationsResponse>(
+    Ok(sdk_request::<ListOperationResponse>(
         "GET",
         &format!(
             "/projects/{}/operations",

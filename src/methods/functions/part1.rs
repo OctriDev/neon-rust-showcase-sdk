@@ -5,8 +5,8 @@ use crate::client::ClientConfig;
 use crate::client::{sdk_request, RequestOptions, RequestOpts};
 use crate::errors::{SdkError, SdkNetworkError};
 use crate::types::{
-    CustomDomain, FunctionDeployRequestRuntimeEnum, NeonFunctionDeploymentResponse,
-    NeonFunctionResponse, NeonFunctionsListResponse, TriggerCreateRequest, TriggerID,
+    CustomDomain, FunctionDeployRequestRuntimeEnum, ListFunctionsResponse,
+    NeonFunctionDeploymentResponse, NeonFunctionResponse, TriggerCreateRequest, TriggerID,
     TriggerResponse, TriggerUpdateRequest, TriggersListResponse,
 };
 use crate::validation::{validate_length, validate_pattern, validate_range, LengthOpts, RangeOpts};
@@ -29,7 +29,7 @@ pub fn list_functions(
     cursor: Option<String>,
     limit: Option<i64>,
     options: Option<&RequestOptions>,
-) -> Result<NeonFunctionsListResponse, SdkError> {
+) -> Result<ListFunctionsResponse, SdkError> {
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
     if let Some(ref limit_v) = limit {
@@ -52,7 +52,7 @@ pub fn list_functions(
         __query.push(("limit", crate::client::query_value(v)));
     }
 
-    Ok(sdk_request::<NeonFunctionsListResponse>(
+    Ok(sdk_request::<ListFunctionsResponse>(
         "GET",
         &format!(
             "/projects/{}/branches/{}/functions",

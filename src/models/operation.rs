@@ -3,6 +3,20 @@
 
 // operation domain models
 
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct ListOperationResponse {
+    #[serde(flatten)]
+    pub member_0: OperationsResponse,
+    #[serde(flatten)]
+    pub member_1: PaginationResponse,
+}
+
+impl ListOperationResponse {
+    pub fn new(member_0: OperationsResponse, member_1: PaginationResponse) -> Self {
+        Self { member_0, member_1 }
+    }
+}
+
 /// Typed representation of the `OperationResponse` API schema.
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 pub struct OperationResponse {

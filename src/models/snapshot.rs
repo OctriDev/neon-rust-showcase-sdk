@@ -114,6 +114,30 @@ impl EndpointsOptionalResponse {
     }
 }
 
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct RestoreSnapshotResponse {
+    #[serde(flatten)]
+    pub member_0: BranchResponse,
+    #[serde(flatten)]
+    pub member_1: EndpointsOptionalResponse,
+    #[serde(flatten)]
+    pub member_2: OperationsResponse,
+}
+
+impl RestoreSnapshotResponse {
+    pub fn new(
+        member_0: BranchResponse,
+        member_1: EndpointsOptionalResponse,
+        member_2: OperationsResponse,
+    ) -> Self {
+        Self {
+            member_0,
+            member_1,
+            member_2,
+        }
+    }
+}
+
 /// Typed representation of the `Snapshot` API schema.
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 pub struct Snapshot {

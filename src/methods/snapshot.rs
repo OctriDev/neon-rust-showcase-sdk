@@ -5,8 +5,8 @@ use crate::client::ClientConfig;
 use crate::client::{sdk_request, RequestOptions, RequestOpts};
 use crate::errors::{SdkError, SdkNetworkError};
 use crate::types::{
-    BackupSchedule, BackupScheduleItem, BranchResponse, EmptyResponse, Operation,
-    OperationsResponse, Snapshot, SnapshotUpdateRequestSnapshot,
+    BackupSchedule, BackupScheduleItem, EmptyResponse, Operation, OperationsResponse,
+    RestoreSnapshotResponse, Snapshot, SnapshotUpdateRequestSnapshot,
 };
 use crate::validation::validate_pattern;
 
@@ -270,7 +270,7 @@ pub fn restore_snapshot(
     config: &ClientConfig,
     params: RestoreSnapshotParams,
     options: Option<&RequestOptions>,
-) -> Result<BranchResponse, SdkError> {
+) -> Result<RestoreSnapshotResponse, SdkError> {
     let RestoreSnapshotParams {
         project_id,
         snapshot_id,
@@ -323,7 +323,7 @@ pub fn restore_snapshot(
     }
     let __body = serde_json::Value::Object(__body_map);
 
-    Ok(sdk_request::<BranchResponse>(
+    Ok(sdk_request::<RestoreSnapshotResponse>(
         "POST",
         &format!(
             "/projects/{}/snapshots/{}/restore",

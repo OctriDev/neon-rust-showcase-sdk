@@ -5,8 +5,9 @@ use crate::client::ClientConfig;
 use crate::client::{sdk_request, RequestOptions, RequestOpts};
 use crate::errors::{SdkError, SdkNetworkError};
 use crate::types::{
-    AdvisorCategory, AdvisorIssue, ProjectCreateRequestProject, ProjectPermissions,
-    ProjectRecoverResponse, ProjectResponse, ProjectUpdateRequestProject, ProjectsResponse,
+    AdvisorCategory, AdvisorIssue, CreateProjectResponse, ListProjectsResponse,
+    ListSharedProjectsResponse, ProjectCreateRequestProject, ProjectPermissions,
+    ProjectRecoverResponse, ProjectResponse, ProjectUpdateRequestProject, UpdateProjectResponse,
 };
 use crate::validation::{validate_pattern, validate_range, RangeOpts};
 
@@ -174,7 +175,7 @@ pub fn list_projects(
     config: &ClientConfig,
     params: ListProjectsParams,
     options: Option<&RequestOptions>,
-) -> Result<ProjectsResponse, SdkError> {
+) -> Result<ListProjectsResponse, SdkError> {
     let ListProjectsParams {
         cursor,
         limit,
@@ -229,7 +230,7 @@ pub fn list_projects(
         __query.push(("recoverable", crate::client::query_value(v)));
     }
 
-    Ok(sdk_request::<ProjectsResponse>(
+    Ok(sdk_request::<ListProjectsResponse>(
         "GET",
         "/projects",
         config,
@@ -255,7 +256,7 @@ pub fn create_project(
     config: &ClientConfig,
     project: ProjectCreateRequestProject,
     options: Option<&RequestOptions>,
-) -> Result<ProjectResponse, SdkError> {
+) -> Result<CreateProjectResponse, SdkError> {
     let mut __body_map = serde_json::Map::new();
     __body_map.insert(
         "project".to_string(),
@@ -268,7 +269,7 @@ pub fn create_project(
     );
     let __body = serde_json::Value::Object(__body_map);
 
-    Ok(sdk_request::<ProjectResponse>(
+    Ok(sdk_request::<CreateProjectResponse>(
         "POST",
         "/projects",
         config,
@@ -306,7 +307,7 @@ pub fn list_shared_projects(
     search: Option<String>,
     timeout: Option<i64>,
     options: Option<&RequestOptions>,
-) -> Result<ProjectsResponse, SdkError> {
+) -> Result<ListSharedProjectsResponse, SdkError> {
     if let Some(ref limit_v) = limit {
         validate_range(
             "limit",
@@ -344,7 +345,7 @@ pub fn list_shared_projects(
         __query.push(("timeout", crate::client::query_value(v)));
     }
 
-    Ok(sdk_request::<ProjectsResponse>(
+    Ok(sdk_request::<ListSharedProjectsResponse>(
         "GET",
         "/projects/shared",
         config,
@@ -403,7 +404,7 @@ pub fn update_project(
     project_id: String,
     project: ProjectUpdateRequestProject,
     options: Option<&RequestOptions>,
-) -> Result<ProjectResponse, SdkError> {
+) -> Result<UpdateProjectResponse, SdkError> {
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
 
     let mut __body_map = serde_json::Map::new();
@@ -418,7 +419,7 @@ pub fn update_project(
     );
     let __body = serde_json::Value::Object(__body_map);
 
-    Ok(sdk_request::<ProjectResponse>(
+    Ok(sdk_request::<UpdateProjectResponse>(
         "PATCH",
         &format!(
             "/projects/{}",

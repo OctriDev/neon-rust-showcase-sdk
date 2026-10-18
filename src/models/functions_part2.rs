@@ -3,6 +3,44 @@
 
 // functions domain models (part 2)
 
+impl NeonFunctionUpdateRequest {
+    pub(super) fn validate_constraints(&self) -> Result<(), crate::errors::SdkError> {
+        if let Some(value) = self.name.as_ref() {
+            crate::validation::validate_length(
+                "name",
+                value,
+                crate::validation::LengthOpts {
+                    min: Some(1),
+                    max: Some(256),
+                },
+            )?;
+        }
+        Ok(())
+    }
+
+    pub fn new(name: Option<String>) -> Result<Self, crate::errors::SdkError> {
+        let value = Self { name };
+        value.validate_constraints()?;
+        Ok(value)
+    }
+}
+
+/// Trigger type discriminator.
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize)]
+pub enum ScheduleTriggerTypeEnum {
+    #[serde(rename = "schedule")]
+    #[default]
+    Schedule,
+}
+
+impl ScheduleTriggerTypeEnum {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Schedule => "schedule",
+        }
+    }
+}
+
 impl std::fmt::Display for ScheduleTriggerTypeEnum {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -585,48 +623,4 @@ pub enum Trigger {
     /// A member whose `type` names no branch this SDK knows, kept as received.
     #[serde(deserialize_with = "Trigger::unknown_member")]
     Unknown(serde_json::Value),
-}
-
-impl Trigger {
-    fn unknown_member<'de, D: serde::Deserializer<'de>>(
-        deserializer: D,
-    ) -> Result<serde_json::Value, D::Error> {
-        crate::client::unknown_union_member(
-            deserializer,
-            "type",
-            &["schedule", "storage_object_created"],
-        )
-    }
-}
-
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
-#[serde(untagged)]
-pub enum TriggerCreateRequest {
-    ScheduleTriggerCreateRequest(Box<ScheduleTriggerCreateRequest>),
-    StorageObjectCreatedTriggerCreateRequest(Box<StorageObjectCreatedTriggerCreateRequest>),
-    /// A member whose `type` names no branch this SDK knows, kept as received.
-    #[serde(deserialize_with = "TriggerCreateRequest::unknown_member")]
-    Unknown(serde_json::Value),
-}
-
-impl TriggerCreateRequest {
-    fn unknown_member<'de, D: serde::Deserializer<'de>>(
-        deserializer: D,
-    ) -> Result<serde_json::Value, D::Error> {
-        crate::client::unknown_union_member(
-            deserializer,
-            "type",
-            &["schedule", "storage_object_created"],
-        )
-    }
-}
-
-pub type TriggerID = String;
-
-/// Typed representation of the `TriggerResponse` API schema.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
-pub struct TriggerResponse {
-    /// A branch-effective trigger discriminated by `type`. The supported trigger
-    /// types are `schedule` and `storage_object_created`.
-    pub trigger: Trigger,
 }

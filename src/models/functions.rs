@@ -324,6 +324,34 @@ impl FunctionTriggerStorageObjectCreated {
     }
 }
 
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct ListFunctionsCustomDomainsResponse {
+    #[serde(flatten)]
+    pub member_0: CustomDomainsListResponse,
+    #[serde(flatten)]
+    pub member_1: CursorPaginationResponse,
+}
+
+impl ListFunctionsCustomDomainsResponse {
+    pub fn new(member_0: CustomDomainsListResponse, member_1: CursorPaginationResponse) -> Self {
+        Self { member_0, member_1 }
+    }
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+pub struct ListFunctionsResponse {
+    #[serde(flatten)]
+    pub member_0: NeonFunctionsListResponse,
+    #[serde(flatten)]
+    pub member_1: CursorPaginationResponse,
+}
+
+impl ListFunctionsResponse {
+    pub fn new(member_0: NeonFunctionsListResponse, member_1: CursorPaginationResponse) -> Self {
+        Self { member_0, member_1 }
+    }
+}
+
 /// Typed representation of the `NeonFunction` API schema.
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 pub struct NeonFunction {
@@ -516,42 +544,4 @@ pub struct NeonFunctionUpdateRequest {
     /// rejected.
     #[serde(deserialize_with = "Option::deserialize")]
     pub name: Option<String>,
-}
-
-impl NeonFunctionUpdateRequest {
-    pub(super) fn validate_constraints(&self) -> Result<(), crate::errors::SdkError> {
-        if let Some(value) = self.name.as_ref() {
-            crate::validation::validate_length(
-                "name",
-                value,
-                crate::validation::LengthOpts {
-                    min: Some(1),
-                    max: Some(256),
-                },
-            )?;
-        }
-        Ok(())
-    }
-
-    pub fn new(name: Option<String>) -> Result<Self, crate::errors::SdkError> {
-        let value = Self { name };
-        value.validate_constraints()?;
-        Ok(value)
-    }
-}
-
-/// Trigger type discriminator.
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize)]
-pub enum ScheduleTriggerTypeEnum {
-    #[serde(rename = "schedule")]
-    #[default]
-    Schedule,
-}
-
-impl ScheduleTriggerTypeEnum {
-    pub fn as_str(&self) -> &str {
-        match self {
-            Self::Schedule => "schedule",
-        }
-    }
 }

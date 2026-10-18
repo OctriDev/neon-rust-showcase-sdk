@@ -3,6 +3,30 @@
 
 // shared_standard domain models
 
+/// Optional enumerated value serialized in the `type` wire field.
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize)]
+pub enum StandardEmailServerTypeEnum {
+    #[serde(rename = "standard")]
+    #[default]
+    Standard,
+}
+
+impl StandardEmailServerTypeEnum {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Standard => "standard",
+        }
+    }
+}
+
+impl std::fmt::Display for StandardEmailServerTypeEnum {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            StandardEmailServerTypeEnum::Standard => f.write_str("standard"),
+        }
+    }
+}
+
 /// Typed representation of the `StandardEmailServer` API schema.
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 pub struct StandardEmailServer {
@@ -24,6 +48,9 @@ pub struct StandardEmailServer {
     /// Display name shown as the sender in outgoing emails.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub sender_name: Option<String>,
+    /// Optional enumerated value serialized in the `type` wire field.
+    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
+    pub type_: Option<StandardEmailServerTypeEnum>,
 }
 
 impl StandardEmailServer {
@@ -36,6 +63,31 @@ impl StandardEmailServer {
             password: None,
             sender_email: None,
             sender_name: None,
+            type_: None,
+        }
+    }
+}
+
+/// Optional enumerated value serialized in the `type` wire field.
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize)]
+pub enum StandardEmailServerResponseTypeEnum {
+    #[serde(rename = "standard")]
+    #[default]
+    Standard,
+}
+
+impl StandardEmailServerResponseTypeEnum {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Standard => "standard",
+        }
+    }
+}
+
+impl std::fmt::Display for StandardEmailServerResponseTypeEnum {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            StandardEmailServerResponseTypeEnum::Standard => f.write_str("standard"),
         }
     }
 }
@@ -55,6 +107,9 @@ pub struct StandardEmailServerResponse {
     pub sender_email: String,
     /// Display name shown as the sender in outgoing emails.
     pub sender_name: String,
+    /// Optional enumerated value serialized in the `type` wire field.
+    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
+    pub type_: Option<StandardEmailServerResponseTypeEnum>,
 }
 
 impl StandardEmailServerResponse {
@@ -73,6 +128,7 @@ impl StandardEmailServerResponse {
             password,
             sender_email,
             sender_name,
+            type_: None,
         }
     }
 }

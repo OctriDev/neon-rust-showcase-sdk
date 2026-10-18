@@ -32,7 +32,7 @@ impl ProjectNamespace {
         &self,
         params: crate::methods::project::ListProjectsParams,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<ProjectsResponse, crate::errors::SdkError> {
+    ) -> Result<ListProjectsResponse, crate::errors::SdkError> {
         crate::methods::project::list_projects(&self.config, params, options)
     }
     /// Creates a Neon project within an organization. If using a personal API key, include the `org_id` parameter to specify which organization to create the project in. If using an org API key, `org_id` is automatically inferred from the key. Plan limits define how many projects you can create. For more information, see [Manage projects](https://neon.com/docs/manage/projects/). You can specify a region and Postgres version in the request body. Neon supports Postgres 14 through 18, with 19 rolling out to enabled regions. For supported regions and `region_id` values, see [Regions](https://neon.com/docs/introduction/regions/).
@@ -40,7 +40,7 @@ impl ProjectNamespace {
         &self,
         project: ProjectCreateRequestProject,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<ProjectResponse, crate::errors::SdkError> {
+    ) -> Result<CreateProjectResponse, crate::errors::SdkError> {
         crate::methods::project::create_project(&self.config, project, options)
     }
     /// Retrieves a list of projects shared with your Neon account. For more information, see [Manage projects](https://neon.com/docs/manage/projects/).
@@ -51,7 +51,7 @@ impl ProjectNamespace {
         search: Option<String>,
         timeout: Option<i64>,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<ProjectsResponse, crate::errors::SdkError> {
+    ) -> Result<ListSharedProjectsResponse, crate::errors::SdkError> {
         crate::methods::project::list_shared_projects(
             &self.config,
             cursor,
@@ -77,7 +77,7 @@ impl ProjectNamespace {
         project_id: String,
         project: ProjectUpdateRequestProject,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<ProjectResponse, crate::errors::SdkError> {
+    ) -> Result<UpdateProjectResponse, crate::errors::SdkError> {
         crate::methods::project::update_project(&self.config, project_id, project, options)
     }
     /// Deletes the specified project and all its endpoints, branches, databases, and users. Deleted projects can be recovered within 7 days using `POST /projects/{project_id}/recover`. To list recoverable projects, use `GET /projects?recoverable=true`.
@@ -367,7 +367,7 @@ impl OperationNamespace {
         cursor: Option<String>,
         limit: Option<i64>,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<OperationsResponse, crate::errors::SdkError> {
+    ) -> Result<ListOperationResponse, crate::errors::SdkError> {
         crate::methods::operation::list_operation(&self.config, project_id, cursor, limit, options)
     }
 }
@@ -1228,7 +1228,7 @@ impl BranchNamespace {
         project_id: String,
         body: Option<BranchCreateRequest>,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<BranchResponse, crate::errors::SdkError> {
+    ) -> Result<CreateBranchResponse, crate::errors::SdkError> {
         crate::methods::branch::create_branch(&self.config, project_id, body, options)
     }
     /// Retrieves a list of branches for the specified project. Each Neon project has a root branch named `main`. A `branch_id` value has a `br-` prefix. A project may contain child branches that were branched from `main` or from another branch. A parent branch is identified by the `parent_id` value, which is the `id` of the parent branch. For related information, see [Manage branches](https://neon.com/docs/manage/branches/).
@@ -1236,7 +1236,7 @@ impl BranchNamespace {
         &self,
         params: crate::methods::branch::ListBranchParams,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<BranchesResponse, crate::errors::SdkError> {
+    ) -> Result<ListBranchResponse, crate::errors::SdkError> {
         crate::methods::branch::list_branch(&self.config, params, options)
     }
     /// Creates a branch with anonymized data using PostgreSQL Anonymizer for static masking. Supply `branch_create` to configure the branch and optionally provide `masking_rules` or set `start_anonymization` to true to apply masking rules and start anonymization during creation. This endpoint is in beta; the response includes the created branch, operations, and any endpoints specified in the request.
@@ -1247,7 +1247,7 @@ impl BranchNamespace {
         project_id: String,
         body: BranchAnonymizedCreateRequest,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<BranchResponse, crate::errors::SdkError> {
+    ) -> Result<CreateBranchResponse, crate::errors::SdkError> {
         crate::methods::branch::create_branch_anonymized(&self.config, project_id, body, options)
     }
     /// Retrieves the total number of branches in the specified project. Supports an optional `search` parameter to count branches matching a name filter.
@@ -1265,7 +1265,7 @@ impl BranchNamespace {
         project_id: String,
         branch_id: String,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<BranchResponse, crate::errors::SdkError> {
+    ) -> Result<GetBranchResponse, crate::errors::SdkError> {
         crate::methods::branch::get_branch(&self.config, project_id, branch_id, options)
     }
     /// Deletes the specified branch from a project and places all compute endpoints into an idle state, breaking existing client connections. The deletion completes after all operations finish. You cannot delete a project's root or default branch, or a branch that has a child branch. A project must have at least one branch. For related information, see [Manage branches](https://neon.com/docs/manage/branches/).
@@ -1741,7 +1741,7 @@ impl ConsumptionNamespace {
         &self,
         params: crate::methods::consumption::GetConsumptionHistoryPerProjectParams,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<ConsumptionHistoryPerProjectResponse, crate::errors::SdkError> {
+    ) -> Result<GetConsumptionHistoryPerProjectResponse, crate::errors::SdkError> {
         crate::methods::consumption::get_consumption_history_per_project(
             &self.config,
             params,
@@ -1753,7 +1753,7 @@ impl ConsumptionNamespace {
         &self,
         params: crate::methods::consumption::GetConsumptionHistoryPerProjectV2Params,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<ConsumptionHistoryPerProjectV2Response, crate::errors::SdkError> {
+    ) -> Result<GetConsumptionHistoryPerProjectV2Response, crate::errors::SdkError> {
         crate::methods::consumption::get_consumption_history_per_project_v2(
             &self.config,
             params,
@@ -1765,7 +1765,7 @@ impl ConsumptionNamespace {
         &self,
         params: crate::methods::consumption::GetConsumptionHistoryPerBranchV2Params,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<ConsumptionHistoryPerBranchV2Response, crate::errors::SdkError> {
+    ) -> Result<GetConsumptionHistoryPerBranchV2Response, crate::errors::SdkError> {
         crate::methods::consumption::get_consumption_history_per_branch_v2(
             &self.config,
             params,
@@ -1873,7 +1873,7 @@ impl OrganizationsNamespace {
         &self,
         params: crate::methods::organizations::ListOrganizationsMembersParams,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<OrganizationMembersResponse, crate::errors::SdkError> {
+    ) -> Result<ListOrganizationsMembersResponse, crate::errors::SdkError> {
         crate::methods::organizations::list_organizations_members(&self.config, params, options)
     }
     /// Retrieves information about the specified organization member.
@@ -2173,7 +2173,7 @@ impl SnapshotNamespace {
         &self,
         params: crate::methods::snapshot::RestoreSnapshotParams,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<BranchResponse, crate::errors::SdkError> {
+    ) -> Result<RestoreSnapshotResponse, crate::errors::SdkError> {
         crate::methods::snapshot::restore_snapshot(&self.config, params, options)
     }
     /// Returns the backup schedule for the specified branch, including the configured snapshot frequencies.
@@ -2535,7 +2535,7 @@ impl FunctionsNamespace {
         cursor: Option<String>,
         limit: Option<i64>,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<NeonFunctionsListResponse, crate::errors::SdkError> {
+    ) -> Result<ListFunctionsResponse, crate::errors::SdkError> {
         crate::methods::functions::list_functions(
             &self.config,
             project_id,
@@ -2699,7 +2699,7 @@ impl FunctionsNamespace {
         cursor: Option<String>,
         limit: Option<i64>,
         options: Option<&crate::client::RequestOptions>,
-    ) -> Result<CustomDomainsListResponse, crate::errors::SdkError> {
+    ) -> Result<ListFunctionsCustomDomainsResponse, crate::errors::SdkError> {
         crate::methods::functions::list_functions_custom_domains(
             &self.config,
             project_id,
