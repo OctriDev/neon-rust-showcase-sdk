@@ -358,6 +358,12 @@ pub fn query_logs(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListLogsFieldsParams {
+    pub project_id: String,
+    pub branch_id: String,
+}
+
 /// Lists the low-cardinality log fields observed on this branch whose distinct values can be discovered with the log field-values endpoint. The set is computed per branch and grows as new fields are observed, so treat it as data rather than a fixed list: discover a field here, then pass it as `field_name` to the field-values endpoint. \*\*Note\*\*: This endpoint is currently in Private Beta.
 ///
 /// # Arguments
@@ -366,10 +372,13 @@ pub fn query_logs(
 /// * `branch_id` - The Neon branch ID
 pub fn list_logs_fields(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
+    params: ListLogsFieldsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ProjectBranchLogFieldsResponse, SdkError> {
+    let ListLogsFieldsParams {
+        project_id,
+        branch_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 

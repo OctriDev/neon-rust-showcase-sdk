@@ -7,6 +7,12 @@ use crate::errors::SdkError;
 use crate::types::BranchAiGateway;
 use crate::validation::validate_pattern;
 
+#[derive(Debug, Clone, Default)]
+pub struct GetAiGatewayParams {
+    pub project_id: String,
+    pub branch_id: String,
+}
+
 /// Returns the AI Gateway endpoint host for the specified branch, used to render code-snippet base URLs. A 200 response means the branch is registered and this region serves the AI gateway. A 404 response includes a `reason` field indicating why the gateway is unavailable. \*\*Note\*\*: This endpoint is currently in Beta.
 ///
 /// # Arguments
@@ -15,10 +21,13 @@ use crate::validation::validate_pattern;
 /// * `branch_id` - The Neon branch ID
 pub fn get_ai_gateway(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
+    params: GetAiGatewayParams,
     options: Option<&RequestOptions>,
 ) -> Result<BranchAiGateway, SdkError> {
+    let GetAiGatewayParams {
+        project_id,
+        branch_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 

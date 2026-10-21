@@ -114,9 +114,11 @@ fn accept_project_transfer_request_accept_project_transfer_request_reaches_mock_
     let _ = &config;
     project::accept_project_transfer_request(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""org-cool-darkness-12345678""#))),
+        project::AcceptProjectTransferRequestParams {
+            project_id: decode(fixture(r#""a""#)),
+            request_id: decode(fixture(r#""a""#)),
+            org_id: Some(decode(fixture(r#""org-cool-darkness-12345678""#))),
+        },
         None,
     )
     .expect("accept_project_transfer_request request failed");
@@ -135,9 +137,11 @@ fn accept_project_transfer_request_accept_project_transfer_request_406_decodes_d
     };
     let result = project::accept_project_transfer_request(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""org-cool-darkness-12345678""#))),
+        project::AcceptProjectTransferRequestParams {
+            project_id: decode(fixture(r#""a""#)),
+            request_id: decode(fixture(r#""a""#)),
+            org_id: Some(decode(fixture(r#""org-cool-darkness-12345678""#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -161,9 +165,11 @@ fn add_auth_legacy_domain_to_redirect_uri_whitelist_add_auth_legacy_domain_to_re
     let _ = &config;
     auth_legacy::add_auth_legacy_domain_to_redirect_uri_whitelist(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""https://example.com""#)),
-        decode(fixture(r#""mock""#)),
+        auth_legacy::AddAuthLegacyDomainToRedirectUriWhitelistParams {
+            project_id: decode(fixture(r#""a""#)),
+            domain: decode(fixture(r#""https://example.com""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+        },
         None,
     )
     .expect("add_auth_legacy_domain_to_redirect_uri_whitelist request failed");
@@ -183,9 +189,11 @@ fn add_auth_legacy_domain_to_redirect_uri_whitelist_add_auth_legacy_domain_to_re
     };
     let result = auth_legacy::add_auth_legacy_domain_to_redirect_uri_whitelist(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""https://example.com""#)),
-        decode(fixture(r#""mock""#)),
+        auth_legacy::AddAuthLegacyDomainToRedirectUriWhitelistParams {
+            project_id: decode(fixture(r#""a""#)),
+            domain: decode(fixture(r#""https://example.com""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -335,10 +343,12 @@ fn add_auth_trusted_domain_add_auth_trusted_domain_reaches_mock_and_decodes_resp
     let _ = &config;
     auth::add_auth_trusted_domain(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""https://example.com""#)),
-        decode(fixture(r#""mock""#)),
+        auth::AddAuthTrustedDomainParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            domain: decode(fixture(r#""https://example.com""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+        },
         None,
     )
     .expect("add_auth_trusted_domain request failed");
@@ -357,10 +367,12 @@ fn add_auth_trusted_domain_add_auth_trusted_domain_418_decodes_declared_error() 
     };
     let result = auth::add_auth_trusted_domain(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""https://example.com""#)),
-        decode(fixture(r#""mock""#)),
+        auth::AddAuthTrustedDomainParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            domain: decode(fixture(r#""https://example.com""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -450,10 +462,12 @@ fn assign_organization_vpc_endpoint_assign_organization_vpc_endpoint_reaches_moc
     let _ = &config;
     organizations::assign_organization_vpc_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""region-1""#)),
-        decode(fixture(r#""vpc_endpoint-1""#)),
-        decode(fixture(r#""label""#)),
+        organizations::AssignOrganizationVpcEndpointParams {
+            org_id: decode(fixture(r#""a""#)),
+            region_id: decode(fixture(r#""region-1""#)),
+            vpc_endpoint_id: decode(fixture(r#""vpc_endpoint-1""#)),
+            label: decode(fixture(r#""label""#)),
+        },
         None,
     )
     .expect("assign_organization_vpc_endpoint request failed");
@@ -472,10 +486,12 @@ fn assign_organization_vpc_endpoint_assign_organization_vpc_endpoint_418_decodes
     };
     let result = organizations::assign_organization_vpc_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""region-1""#)),
-        decode(fixture(r#""vpc_endpoint-1""#)),
-        decode(fixture(r#""label""#)),
+        organizations::AssignOrganizationVpcEndpointParams {
+            org_id: decode(fixture(r#""a""#)),
+            region_id: decode(fixture(r#""region-1""#)),
+            vpc_endpoint_id: decode(fixture(r#""vpc_endpoint-1""#)),
+            label: decode(fixture(r#""label""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -498,9 +514,11 @@ fn assign_project_vpc_endpoint_assign_project_vpc_endpoint_reaches_mock_and_deco
     let _ = &config;
     project::assign_project_vpc_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""vpc_endpoint-1""#)),
-        decode(fixture(r#""label""#)),
+        project::AssignProjectVpcEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            vpc_endpoint_id: decode(fixture(r#""vpc_endpoint-1""#)),
+            label: decode(fixture(r#""label""#)),
+        },
         None,
     )
     .expect("assign_project_vpc_endpoint request failed");
@@ -519,9 +537,11 @@ fn assign_project_vpc_endpoint_assign_project_vpc_endpoint_418_decodes_declared_
     };
     let result = project::assign_project_vpc_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""vpc_endpoint-1""#)),
-        decode(fixture(r#""label""#)),
+        project::AssignProjectVpcEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            vpc_endpoint_id: decode(fixture(r#""vpc_endpoint-1""#)),
+            label: decode(fixture(r#""label""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -610,8 +630,10 @@ fn count_branch_count_branch_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::count_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""search""#))),
+        branch::CountBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            search: Some(decode(fixture(r#""search""#))),
+        },
         None,
     )
     .expect("count_branch request failed");
@@ -636,8 +658,10 @@ fn count_branch_count_branch_418_decodes_declared_error() {
     };
     let result = branch::count_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""search""#))),
+        branch::CountBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            search: Some(decode(fixture(r#""search""#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -658,8 +682,14 @@ fn create_api_key_create_api_key_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = api_key::create_api_key(&config, decode(fixture(r#""mykey""#)), None)
-        .expect("create_api_key request failed");
+    let actual = api_key::create_api_key(
+        &config,
+        api_key::CreateApiKeyParams {
+            key_name: decode(fixture(r#""mykey""#)),
+        },
+        None,
+    )
+    .expect("create_api_key request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"id":165434,"key":"9v1faketcjbl4sn1013keyd43n2a8qlfakeog8yvp40hx16keyjo1bpds4y2dfms3","name":"mykey","created_at":"2022-11-15T20:13:35Z","created_by":"629982cc-de05-43db-ae16-28f2399c4910"}"#,
@@ -681,7 +711,13 @@ fn create_api_key_create_api_key_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = api_key::create_api_key(&config, decode(fixture(r#""mykey""#)), None);
+    let result = api_key::create_api_key(
+        &config,
+        api_key::CreateApiKeyParams {
+            key_name: decode(fixture(r#""mykey""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("create_api_key did not fail with SdkError::Http on 418");
     };
@@ -702,10 +738,12 @@ fn create_auth_create_auth_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = auth::create_auth(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
-        Some(decode(fixture(r#""Example Name""#))),
+        auth::CreateAuthParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+            database_name: Some(decode(fixture(r#""Example Name""#))),
+        },
         None,
     )
     .expect("create_auth request failed");
@@ -732,10 +770,12 @@ fn create_auth_create_auth_418_decodes_declared_error() {
     };
     let result = auth::create_auth(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
-        Some(decode(fixture(r#""Example Name""#))),
+        auth::CreateAuthParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+            database_name: Some(decode(fixture(r#""Example Name""#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -822,8 +862,10 @@ fn create_auth_legacy_provider_sdk_keys_create_auth_legacy_provider_sdk_keys_rea
     let _ = &config;
     let actual = auth_legacy::create_auth_legacy_provider_sdk_keys(
         &config,
-        decode(fixture(r#""wispy-forest-12345678""#)),
-        decode(fixture(r#""mock""#)),
+        auth_legacy::CreateAuthLegacyProviderSdkKeysParams {
+            project_id: decode(fixture(r#""wispy-forest-12345678""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+        },
         None,
     )
     .expect("create_auth_legacy_provider_sdk_keys request failed");
@@ -851,8 +893,10 @@ fn create_auth_legacy_provider_sdk_keys_create_auth_legacy_provider_sdk_keys_418
     };
     let result = auth_legacy::create_auth_legacy_provider_sdk_keys(
         &config,
-        decode(fixture(r#""wispy-forest-12345678""#)),
-        decode(fixture(r#""mock""#)),
+        auth_legacy::CreateAuthLegacyProviderSdkKeysParams {
+            project_id: decode(fixture(r#""wispy-forest-12345678""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -875,10 +919,12 @@ fn create_auth_legacy_user_create_auth_legacy_user_reaches_mock_and_decodes_resp
     let _ = &config;
     let actual = auth_legacy::create_auth_legacy_user(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
-        decode(fixture(r#""user@example.com""#)),
-        Some(decode(fixture(r#""Example Name""#))),
+        auth_legacy::CreateAuthLegacyUserParams {
+            project_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+            email: decode(fixture(r#""user@example.com""#)),
+            name: Some(decode(fixture(r#""Example Name""#))),
+        },
         None,
     )
     .expect("create_auth_legacy_user request failed");
@@ -903,10 +949,12 @@ fn create_auth_legacy_user_create_auth_legacy_user_418_decodes_declared_error() 
     };
     let result = auth_legacy::create_auth_legacy_user(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
-        decode(fixture(r#""user@example.com""#)),
-        Some(decode(fixture(r#""Example Name""#))),
+        auth_legacy::CreateAuthLegacyUserParams {
+            project_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+            email: decode(fixture(r#""user@example.com""#)),
+            name: Some(decode(fixture(r#""Example Name""#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -995,10 +1043,12 @@ fn create_auth_user_create_auth_user_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = auth::create_auth_user(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""user@example.com""#)),
-        Some(decode(fixture(r#""Example Name""#))),
+        auth::CreateAuthUserParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            email: decode(fixture(r#""user@example.com""#)),
+            name: Some(decode(fixture(r#""Example Name""#))),
+        },
         None,
     )
     .expect("create_auth_user request failed");
@@ -1023,10 +1073,12 @@ fn create_auth_user_create_auth_user_418_decodes_declared_error() {
     };
     let result = auth::create_auth_user(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""user@example.com""#)),
-        Some(decode(fixture(r#""Example Name""#))),
+        auth::CreateAuthUserParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            email: decode(fixture(r#""user@example.com""#)),
+            name: Some(decode(fixture(r#""Example Name""#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1049,10 +1101,12 @@ fn create_branch_create_branch_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::create_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(
-            r#"{"branch":{"parent_id":"br-aged-salad-637688","name":"mybranch"}}"#,
-        ))),
+        branch::CreateBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            body: Some(decode(fixture(
+                r#"{"branch":{"parent_id":"br-aged-salad-637688","name":"mybranch"}}"#,
+            ))),
+        },
         None,
     )
     .expect("create_branch request failed");
@@ -1079,10 +1133,12 @@ fn create_branch_create_branch_418_decodes_declared_error() {
     };
     let result = branch::create_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(
-            r#"{"branch":{"parent_id":"br-aged-salad-637688","name":"mybranch"}}"#,
-        ))),
+        branch::CreateBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            body: Some(decode(fixture(
+                r#"{"branch":{"parent_id":"br-aged-salad-637688","name":"mybranch"}}"#,
+            ))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1105,8 +1161,10 @@ fn create_branch_anonymized_create_branch_anonymized_reaches_mock_and_decodes_re
     let _ = &config;
     let actual = branch::create_branch_anonymized(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"annotation_value":{"github-commit-ref":"github-branch-name"},"branch_create":{"endpoints":[{"type":"read_only","settings":{"pg_settings":{"key":"key"},"pgbouncer_settings":{"key":"key"},"preload_libraries":{"use_defaults":false,"enabled_libraries":["enabled_libraries"]}},"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"provisioner":"k8s-neonvm","suspend_timeout_seconds":-1}],"branch":{"parent_id":"a","name":"Example Name","parent_lsn":"parent_lsn","parent_timestamp":"2024-02-26T12:00:00Z","protected":false,"realtime":{"allowed_origins":["*"]},"archived":false,"init_source":"parent-data","expires_at":"2025-06-09T18:02:16Z"}},"masking_rules":[{"database_name":"neondb","schema_name":"public","table_name":"users","column_name":"email","masking_function":"anon.fake_email()"}],"start_anonymization":false}"#)),
+        branch::CreateBranchAnonymizedParams {
+            project_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(r#"{"annotation_value":{"github-commit-ref":"github-branch-name"},"branch_create":{"endpoints":[{"type":"read_only","settings":{"pg_settings":{"key":"key"},"pgbouncer_settings":{"key":"key"},"preload_libraries":{"use_defaults":false,"enabled_libraries":["enabled_libraries"]}},"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"provisioner":"k8s-neonvm","suspend_timeout_seconds":-1}],"branch":{"parent_id":"a","name":"Example Name","parent_lsn":"parent_lsn","parent_timestamp":"2024-02-26T12:00:00Z","protected":false,"realtime":{"allowed_origins":["*"]},"archived":false,"init_source":"parent-data","expires_at":"2025-06-09T18:02:16Z"}},"masking_rules":[{"database_name":"neondb","schema_name":"public","table_name":"users","column_name":"email","masking_function":"anon.fake_email()"}],"start_anonymization":false}"#)),
+        },
         None,
     )
     .expect("create_branch_anonymized request failed");
@@ -1133,10 +1191,12 @@ fn create_branch_anonymized_create_branch_anonymized_418_decodes_declared_error(
     };
     let result = branch::create_branch_anonymized(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"{"annotation_value":{"github-commit-ref":"github-branch-name"},"branch_create":{"endpoints":[{"type":"read_only","settings":{"pg_settings":{"key":"key"},"pgbouncer_settings":{"key":"key"},"preload_libraries":{"use_defaults":false,"enabled_libraries":["enabled_libraries"]}},"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"provisioner":"k8s-neonvm","suspend_timeout_seconds":-1}],"branch":{"parent_id":"a","name":"Example Name","parent_lsn":"parent_lsn","parent_timestamp":"2024-02-26T12:00:00Z","protected":false,"realtime":{"allowed_origins":["*"]},"archived":false,"init_source":"parent-data","expires_at":"2025-06-09T18:02:16Z"}},"masking_rules":[{"database_name":"neondb","schema_name":"public","table_name":"users","column_name":"email","masking_function":"anon.fake_email()"}],"start_anonymization":false}"#,
-        )),
+        branch::CreateBranchAnonymizedParams {
+            project_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(
+                r#"{"annotation_value":{"github-commit-ref":"github-branch-name"},"branch_create":{"endpoints":[{"type":"read_only","settings":{"pg_settings":{"key":"key"},"pgbouncer_settings":{"key":"key"},"preload_libraries":{"use_defaults":false,"enabled_libraries":["enabled_libraries"]}},"autoscaling_limit_min_cu":0.25,"autoscaling_limit_max_cu":0.25,"provisioner":"k8s-neonvm","suspend_timeout_seconds":-1}],"branch":{"parent_id":"a","name":"Example Name","parent_lsn":"parent_lsn","parent_timestamp":"2024-02-26T12:00:00Z","protected":false,"realtime":{"allowed_origins":["*"]},"archived":false,"init_source":"parent-data","expires_at":"2025-06-09T18:02:16Z"}},"masking_rules":[{"database_name":"neondb","schema_name":"public","table_name":"users","column_name":"email","masking_function":"anon.fake_email()"}],"start_anonymization":false}"#,
+            )),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1159,9 +1219,11 @@ fn create_branch_database_create_branch_database_reaches_mock_and_decodes_respon
     let _ = &config;
     let actual = branch::create_branch_database(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"name":"mydb","owner_name":"casey"}"#)),
+        branch::CreateBranchDatabaseParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database: decode(fixture(r#"{"name":"mydb","owner_name":"casey"}"#)),
+        },
         None,
     )
     .expect("create_branch_database request failed");
@@ -1188,9 +1250,11 @@ fn create_branch_database_create_branch_database_418_decodes_declared_error() {
     };
     let result = branch::create_branch_database(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"name":"mydb","owner_name":"casey"}"#)),
+        branch::CreateBranchDatabaseParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database: decode(fixture(r#"{"name":"mydb","owner_name":"casey"}"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1213,9 +1277,11 @@ fn create_branch_role_create_branch_role_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::create_branch_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"name":"sally"}"#)),
+        branch::CreateBranchRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            role: decode(fixture(r#"{"name":"sally"}"#)),
+        },
         None,
     )
     .expect("create_branch_role request failed");
@@ -1242,9 +1308,11 @@ fn create_branch_role_create_branch_role_418_decodes_declared_error() {
     };
     let result = branch::create_branch_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"name":"sally"}"#)),
+        branch::CreateBranchRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            role: decode(fixture(r#"{"name":"sally"}"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1267,10 +1335,12 @@ fn create_buckets_create_buckets_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = buckets::create_buckets(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        Some(decode(fixture(r#""private""#))),
+        buckets::CreateBucketsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            name: decode(fixture(r#""Example Name""#)),
+            access_level: Some(decode(fixture(r#""private""#))),
+        },
         None,
     )
     .expect("create_buckets request failed");
@@ -1297,10 +1367,12 @@ fn create_buckets_create_buckets_410_decodes_declared_error() {
     };
     let result = buckets::create_buckets(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        Some(decode(fixture(r#""private""#))),
+        buckets::CreateBucketsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            name: decode(fixture(r#""Example Name""#)),
+            access_level: Some(decode(fixture(r#""private""#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1457,10 +1529,12 @@ fn create_endpoint_create_endpoint_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = endpoint::create_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"{"branch_id":"br-floral-mountain-251143","type":"read_write"}"#,
-        )),
+        endpoint::CreateEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint: decode(fixture(
+                r#"{"branch_id":"br-floral-mountain-251143","type":"read_write"}"#,
+            )),
+        },
         None,
     )
     .expect("create_endpoint request failed");
@@ -1487,10 +1561,12 @@ fn create_endpoint_create_endpoint_418_decodes_declared_error() {
     };
     let result = endpoint::create_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"{"branch_id":"br-floral-mountain-251143","type":"read_write"}"#,
-        )),
+        endpoint::CreateEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint: decode(fixture(
+                r#"{"branch_id":"br-floral-mountain-251143","type":"read_write"}"#,
+            )),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1585,9 +1661,11 @@ fn create_functions_trigger_create_functions_trigger_reaches_mock_and_decodes_re
     let _ = &config;
     let actual = functions::create_functions_trigger(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"type":"schedule","function_slug":"a","name":"Example Name","function_path":"/","schedule":{"cron":"0 9 * * 1-5"},"enabled":true}"#)),
+        functions::CreateFunctionsTriggerParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(r#"{"type":"schedule","function_slug":"a","name":"Example Name","function_path":"/","schedule":{"cron":"0 9 * * 1-5"},"enabled":true}"#)),
+        },
         None,
     )
     .expect("create_functions_trigger request failed");
@@ -1614,11 +1692,13 @@ fn create_functions_trigger_create_functions_trigger_418_decodes_declared_error(
     };
     let result = functions::create_functions_trigger(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"{"type":"schedule","function_slug":"a","name":"Example Name","function_path":"/","schedule":{"cron":"0 9 * * 1-5"},"enabled":true}"#,
-        )),
+        functions::CreateFunctionsTriggerParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(
+                r#"{"type":"schedule","function_slug":"a","name":"Example Name","function_path":"/","schedule":{"cron":"0 9 * * 1-5"},"enabled":true}"#,
+            )),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1642,10 +1722,12 @@ fn create_organization_invitations_create_organization_invitations_reaches_mock_
     let _ = &config;
     let actual = organizations::create_organization_invitations(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"[{"email":"invited-user@email.com","role":"member"}]"#,
-        )),
+        organizations::CreateOrganizationInvitationsParams {
+            org_id: decode(fixture(r#""a""#)),
+            invitations: decode(fixture(
+                r#"[{"email":"invited-user@email.com","role":"member"}]"#,
+            )),
+        },
         None,
     )
     .expect("create_organization_invitations request failed");
@@ -1672,10 +1754,12 @@ fn create_organization_invitations_create_organization_invitations_418_decodes_d
     };
     let result = organizations::create_organization_invitations(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"[{"email":"invited-user@email.com","role":"member"}]"#,
-        )),
+        organizations::CreateOrganizationInvitationsParams {
+            org_id: decode(fixture(r#""a""#)),
+            invitations: decode(fixture(
+                r#"[{"email":"invited-user@email.com","role":"member"}]"#,
+            )),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1698,8 +1782,10 @@ fn create_organizations_api_key_create_organizations_api_key_reaches_mock_and_de
     let _ = &config;
     let actual = organizations::create_organizations_api_key(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"key_name":"orgkey"}"#)),
+        organizations::CreateOrganizationsApiKeyParams {
+            org_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(r#"{"key_name":"orgkey"}"#)),
+        },
         None,
     )
     .expect("create_organizations_api_key request failed");
@@ -1726,8 +1812,10 @@ fn create_organizations_api_key_create_organizations_api_key_418_decodes_declare
     };
     let result = organizations::create_organizations_api_key(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"key_name":"orgkey"}"#)),
+        organizations::CreateOrganizationsApiKeyParams {
+            org_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(r#"{"key_name":"orgkey"}"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1748,8 +1836,14 @@ fn create_project_create_project_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = project::create_project(&config, decode(fixture(r#"{"name":"myproject"}"#)), None)
-        .expect("create_project request failed");
+    let actual = project::create_project(
+        &config,
+        project::CreateProjectParams {
+            project: decode(fixture(r#"{"name":"myproject"}"#)),
+        },
+        None,
+    )
+    .expect("create_project request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"project":{"id":"spring-example-302709","platform_id":"aws","region_id":"aws-us-east-2","name":"spring-example-302709","provisioner":"k8s-pod","pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","store_passwords":true,"creation_source":"console","history_retention_seconds":604800,"created_at":"2022-12-13T01:30:55Z","updated_at":"2022-12-13T01:30:55Z","owner":{"name":"John Smith","email":"some@email.com","branches_limit":10,"subscription_type":"scale"},"org_id":"org-morning-bread-81040908","owner_id":"629982cc-de05-43db-ae16-28f2399c4910","data_storage_bytes_hour":2831928,"branch_logical_size_limit":10,"branch_logical_size_limit_bytes":10485760,"data_transfer_bytes":1000,"written_data_bytes":193990002,"compute_time_seconds":2485760,"active_time_seconds":621440,"cpu_used_sec":155350,"consumption_period_start":"2022-11-01T00:00:00Z","consumption_period_end":"2022-12-01T00:00:00Z"},"connection_uris":[{"connection_uri":"https://example.com","connection_parameters":{"database":"database","password":"password","role":"role","host":"host","pooler_host":"pooler_host"}}],"roles":[{"branch_id":"br-wispy-meadow-118737","name":"casey","protected":false,"created_at":"2022-11-23T17:42:25Z","updated_at":"2022-11-23T17:42:25Z"}],"databases":[{"id":834686,"branch_id":"br-wispy-meadow-118737","name":"neondb","owner_name":"casey","created_at":"2022-11-30T18:25:15Z","updated_at":"2022-11-30T18:25:15Z"}],"operations":[{"id":"d8ac46eb-a757-42b1-9907-f78322ee394e","project_id":"spring-example-302709","branch_id":"br-wispy-meadow-118737","endpoint_id":"ep-silent-smoke-806639","action":"start_compute","status":"finished","failures_count":0,"created_at":"2022-11-15T20:02:00Z","updated_at":"2022-11-15T20:02:02Z","total_duration_ms":200}],"branch":{"id":"br-wispy-meadow-118737","project_id":"spring-example-302709","parent_id":"br-aged-salad-637688","parent_lsn":"0/1DE2850","name":"dev2","protected":false,"current_state":"ready","state_changed_at":"2022-11-30T20:09:48Z","creation_source":"console","created_at":"2022-11-30T19:09:48Z","updated_at":"2022-12-01T19:53:05Z","default":true,"init_source":"parent-data","data_transfer_bytes":72911987,"written_data_bytes":542998300,"compute_time_seconds":823880990,"active_time_seconds":922200,"cpu_used_sec":461100},"endpoints":[{"host":"ep-silent-smoke-806639.us-east-2.aws.neon.tech","id":"ep-silent-smoke-806639","name":"My cool compute","project_id":"spring-example-302709","branch_id":"br-wispy-meadow-118737","autoscaling_limit_min_cu":1,"autoscaling_limit_max_cu":1,"region_id":"aws-us-east-2","type":"read_write","current_state":"init","pending_state":"active","settings":{"pg_settings":{}},"pooler_enabled":false,"pooler_mode":"transaction","disabled":false,"passwordless_access":true,"creation_source":"console","created_at":"2022-12-03T15:37:07Z","updated_at":"2022-12-03T15:37:07Z","proxy_host":"us-east-2.aws.neon.tech","suspend_timeout_seconds":0,"provisioner":"k8s-neonvm"}]}"#,
@@ -1771,7 +1865,13 @@ fn create_project_create_project_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = project::create_project(&config, decode(fixture(r#"{"name":"myproject"}"#)), None);
+    let result = project::create_project(
+        &config,
+        project::CreateProjectParams {
+            project: decode(fixture(r#"{"name":"myproject"}"#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("create_project did not fail with SdkError::Http on 418");
     };
@@ -1793,8 +1893,10 @@ fn create_project_transfer_request_create_project_transfer_request_reaches_mock_
     let _ = &config;
     let actual = project::create_project_transfer_request(
         &config,
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#"86400"#))),
+        project::CreateProjectTransferRequestParams {
+            project_id: decode(fixture(r#""a""#)),
+            ttl_seconds: Some(decode(fixture(r#"86400"#))),
+        },
         None,
     )
     .expect("create_project_transfer_request request failed");
@@ -1821,8 +1923,10 @@ fn create_project_transfer_request_create_project_transfer_request_418_decodes_d
     };
     let result = project::create_project_transfer_request(
         &config,
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#"86400"#))),
+        project::CreateProjectTransferRequestParams {
+            project_id: decode(fixture(r#""a""#)),
+            ttl_seconds: Some(decode(fixture(r#"86400"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1910,9 +2014,11 @@ fn delete_auth_legacy_domain_from_redirect_uri_whitelist_delete_auth_legacy_doma
     let _ = &config;
     auth_legacy::delete_auth_legacy_domain_from_redirect_uri_whitelist(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
-        decode(fixture(r#"[{"domain":"https://example.com"}]"#)),
+        auth_legacy::DeleteAuthLegacyDomainFromRedirectUriWhitelistParams {
+            project_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+            domains: decode(fixture(r#"[{"domain":"https://example.com"}]"#)),
+        },
         None,
     )
     .expect("delete_auth_legacy_domain_from_redirect_uri_whitelist request failed");
@@ -1932,9 +2038,11 @@ fn delete_auth_legacy_domain_from_redirect_uri_whitelist_delete_auth_legacy_doma
     };
     let result = auth_legacy::delete_auth_legacy_domain_from_redirect_uri_whitelist(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
-        decode(fixture(r#"[{"domain":"https://example.com"}]"#)),
+        auth_legacy::DeleteAuthLegacyDomainFromRedirectUriWhitelistParams {
+            project_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+            domains: decode(fixture(r#"[{"domain":"https://example.com"}]"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -1958,9 +2066,11 @@ fn delete_auth_legacy_integration_delete_auth_legacy_integration_reaches_mock_an
     let _ = &config;
     auth_legacy::delete_auth_legacy_integration(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
-        Some(decode(fixture(r#"false"#))),
+        auth_legacy::DeleteAuthLegacyIntegrationParams {
+            project_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+            delete_data: Some(decode(fixture(r#"false"#))),
+        },
         None,
     )
     .expect("delete_auth_legacy_integration request failed");
@@ -1979,9 +2089,11 @@ fn delete_auth_legacy_integration_delete_auth_legacy_integration_418_decodes_dec
     };
     let result = auth_legacy::delete_auth_legacy_integration(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
-        Some(decode(fixture(r#"false"#))),
+        auth_legacy::DeleteAuthLegacyIntegrationParams {
+            project_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+            delete_data: Some(decode(fixture(r#"false"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2005,8 +2117,10 @@ fn delete_auth_legacy_oauth_provider_delete_auth_legacy_oauth_provider_reaches_m
     let _ = &config;
     auth_legacy::delete_auth_legacy_oauth_provider(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""google""#)),
+        auth_legacy::DeleteAuthLegacyOauthProviderParams {
+            project_id: decode(fixture(r#""a""#)),
+            oauth_provider_id: decode(fixture(r#""google""#)),
+        },
         None,
     )
     .expect("delete_auth_legacy_oauth_provider request failed");
@@ -2026,8 +2140,10 @@ fn delete_auth_legacy_oauth_provider_delete_auth_legacy_oauth_provider_418_decod
     };
     let result = auth_legacy::delete_auth_legacy_oauth_provider(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""google""#)),
+        auth_legacy::DeleteAuthLegacyOauthProviderParams {
+            project_id: decode(fixture(r#""a""#)),
+            oauth_provider_id: decode(fixture(r#""google""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2050,8 +2166,10 @@ fn delete_auth_legacy_user_delete_auth_legacy_user_reaches_mock_and_decodes_resp
     let _ = &config;
     auth_legacy::delete_auth_legacy_user(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""auth_user-1""#)),
+        auth_legacy::DeleteAuthLegacyUserParams {
+            project_id: decode(fixture(r#""a""#)),
+            auth_user_id: decode(fixture(r#""auth_user-1""#)),
+        },
         None,
     )
     .expect("delete_auth_legacy_user request failed");
@@ -2070,8 +2188,10 @@ fn delete_auth_legacy_user_delete_auth_legacy_user_418_decodes_declared_error() 
     };
     let result = auth_legacy::delete_auth_legacy_user(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""auth_user-1""#)),
+        auth_legacy::DeleteAuthLegacyUserParams {
+            project_id: decode(fixture(r#""a""#)),
+            auth_user_id: decode(fixture(r#""auth_user-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2094,9 +2214,11 @@ fn delete_auth_oauth_client_delete_auth_oauth_client_reaches_mock_and_decodes_re
     let _ = &config;
     auth::delete_auth_oauth_client(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::DeleteAuthOauthClientParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            client_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("delete_auth_oauth_client request failed");
@@ -2115,9 +2237,11 @@ fn delete_auth_oauth_client_delete_auth_oauth_client_418_decodes_declared_error(
     };
     let result = auth::delete_auth_oauth_client(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::DeleteAuthOauthClientParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            client_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2140,9 +2264,11 @@ fn delete_auth_oauth_provider_delete_auth_oauth_provider_reaches_mock_and_decode
     let _ = &config;
     auth::delete_auth_oauth_provider(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""google""#)),
+        auth::DeleteAuthOauthProviderParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            oauth_provider_id: decode(fixture(r#""google""#)),
+        },
         None,
     )
     .expect("delete_auth_oauth_provider request failed");
@@ -2161,9 +2287,11 @@ fn delete_auth_oauth_provider_delete_auth_oauth_provider_418_decodes_declared_er
     };
     let result = auth::delete_auth_oauth_provider(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""google""#)),
+        auth::DeleteAuthOauthProviderParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            oauth_provider_id: decode(fixture(r#""google""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2186,10 +2314,12 @@ fn delete_auth_trusted_domain_delete_auth_trusted_domain_reaches_mock_and_decode
     let _ = &config;
     auth::delete_auth_trusted_domain(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
-        decode(fixture(r#"[{"domain":"https://example.com"}]"#)),
+        auth::DeleteAuthTrustedDomainParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+            domains: decode(fixture(r#"[{"domain":"https://example.com"}]"#)),
+        },
         None,
     )
     .expect("delete_auth_trusted_domain request failed");
@@ -2208,10 +2338,12 @@ fn delete_auth_trusted_domain_delete_auth_trusted_domain_418_decodes_declared_er
     };
     let result = auth::delete_auth_trusted_domain(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
-        decode(fixture(r#"[{"domain":"https://example.com"}]"#)),
+        auth::DeleteAuthTrustedDomainParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+            domains: decode(fixture(r#"[{"domain":"https://example.com"}]"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2234,9 +2366,11 @@ fn delete_auth_user_delete_auth_user_reaches_mock_and_decodes_response() {
     let _ = &config;
     auth::delete_auth_user(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""auth_user-1""#)),
+        auth::DeleteAuthUserParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            auth_user_id: decode(fixture(r#""auth_user-1""#)),
+        },
         None,
     )
     .expect("delete_auth_user request failed");
@@ -2255,9 +2389,11 @@ fn delete_auth_user_delete_auth_user_418_decodes_declared_error() {
     };
     let result = auth::delete_auth_user(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""auth_user-1""#)),
+        auth::DeleteAuthUserParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            auth_user_id: decode(fixture(r#""auth_user-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2280,8 +2416,10 @@ fn delete_branch_delete_branch_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::delete_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::DeleteBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("delete_branch request failed");
@@ -2308,8 +2446,10 @@ fn delete_branch_delete_branch_418_decodes_declared_error() {
     };
     let result = branch::delete_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::DeleteBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2332,9 +2472,11 @@ fn delete_branch_database_delete_branch_database_reaches_mock_and_decodes_respon
     let _ = &config;
     let actual = branch::delete_branch_database(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::DeleteBranchDatabaseParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     )
     .expect("delete_branch_database request failed");
@@ -2361,9 +2503,11 @@ fn delete_branch_database_delete_branch_database_418_decodes_declared_error() {
     };
     let result = branch::delete_branch_database(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::DeleteBranchDatabaseParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2386,9 +2530,11 @@ fn delete_branch_role_delete_branch_role_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::delete_branch_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::DeleteBranchRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            role_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     )
     .expect("delete_branch_role request failed");
@@ -2415,9 +2561,11 @@ fn delete_branch_role_delete_branch_role_418_decodes_declared_error() {
     };
     let result = branch::delete_branch_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::DeleteBranchRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            role_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2440,9 +2588,11 @@ fn delete_buckets_delete_buckets_reaches_mock_and_decodes_response() {
     let _ = &config;
     buckets::delete_buckets(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        buckets::DeleteBucketsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            bucket_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     )
     .expect("delete_buckets request failed");
@@ -2461,9 +2611,11 @@ fn delete_buckets_delete_buckets_404_decodes_declared_error() {
     };
     let result = buckets::delete_buckets(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        buckets::DeleteBucketsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            bucket_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2486,10 +2638,12 @@ fn delete_buckets_object_delete_buckets_object_reaches_mock_and_decodes_response
     let _ = &config;
     buckets::delete_buckets_object(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        decode(fixture(r#""x""#)),
+        buckets::DeleteBucketsObjectParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            bucket_name: decode(fixture(r#""Example Name""#)),
+            object_key: decode(fixture(r#""x""#)),
+        },
         None,
     )
     .expect("delete_buckets_object request failed");
@@ -2508,10 +2662,12 @@ fn delete_buckets_object_delete_buckets_object_404_decodes_declared_error() {
     };
     let result = buckets::delete_buckets_object(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        decode(fixture(r#""x""#)),
+        buckets::DeleteBucketsObjectParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            bucket_name: decode(fixture(r#""Example Name""#)),
+            object_key: decode(fixture(r#""x""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2535,10 +2691,12 @@ fn delete_buckets_objects_by_prefix_delete_buckets_objects_by_prefix_reaches_moc
     let _ = &config;
     let actual = buckets::delete_buckets_objects_by_prefix(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        decode(fixture(r#""x""#)),
+        buckets::DeleteBucketsObjectsByPrefixParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            bucket_name: decode(fixture(r#""Example Name""#)),
+            prefix: decode(fixture(r#""x""#)),
+        },
         None,
     )
     .expect("delete_buckets_objects_by_prefix request failed");
@@ -2563,10 +2721,12 @@ fn delete_buckets_objects_by_prefix_delete_buckets_objects_by_prefix_404_decodes
     };
     let result = buckets::delete_buckets_objects_by_prefix(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        decode(fixture(r#""x""#)),
+        buckets::DeleteBucketsObjectsByPrefixParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            bucket_name: decode(fixture(r#""Example Name""#)),
+            prefix: decode(fixture(r#""x""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2589,9 +2749,11 @@ fn delete_data_api_delete_data_api_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = data_api::delete_data_api(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        data_api::DeleteDataApiParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     )
     .expect("delete_data_api request failed");
@@ -2616,9 +2778,11 @@ fn delete_data_api_delete_data_api_418_decodes_declared_error() {
     };
     let result = data_api::delete_data_api(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        data_api::DeleteDataApiParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2641,8 +2805,10 @@ fn delete_endpoint_delete_endpoint_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = endpoint::delete_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        endpoint::DeleteEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("delete_endpoint request failed");
@@ -2669,8 +2835,10 @@ fn delete_endpoint_delete_endpoint_418_decodes_declared_error() {
     };
     let result = endpoint::delete_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        endpoint::DeleteEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2693,9 +2861,11 @@ fn delete_functions_delete_functions_reaches_mock_and_decodes_response() {
     let _ = &config;
     functions::delete_functions(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        functions::DeleteFunctionsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            slug: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("delete_functions request failed");
@@ -2714,9 +2884,11 @@ fn delete_functions_delete_functions_418_decodes_declared_error() {
     };
     let result = functions::delete_functions(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        functions::DeleteFunctionsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            slug: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2740,9 +2912,11 @@ fn delete_functions_custom_domain_delete_functions_custom_domain_reaches_mock_an
     let _ = &config;
     functions::delete_functions_custom_domain(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""axx""#)),
+        functions::DeleteFunctionsCustomDomainParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            domain: decode(fixture(r#""axx""#)),
+        },
         None,
     )
     .expect("delete_functions_custom_domain request failed");
@@ -2761,9 +2935,11 @@ fn delete_functions_custom_domain_delete_functions_custom_domain_418_decodes_dec
     };
     let result = functions::delete_functions_custom_domain(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""axx""#)),
+        functions::DeleteFunctionsCustomDomainParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            domain: decode(fixture(r#""axx""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2786,9 +2962,11 @@ fn delete_functions_trigger_delete_functions_trigger_reaches_mock_and_decodes_re
     let _ = &config;
     functions::delete_functions_trigger(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        functions::DeleteFunctionsTriggerParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            trigger_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("delete_functions_trigger request failed");
@@ -2807,9 +2985,11 @@ fn delete_functions_trigger_delete_functions_trigger_418_decodes_declared_error(
     };
     let result = functions::delete_functions_trigger(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        functions::DeleteFunctionsTriggerParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            trigger_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2831,9 +3011,14 @@ fn delete_organization_spending_limit_delete_organization_spending_limit_reaches
         return;
     };
     let _ = &config;
-    let actual =
-        organizations::delete_organization_spending_limit(&config, decode(fixture(r#""a""#)), None)
-            .expect("delete_organization_spending_limit request failed");
+    let actual = organizations::delete_organization_spending_limit(
+        &config,
+        organizations::DeleteOrganizationSpendingLimitParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("delete_organization_spending_limit request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(r#"{}"#);
     assert!(
@@ -2854,8 +3039,13 @@ fn delete_organization_spending_limit_delete_organization_spending_limit_418_dec
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result =
-        organizations::delete_organization_spending_limit(&config, decode(fixture(r#""a""#)), None);
+    let result = organizations::delete_organization_spending_limit(
+        &config,
+        organizations::DeleteOrganizationSpendingLimitParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("delete_organization_spending_limit did not fail with SdkError::Http on 418");
     };
@@ -2877,9 +3067,11 @@ fn delete_organization_vpc_endpoint_delete_organization_vpc_endpoint_reaches_moc
     let _ = &config;
     organizations::delete_organization_vpc_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""region-1""#)),
-        decode(fixture(r#""vpc_endpoint-1""#)),
+        organizations::DeleteOrganizationVpcEndpointParams {
+            org_id: decode(fixture(r#""a""#)),
+            region_id: decode(fixture(r#""region-1""#)),
+            vpc_endpoint_id: decode(fixture(r#""vpc_endpoint-1""#)),
+        },
         None,
     )
     .expect("delete_organization_vpc_endpoint request failed");
@@ -2898,9 +3090,11 @@ fn delete_organization_vpc_endpoint_delete_organization_vpc_endpoint_418_decodes
     };
     let result = organizations::delete_organization_vpc_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""region-1""#)),
-        decode(fixture(r#""vpc_endpoint-1""#)),
+        organizations::DeleteOrganizationVpcEndpointParams {
+            org_id: decode(fixture(r#""a""#)),
+            region_id: decode(fixture(r#""region-1""#)),
+            vpc_endpoint_id: decode(fixture(r#""vpc_endpoint-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -2921,8 +3115,14 @@ fn delete_project_delete_project_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = project::delete_project(&config, decode(fixture(r#""a""#)), None)
-        .expect("delete_project request failed");
+    let actual = project::delete_project(
+        &config,
+        project::DeleteProjectParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("delete_project request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"project":{"id":"bold-cloud-468218","platform_id":"aws","region_id":"aws-us-east-2","name":"bold-cloud-468218","provisioner":"k8s-pod","pg_version":15,"created_at":"2022-11-30T18:41:29Z","updated_at":"2022-11-30T18:41:29Z","proxy_host":"us-east-2.aws.neon.tech","cpu_used_sec":23004200,"branch_logical_size_limit":0,"owner_id":"1232111","creation_source":"console","store_passwords":true,"branch_logical_size_limit_bytes":10500,"data_storage_bytes_hour":1040,"data_transfer_bytes":1000000,"written_data_bytes":100800,"compute_time_seconds":100,"active_time_seconds":100,"history_retention_seconds":604800,"consumption_period_start":"2023-02-01T00:00:00Z","consumption_period_end":"2023-03-01T00:00:00Z"}}"#,
@@ -2944,7 +3144,13 @@ fn delete_project_delete_project_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = project::delete_project(&config, decode(fixture(r#""a""#)), None);
+    let result = project::delete_project(
+        &config,
+        project::DeleteProjectParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("delete_project did not fail with SdkError::Http on 418");
     };
@@ -2965,8 +3171,10 @@ fn delete_project_jwks_delete_project_jwks_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = project::delete_project_jwks(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""jwks-1""#)),
+        project::DeleteProjectJwksParams {
+            project_id: decode(fixture(r#""a""#)),
+            jwks_id: decode(fixture(r#""jwks-1""#)),
+        },
         None,
     )
     .expect("delete_project_jwks request failed");
@@ -2993,8 +3201,10 @@ fn delete_project_jwks_delete_project_jwks_418_decodes_declared_error() {
     };
     let result = project::delete_project_jwks(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""jwks-1""#)),
+        project::DeleteProjectJwksParams {
+            project_id: decode(fixture(r#""a""#)),
+            jwks_id: decode(fixture(r#""jwks-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3017,8 +3227,10 @@ fn delete_project_vpc_endpoint_delete_project_vpc_endpoint_reaches_mock_and_deco
     let _ = &config;
     project::delete_project_vpc_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""vpc_endpoint-1""#)),
+        project::DeleteProjectVpcEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            vpc_endpoint_id: decode(fixture(r#""vpc_endpoint-1""#)),
+        },
         None,
     )
     .expect("delete_project_vpc_endpoint request failed");
@@ -3037,8 +3249,10 @@ fn delete_project_vpc_endpoint_delete_project_vpc_endpoint_418_decodes_declared_
     };
     let result = project::delete_project_vpc_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""vpc_endpoint-1""#)),
+        project::DeleteProjectVpcEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            vpc_endpoint_id: decode(fixture(r#""vpc_endpoint-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3061,8 +3275,10 @@ fn delete_snapshot_delete_snapshot_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = snapshot::delete_snapshot(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        snapshot::DeleteSnapshotParams {
+            project_id: decode(fixture(r#""a""#)),
+            snapshot_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("delete_snapshot request failed");
@@ -3089,8 +3305,10 @@ fn delete_snapshot_delete_snapshot_418_decodes_declared_error() {
     };
     let result = snapshot::delete_snapshot(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        snapshot::DeleteSnapshotParams {
+            project_id: decode(fixture(r#""a""#)),
+            snapshot_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3113,9 +3331,11 @@ fn disable_auth_disable_auth_reaches_mock_and_decodes_response() {
     let _ = &config;
     auth::disable_auth(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#"false"#))),
+        auth::DisableAuthParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            delete_data: Some(decode(fixture(r#"false"#))),
+        },
         None,
     )
     .expect("disable_auth request failed");
@@ -3134,9 +3354,11 @@ fn disable_auth_disable_auth_418_decodes_declared_error() {
     };
     let result = auth::disable_auth(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#"false"#))),
+        auth::DisableAuthParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            delete_data: Some(decode(fixture(r#"false"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3159,8 +3381,10 @@ fn disable_realtime_disable_realtime_reaches_mock_and_decodes_response() {
     let _ = &config;
     realtime::disable_realtime(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        realtime::DisableRealtimeParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("disable_realtime request failed");
@@ -3179,8 +3403,10 @@ fn disable_realtime_disable_realtime_418_decodes_declared_error() {
     };
     let result = realtime::disable_realtime(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        realtime::DisableRealtimeParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3203,9 +3429,11 @@ fn enable_realtime_enable_realtime_reaches_mock_and_decodes_response() {
     let _ = &config;
     realtime::enable_realtime(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#"["*"]"#))),
+        realtime::EnableRealtimeParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            allowed_origins: Some(decode(fixture(r#"["*"]"#))),
+        },
         None,
     )
     .expect("enable_realtime request failed");
@@ -3224,9 +3452,11 @@ fn enable_realtime_enable_realtime_418_decodes_declared_error() {
     };
     let result = realtime::enable_realtime(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#"["*"]"#))),
+        realtime::EnableRealtimeParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            allowed_origins: Some(decode(fixture(r#"["*"]"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3249,9 +3479,11 @@ fn finalize_restore_branch_finalize_restore_branch_reaches_mock_and_decodes_resp
     let _ = &config;
     let actual = branch::finalize_restore_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""Example Name""#))),
+        branch::FinalizeRestoreBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            name: Some(decode(fixture(r#""Example Name""#))),
+        },
         None,
     )
     .expect("finalize_restore_branch request failed");
@@ -3278,9 +3510,11 @@ fn finalize_restore_branch_finalize_restore_branch_418_decodes_declared_error() 
     };
     let result = branch::finalize_restore_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""Example Name""#))),
+        branch::FinalizeRestoreBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            name: Some(decode(fixture(r#""Example Name""#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3301,8 +3535,14 @@ fn get_active_regions_get_active_regions_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = region::get_active_regions(&config, Some(decode(fixture(r#""a""#))), None)
-        .expect("get_active_regions request failed");
+    let actual = region::get_active_regions(
+        &config,
+        region::GetActiveRegionsParams {
+            org_id: Some(decode(fixture(r#""a""#))),
+        },
+        None,
+    )
+    .expect("get_active_regions request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"regions":[{"region_id":"aws-us-east-1","name":"Example Name","default":false,"geo_lat":"2024-01-01T00:00:00Z","geo_long":"geo_long"}]}"#,
@@ -3324,7 +3564,13 @@ fn get_active_regions_get_active_regions_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = region::get_active_regions(&config, Some(decode(fixture(r#""a""#))), None);
+    let result = region::get_active_regions(
+        &config,
+        region::GetActiveRegionsParams {
+            org_id: Some(decode(fixture(r#""a""#))),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("get_active_regions did not fail with SdkError::Http on 418");
     };
@@ -3345,8 +3591,10 @@ fn get_ai_gateway_get_ai_gateway_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = ai_gateway::get_ai_gateway(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        ai_gateway::GetAiGatewayParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_ai_gateway request failed");
@@ -3373,8 +3621,10 @@ fn get_ai_gateway_get_ai_gateway_404_decodes_declared_error() {
     };
     let result = ai_gateway::get_ai_gateway(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        ai_gateway::GetAiGatewayParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3399,8 +3649,10 @@ fn get_anonymized_branch_status_get_anonymized_branch_status_reaches_mock_and_de
     let _ = &config;
     let actual = branch::get_anonymized_branch_status(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::GetAnonymizedBranchStatusParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_anonymized_branch_status request failed");
@@ -3427,8 +3679,10 @@ fn get_anonymized_branch_status_get_anonymized_branch_status_418_decodes_declare
     };
     let result = branch::get_anonymized_branch_status(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::GetAnonymizedBranchStatusParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3451,8 +3705,10 @@ fn get_auth_get_auth_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = auth::get_auth(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_auth request failed");
@@ -3479,8 +3735,10 @@ fn get_auth_get_auth_418_decodes_declared_error() {
     };
     let result = auth::get_auth(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3503,8 +3761,10 @@ fn get_auth_allow_localhost_get_auth_allow_localhost_reaches_mock_and_decodes_re
     let _ = &config;
     let actual = auth::get_auth_allow_localhost(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthAllowLocalhostParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_auth_allow_localhost request failed");
@@ -3529,8 +3789,10 @@ fn get_auth_allow_localhost_get_auth_allow_localhost_418_decodes_declared_error(
     };
     let result = auth::get_auth_allow_localhost(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthAllowLocalhostParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3594,8 +3856,10 @@ fn get_auth_email_and_password_config_get_auth_email_and_password_config_reaches
     let _ = &config;
     let actual = auth::get_auth_email_and_password_config(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthEmailAndPasswordConfigParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_auth_email_and_password_config request failed");
@@ -3623,8 +3887,10 @@ fn get_auth_email_and_password_config_get_auth_email_and_password_config_418_dec
     };
     let result = auth::get_auth_email_and_password_config(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthEmailAndPasswordConfigParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3647,8 +3913,10 @@ fn get_auth_email_provider_get_auth_email_provider_reaches_mock_and_decodes_resp
     let _ = &config;
     let actual = auth::get_auth_email_provider(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthEmailProviderParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_auth_email_provider request failed");
@@ -3675,8 +3943,10 @@ fn get_auth_email_provider_get_auth_email_provider_418_decodes_declared_error() 
     };
     let result = auth::get_auth_email_provider(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthEmailProviderParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3697,9 +3967,14 @@ fn get_auth_legacy_email_server_get_auth_legacy_email_server_reaches_mock_and_de
         return;
     };
     let _ = &config;
-    let actual =
-        auth_legacy::get_auth_legacy_email_server(&config, decode(fixture(r#""a""#)), None)
-            .expect("get_auth_legacy_email_server request failed");
+    let actual = auth_legacy::get_auth_legacy_email_server(
+        &config,
+        auth_legacy::GetAuthLegacyEmailServerParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("get_auth_legacy_email_server request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"host":"host","port":1,"username":"Example Name","password":"password","sender_email":"user@example.com","sender_name":"Example Name","type":"standard"}"#,
@@ -3721,8 +3996,13 @@ fn get_auth_legacy_email_server_get_auth_legacy_email_server_418_decodes_declare
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result =
-        auth_legacy::get_auth_legacy_email_server(&config, decode(fixture(r#""a""#)), None);
+    let result = auth_legacy::get_auth_legacy_email_server(
+        &config,
+        auth_legacy::GetAuthLegacyEmailServerParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("get_auth_legacy_email_server did not fail with SdkError::Http on 418");
     };
@@ -3743,9 +4023,11 @@ fn get_auth_oauth_client_get_auth_oauth_client_reaches_mock_and_decodes_response
     let _ = &config;
     let actual = auth::get_auth_oauth_client(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthOauthClientParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            client_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_auth_oauth_client request failed");
@@ -3772,9 +4054,11 @@ fn get_auth_oauth_client_get_auth_oauth_client_418_decodes_declared_error() {
     };
     let result = auth::get_auth_oauth_client(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthOauthClientParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            client_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3798,8 +4082,10 @@ fn get_auth_oauth_provider_plugin_get_auth_oauth_provider_plugin_reaches_mock_an
     let _ = &config;
     let actual = auth::get_auth_oauth_provider_plugin(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthOauthProviderPluginParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_auth_oauth_provider_plugin request failed");
@@ -3826,8 +4112,10 @@ fn get_auth_oauth_provider_plugin_get_auth_oauth_provider_plugin_418_decodes_dec
     };
     let result = auth::get_auth_oauth_provider_plugin(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthOauthProviderPluginParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3850,8 +4138,10 @@ fn get_auth_phone_number_plugin_get_auth_phone_number_plugin_reaches_mock_and_de
     let _ = &config;
     let actual = auth::get_auth_phone_number_plugin(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthPhoneNumberPluginParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_auth_phone_number_plugin request failed");
@@ -3876,8 +4166,10 @@ fn get_auth_phone_number_plugin_get_auth_phone_number_plugin_418_decodes_declare
     };
     let result = auth::get_auth_phone_number_plugin(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthPhoneNumberPluginParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3900,8 +4192,10 @@ fn get_auth_plugin_configs_get_auth_plugin_configs_reaches_mock_and_decodes_resp
     let _ = &config;
     let actual = auth::get_auth_plugin_configs(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthPluginConfigsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_auth_plugin_configs request failed");
@@ -3928,8 +4222,10 @@ fn get_auth_plugin_configs_get_auth_plugin_configs_418_decodes_declared_error() 
     };
     let result = auth::get_auth_plugin_configs(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthPluginConfigsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -3952,8 +4248,10 @@ fn get_auth_webhook_config_get_auth_webhook_config_reaches_mock_and_decodes_resp
     let _ = &config;
     let actual = auth::get_auth_webhook_config(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthWebhookConfigParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_auth_webhook_config request failed");
@@ -3980,8 +4278,10 @@ fn get_auth_webhook_config_get_auth_webhook_config_418_decodes_declared_error() 
     };
     let result = auth::get_auth_webhook_config(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::GetAuthWebhookConfigParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4003,8 +4303,14 @@ fn get_available_preload_libraries_get_available_preload_libraries_reaches_mock_
         return;
     };
     let _ = &config;
-    let actual = project::get_available_preload_libraries(&config, decode(fixture(r#""a""#)), None)
-        .expect("get_available_preload_libraries request failed");
+    let actual = project::get_available_preload_libraries(
+        &config,
+        project::GetAvailablePreloadLibrariesParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("get_available_preload_libraries request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"libraries":[{"library_name":"Example Name","description":"example text","is_default":false,"is_experimental":false,"version":"version"}]}"#,
@@ -4026,7 +4332,13 @@ fn get_available_preload_libraries_get_available_preload_libraries_418_decodes_d
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = project::get_available_preload_libraries(&config, decode(fixture(r#""a""#)), None);
+    let result = project::get_available_preload_libraries(
+        &config,
+        project::GetAvailablePreloadLibrariesParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("get_available_preload_libraries did not fail with SdkError::Http on 418");
     };
@@ -4047,8 +4359,10 @@ fn get_branch_get_branch_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::get_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::GetBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_branch request failed");
@@ -4075,8 +4389,10 @@ fn get_branch_get_branch_418_decodes_declared_error() {
     };
     let result = branch::get_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::GetBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4099,9 +4415,11 @@ fn get_branch_database_get_branch_database_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::get_branch_database(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::GetBranchDatabaseParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     )
     .expect("get_branch_database request failed");
@@ -4128,9 +4446,11 @@ fn get_branch_database_get_branch_database_418_decodes_declared_error() {
     };
     let result = branch::get_branch_database(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::GetBranchDatabaseParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4153,9 +4473,11 @@ fn get_branch_role_get_branch_role_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::get_branch_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::GetBranchRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            role_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     )
     .expect("get_branch_role request failed");
@@ -4182,9 +4504,11 @@ fn get_branch_role_get_branch_role_418_decodes_declared_error() {
     };
     let result = branch::get_branch_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::GetBranchRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            role_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4207,9 +4531,11 @@ fn get_branch_role_password_get_branch_role_password_reaches_mock_and_decodes_re
     let _ = &config;
     let actual = branch::get_branch_role_password(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::GetBranchRolePasswordParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            role_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     )
     .expect("get_branch_role_password request failed");
@@ -4234,9 +4560,11 @@ fn get_branch_role_password_get_branch_role_password_404_decodes_declared_error(
     };
     let result = branch::get_branch_role_password(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::GetBranchRolePasswordParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            role_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4323,10 +4651,12 @@ fn get_buckets_object_get_buckets_object_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = buckets::get_buckets_object(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        decode(fixture(r#""x""#)),
+        buckets::GetBucketsObjectParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            bucket_name: decode(fixture(r#""Example Name""#)),
+            object_key: decode(fixture(r#""x""#)),
+        },
         None,
     )
     .expect("get_buckets_object request failed");
@@ -4346,10 +4676,12 @@ fn get_buckets_object_get_buckets_object_404_decodes_declared_error() {
     };
     let result = buckets::get_buckets_object(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        decode(fixture(r#""x""#)),
+        buckets::GetBucketsObjectParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            bucket_name: decode(fixture(r#""Example Name""#)),
+            object_key: decode(fixture(r#""x""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4733,9 +5065,11 @@ fn get_data_api_get_data_api_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = data_api::get_data_api(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        data_api::GetDataApiParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     )
     .expect("get_data_api request failed");
@@ -4762,9 +5096,11 @@ fn get_data_api_get_data_api_418_decodes_declared_error() {
     };
     let result = data_api::get_data_api(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        data_api::GetDataApiParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4787,8 +5123,10 @@ fn get_endpoint_get_endpoint_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = endpoint::get_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        endpoint::GetEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_endpoint request failed");
@@ -4815,8 +5153,10 @@ fn get_endpoint_get_endpoint_418_decodes_declared_error() {
     };
     let result = endpoint::get_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        endpoint::GetEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4839,9 +5179,11 @@ fn get_functions_get_functions_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = functions::get_functions(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        functions::GetFunctionsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            slug: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_functions request failed");
@@ -4868,9 +5210,11 @@ fn get_functions_get_functions_418_decodes_declared_error() {
     };
     let result = functions::get_functions(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        functions::GetFunctionsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            slug: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4893,9 +5237,11 @@ fn get_functions_trigger_get_functions_trigger_reaches_mock_and_decodes_response
     let _ = &config;
     let actual = functions::get_functions_trigger(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        functions::GetFunctionsTriggerParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            trigger_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_functions_trigger request failed");
@@ -4922,9 +5268,11 @@ fn get_functions_trigger_get_functions_trigger_418_decodes_declared_error() {
     };
     let result = functions::get_functions_trigger(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        functions::GetFunctionsTriggerParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            trigger_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4947,8 +5295,10 @@ fn get_masking_rules_get_masking_rules_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::get_masking_rules(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::GetMaskingRulesParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_masking_rules request failed");
@@ -4975,8 +5325,10 @@ fn get_masking_rules_get_masking_rules_418_decodes_declared_error() {
     };
     let result = branch::get_masking_rules(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::GetMaskingRulesParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -4999,8 +5351,10 @@ fn get_operation_get_operation_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = operation::get_operation(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        operation::GetOperationParams {
+            project_id: decode(fixture(r#""a""#)),
+            operation_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        },
         None,
     )
     .expect("get_operation request failed");
@@ -5027,8 +5381,10 @@ fn get_operation_get_operation_418_decodes_declared_error() {
     };
     let result = operation::get_operation(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        operation::GetOperationParams {
+            project_id: decode(fixture(r#""a""#)),
+            operation_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5049,8 +5405,14 @@ fn get_organization_get_organization_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = organizations::get_organization(&config, decode(fixture(r#""a""#)), None)
-        .expect("get_organization request failed");
+    let actual = organizations::get_organization(
+        &config,
+        organizations::GetOrganizationParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("get_organization request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"id":"my-organization-morning-bread-81040908","name":"my-organization","handle":"my-organization-my-organization-morning-bread-81040908","plan":"scale","managed_by":"console","created_at":"2024-02-23T17:42:25Z","updated_at":"2024-02-26T20:41:25Z","require_mfa":false}"#,
@@ -5072,7 +5434,13 @@ fn get_organization_get_organization_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = organizations::get_organization(&config, decode(fixture(r#""a""#)), None);
+    let result = organizations::get_organization(
+        &config,
+        organizations::GetOrganizationParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("get_organization did not fail with SdkError::Http on 418");
     };
@@ -5093,8 +5461,10 @@ fn get_organization_member_get_organization_member_reaches_mock_and_decodes_resp
     let _ = &config;
     let actual = organizations::get_organization_member(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        organizations::GetOrganizationMemberParams {
+            org_id: decode(fixture(r#""a""#)),
+            member_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        },
         None,
     )
     .expect("get_organization_member request failed");
@@ -5121,8 +5491,10 @@ fn get_organization_member_get_organization_member_418_decodes_declared_error() 
     };
     let result = organizations::get_organization_member(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        organizations::GetOrganizationMemberParams {
+            org_id: decode(fixture(r#""a""#)),
+            member_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5144,9 +5516,14 @@ fn get_organization_spending_limit_get_organization_spending_limit_reaches_mock_
         return;
     };
     let _ = &config;
-    let actual =
-        organizations::get_organization_spending_limit(&config, decode(fixture(r#""a""#)), None)
-            .expect("get_organization_spending_limit request failed");
+    let actual = organizations::get_organization_spending_limit(
+        &config,
+        organizations::GetOrganizationSpendingLimitParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("get_organization_spending_limit request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(r#"{"spending_limit_cents":1}"#);
     assert!(
@@ -5166,8 +5543,13 @@ fn get_organization_spending_limit_get_organization_spending_limit_418_decodes_d
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result =
-        organizations::get_organization_spending_limit(&config, decode(fixture(r#""a""#)), None);
+    let result = organizations::get_organization_spending_limit(
+        &config,
+        organizations::GetOrganizationSpendingLimitParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("get_organization_spending_limit did not fail with SdkError::Http on 418");
     };
@@ -5189,9 +5571,11 @@ fn get_organizations_vpc_endpoint_get_organizations_vpc_endpoint_reaches_mock_an
     let _ = &config;
     let actual = organizations::get_organizations_vpc_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""region-1""#)),
-        decode(fixture(r#""vpc_endpoint-1""#)),
+        organizations::GetOrganizationsVpcEndpointParams {
+            org_id: decode(fixture(r#""a""#)),
+            region_id: decode(fixture(r#""region-1""#)),
+            vpc_endpoint_id: decode(fixture(r#""vpc_endpoint-1""#)),
+        },
         None,
     )
     .expect("get_organizations_vpc_endpoint request failed");
@@ -5218,9 +5602,11 @@ fn get_organizations_vpc_endpoint_get_organizations_vpc_endpoint_418_decodes_dec
     };
     let result = organizations::get_organizations_vpc_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""region-1""#)),
-        decode(fixture(r#""vpc_endpoint-1""#)),
+        organizations::GetOrganizationsVpcEndpointParams {
+            org_id: decode(fixture(r#""a""#)),
+            region_id: decode(fixture(r#""region-1""#)),
+            vpc_endpoint_id: decode(fixture(r#""vpc_endpoint-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5241,8 +5627,14 @@ fn get_project_get_project_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = project::get_project(&config, decode(fixture(r#""a""#)), None)
-        .expect("get_project request failed");
+    let actual = project::get_project(
+        &config,
+        project::GetProjectParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("get_project request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"project":{"id":"shiny-wind-028834","platform_id":"aws","region_id":"aws-us-east-2","name":"shiny-wind-028834","provisioner":"k8s-pod","pg_version":15,"history_retention_seconds":604800,"created_at":"2022-11-23T17:42:25Z","updated_at":"2022-11-23T17:42:25Z","proxy_host":"us-east-2.aws.neon.tech","branch_logical_size_limit":0,"cpu_used_sec":10,"owner_id":"1232111","owner":{"name":"John Smith","email":"some@email.com","branches_limit":10,"subscription_type":"scale"},"creation_source":"console","store_passwords":true,"branch_logical_size_limit_bytes":10500,"data_storage_bytes_hour":1040,"data_transfer_bytes":1000000,"written_data_bytes":100800,"compute_time_seconds":100,"active_time_seconds":100,"consumption_period_start":"2023-02-01T00:00:00Z","consumption_period_end":"2023-03-01T00:00:00Z"}}"#,
@@ -5264,7 +5656,13 @@ fn get_project_get_project_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = project::get_project(&config, decode(fixture(r#""a""#)), None);
+    let result = project::get_project(
+        &config,
+        project::GetProjectParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("get_project did not fail with SdkError::Http on 418");
     };
@@ -5347,8 +5745,14 @@ fn get_project_jwks_get_project_jwks_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = project::get_project_jwks(&config, decode(fixture(r#""a""#)), None)
-        .expect("get_project_jwks request failed");
+    let actual = project::get_project_jwks(
+        &config,
+        project::GetProjectJwksParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("get_project_jwks request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"jwks":[{"id":"id-1","project_id":"a","branch_id":"a","jwks_url":"https://example.com","provider_name":"Example Name","created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z","jwt_audience":"jwt_audience","role_names":["Example Name"]}]}"#,
@@ -5370,7 +5774,13 @@ fn get_project_jwks_get_project_jwks_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = project::get_project_jwks(&config, decode(fixture(r#""a""#)), None);
+    let result = project::get_project_jwks(
+        &config,
+        project::GetProjectJwksParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("get_project_jwks did not fail with SdkError::Http on 418");
     };
@@ -5391,8 +5801,10 @@ fn get_realtime_get_realtime_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = realtime::get_realtime(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        realtime::GetRealtimeParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_realtime request failed");
@@ -5419,8 +5831,10 @@ fn get_realtime_get_realtime_418_decodes_declared_error() {
     };
     let result = realtime::get_realtime(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        realtime::GetRealtimeParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5443,8 +5857,10 @@ fn get_realtime_secret_get_realtime_secret_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = realtime::get_realtime_secret(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        realtime::GetRealtimeSecretParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_realtime_secret request failed");
@@ -5469,8 +5885,10 @@ fn get_realtime_secret_get_realtime_secret_418_decodes_declared_error() {
     };
     let result = realtime::get_realtime_secret(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        realtime::GetRealtimeSecretParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5493,8 +5911,10 @@ fn get_snapshot_schedule_get_snapshot_schedule_reaches_mock_and_decodes_response
     let _ = &config;
     let actual = snapshot::get_snapshot_schedule(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        snapshot::GetSnapshotScheduleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_snapshot_schedule request failed");
@@ -5521,8 +5941,10 @@ fn get_snapshot_schedule_get_snapshot_schedule_418_decodes_declared_error() {
     };
     let result = snapshot::get_snapshot_schedule(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        snapshot::GetSnapshotScheduleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5545,8 +5967,10 @@ fn get_storage_get_storage_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = storage::get_storage(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        storage::GetStorageParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("get_storage request failed");
@@ -5573,8 +5997,10 @@ fn get_storage_get_storage_404_decodes_declared_error() {
     };
     let result = storage::get_storage(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        storage::GetStorageParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5599,8 +6025,10 @@ fn grant_project_permission_grant_project_permission_reaches_mock_and_decodes_re
     let _ = &config;
     let actual = project::grant_project_permission(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""user@example.com""#)),
+        project::GrantProjectPermissionParams {
+            project_id: decode(fixture(r#""a""#)),
+            email: decode(fixture(r#""user@example.com""#)),
+        },
         None,
     )
     .expect("grant_project_permission request failed");
@@ -5627,8 +6055,10 @@ fn grant_project_permission_grant_project_permission_418_decodes_declared_error(
     };
     let result = project::grant_project_permission(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""user@example.com""#)),
+        project::GrantProjectPermissionParams {
+            project_id: decode(fixture(r#""a""#)),
+            email: decode(fixture(r#""user@example.com""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5690,9 +6120,14 @@ fn list_auth_legacy_integrations_list_auth_legacy_integrations_reaches_mock_and_
         return;
     };
     let _ = &config;
-    let actual =
-        auth_legacy::list_auth_legacy_integrations(&config, decode(fixture(r#""a""#)), None)
-            .expect("list_auth_legacy_integrations request failed");
+    let actual = auth_legacy::list_auth_legacy_integrations(
+        &config,
+        auth_legacy::ListAuthLegacyIntegrationsParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("list_auth_legacy_integrations request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"data":[{"auth_provider":"mock","auth_provider_project_id":"auth_provider_project-1","branch_id":"br-cool-darkness-12345678","db_name":"Example Name","created_at":"2025-01-15T10:30:00Z","owned_by":"user","transfer_status":"initiated","jwks_url":"https://example.com","base_url":"https://example.com","name":"Example Name"}]}"#,
@@ -5714,8 +6149,13 @@ fn list_auth_legacy_integrations_list_auth_legacy_integrations_418_decodes_decla
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result =
-        auth_legacy::list_auth_legacy_integrations(&config, decode(fixture(r#""a""#)), None);
+    let result = auth_legacy::list_auth_legacy_integrations(
+        &config,
+        auth_legacy::ListAuthLegacyIntegrationsParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("list_auth_legacy_integrations did not fail with SdkError::Http on 418");
     };
@@ -5735,9 +6175,14 @@ fn list_auth_legacy_oauth_providers_list_auth_legacy_oauth_providers_reaches_moc
         return;
     };
     let _ = &config;
-    let actual =
-        auth_legacy::list_auth_legacy_oauth_providers(&config, decode(fixture(r#""a""#)), None)
-            .expect("list_auth_legacy_oauth_providers request failed");
+    let actual = auth_legacy::list_auth_legacy_oauth_providers(
+        &config,
+        auth_legacy::ListAuthLegacyOauthProvidersParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("list_auth_legacy_oauth_providers request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"providers":[{"id":"google","type":"standard","client_id":"client-1","client_secret":"client_secret"}]}"#,
@@ -5759,8 +6204,13 @@ fn list_auth_legacy_oauth_providers_list_auth_legacy_oauth_providers_418_decodes
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result =
-        auth_legacy::list_auth_legacy_oauth_providers(&config, decode(fixture(r#""a""#)), None);
+    let result = auth_legacy::list_auth_legacy_oauth_providers(
+        &config,
+        auth_legacy::ListAuthLegacyOauthProvidersParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("list_auth_legacy_oauth_providers did not fail with SdkError::Http on 418");
     };
@@ -5782,7 +6232,9 @@ fn list_auth_legacy_redirect_uri_whitelist_domains_list_auth_legacy_redirect_uri
     let _ = &config;
     let actual = auth_legacy::list_auth_legacy_redirect_uri_whitelist_domains(
         &config,
-        decode(fixture(r#""a""#)),
+        auth_legacy::ListAuthLegacyRedirectUriWhitelistDomainsParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_auth_legacy_redirect_uri_whitelist_domains request failed");
@@ -5808,7 +6260,9 @@ fn list_auth_legacy_redirect_uri_whitelist_domains_list_auth_legacy_redirect_uri
     };
     let result = auth_legacy::list_auth_legacy_redirect_uri_whitelist_domains(
         &config,
-        decode(fixture(r#""a""#)),
+        auth_legacy::ListAuthLegacyRedirectUriWhitelistDomainsParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5831,8 +6285,10 @@ fn list_auth_oauth_clients_list_auth_oauth_clients_reaches_mock_and_decodes_resp
     let _ = &config;
     let actual = auth::list_auth_oauth_clients(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::ListAuthOauthClientsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_auth_oauth_clients request failed");
@@ -5859,8 +6315,10 @@ fn list_auth_oauth_clients_list_auth_oauth_clients_418_decodes_declared_error() 
     };
     let result = auth::list_auth_oauth_clients(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::ListAuthOauthClientsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5883,8 +6341,10 @@ fn list_auth_oauth_providers_list_auth_oauth_providers_reaches_mock_and_decodes_
     let _ = &config;
     let actual = auth::list_auth_oauth_providers(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::ListAuthOauthProvidersParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_auth_oauth_providers request failed");
@@ -5911,8 +6371,10 @@ fn list_auth_oauth_providers_list_auth_oauth_providers_418_decodes_declared_erro
     };
     let result = auth::list_auth_oauth_providers(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::ListAuthOauthProvidersParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -5935,8 +6397,10 @@ fn list_auth_trusted_domains_list_auth_trusted_domains_reaches_mock_and_decodes_
     let _ = &config;
     let actual = auth::list_auth_trusted_domains(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::ListAuthTrustedDomainsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_auth_trusted_domains request failed");
@@ -5961,8 +6425,10 @@ fn list_auth_trusted_domains_list_auth_trusted_domains_418_decodes_declared_erro
     };
     let result = auth::list_auth_trusted_domains(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::ListAuthTrustedDomainsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6051,8 +6517,10 @@ fn list_branch_databases_list_branch_databases_reaches_mock_and_decodes_response
     let _ = &config;
     let actual = branch::list_branch_databases(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::ListBranchDatabasesParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_branch_databases request failed");
@@ -6079,8 +6547,10 @@ fn list_branch_databases_list_branch_databases_418_decodes_declared_error() {
     };
     let result = branch::list_branch_databases(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::ListBranchDatabasesParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6103,8 +6573,10 @@ fn list_branch_endpoints_list_branch_endpoints_reaches_mock_and_decodes_response
     let _ = &config;
     let actual = branch::list_branch_endpoints(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::ListBranchEndpointsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_branch_endpoints request failed");
@@ -6131,8 +6603,10 @@ fn list_branch_endpoints_list_branch_endpoints_418_decodes_declared_error() {
     };
     let result = branch::list_branch_endpoints(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::ListBranchEndpointsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6155,8 +6629,10 @@ fn list_branch_roles_list_branch_roles_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::list_branch_roles(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::ListBranchRolesParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_branch_roles request failed");
@@ -6183,8 +6659,10 @@ fn list_branch_roles_list_branch_roles_418_decodes_declared_error() {
     };
     let result = branch::list_branch_roles(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::ListBranchRolesParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6207,8 +6685,10 @@ fn list_buckets_list_buckets_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = buckets::list_buckets(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        buckets::ListBucketsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_buckets request failed");
@@ -6235,8 +6715,10 @@ fn list_buckets_list_buckets_418_decodes_declared_error() {
     };
     let result = buckets::list_buckets(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        buckets::ListBucketsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6325,8 +6807,10 @@ fn list_credentials_list_credentials_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = credentials::list_credentials(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        credentials::ListCredentialsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_credentials request failed");
@@ -6353,8 +6837,10 @@ fn list_credentials_list_credentials_418_decodes_declared_error() {
     };
     let result = credentials::list_credentials(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        credentials::ListCredentialsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6375,8 +6861,14 @@ fn list_endpoint_list_endpoint_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = endpoint::list_endpoint(&config, decode(fixture(r#""a""#)), None)
-        .expect("list_endpoint request failed");
+    let actual = endpoint::list_endpoint(
+        &config,
+        endpoint::ListEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("list_endpoint request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"endpoints":[{"host":"ep-little-smoke-851426.us-east-2.aws.neon.tech","creation_source":"console","suspend_timeout_seconds":10800,"provisioner":"k8s-pod","id":"ep-little-smoke-851426","project_id":"shiny-wind-028834","branch_id":"br-aged-salad-637688","autoscaling_limit_min_cu":1,"autoscaling_limit_max_cu":1,"region_id":"aws-us-east-2","type":"read_write","current_state":"idle","settings":{"pg_settings":{}},"pooler_enabled":false,"pooler_mode":"transaction","disabled":false,"passwordless_access":true,"last_active":"2022-11-23T17:00:00Z","created_at":"2022-11-23T17:42:25Z","updated_at":"2022-11-30T18:25:21Z","proxy_host":"us-east-2.aws.neon.tech"},{"host":"ep-steep-bush-777093.us-east-2.aws.neon.tech","creation_source":"console","suspend_timeout_seconds":10800,"provisioner":"k8s-pod","id":"ep-steep-bush-777093","project_id":"shiny-wind-028834","branch_id":"br-raspy-hill-832856","autoscaling_limit_min_cu":1,"autoscaling_limit_max_cu":1,"region_id":"aws-us-east-2","type":"read_write","current_state":"idle","settings":{"pg_settings":{}},"pooler_enabled":false,"pooler_mode":"transaction","disabled":false,"passwordless_access":true,"last_active":"2022-11-30T17:00:00Z","created_at":"2022-11-30T17:36:57Z","updated_at":"2022-11-30T18:42:58Z","proxy_host":"us-east-2.aws.neon.tech"},{"host":"ep-soft-violet-752733.us-east-2.aws.neon.tech","creation_source":"console","suspend_timeout_seconds":10800,"provisioner":"k8s-pod","id":"ep-soft-violet-752733","project_id":"shiny-wind-028834","branch_id":"br-sweet-breeze-497520","autoscaling_limit_min_cu":1,"autoscaling_limit_max_cu":1,"region_id":"aws-us-east-2","type":"read_write","current_state":"idle","settings":{"pg_settings":{}},"pooler_enabled":false,"pooler_mode":"transaction","disabled":false,"passwordless_access":true,"last_active":"2022-11-30T19:00:00Z","created_at":"2022-11-30T19:09:48Z","updated_at":"2022-11-30T19:14:51Z","proxy_host":"us-east-2.aws.neon.tech"}]}"#,
@@ -6398,7 +6890,13 @@ fn list_endpoint_list_endpoint_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = endpoint::list_endpoint(&config, decode(fixture(r#""a""#)), None);
+    let result = endpoint::list_endpoint(
+        &config,
+        endpoint::ListEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("list_endpoint did not fail with SdkError::Http on 418");
     };
@@ -6419,10 +6917,12 @@ fn list_functions_list_functions_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = functions::list_functions(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""cursor""#))),
-        Some(decode(fixture(r#"1"#))),
+        functions::ListFunctionsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            cursor: Some(decode(fixture(r#""cursor""#))),
+            limit: Some(decode(fixture(r#"1"#))),
+        },
         None,
     )
     .expect("list_functions request failed");
@@ -6449,10 +6949,12 @@ fn list_functions_list_functions_418_decodes_declared_error() {
     };
     let result = functions::list_functions(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""cursor""#))),
-        Some(decode(fixture(r#"1"#))),
+        functions::ListFunctionsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            cursor: Some(decode(fixture(r#""cursor""#))),
+            limit: Some(decode(fixture(r#"1"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6475,10 +6977,12 @@ fn list_functions_custom_domains_list_functions_custom_domains_reaches_mock_and_
     let _ = &config;
     let actual = functions::list_functions_custom_domains(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""cursor""#))),
-        Some(decode(fixture(r#"1"#))),
+        functions::ListFunctionsCustomDomainsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            cursor: Some(decode(fixture(r#""cursor""#))),
+            limit: Some(decode(fixture(r#"1"#))),
+        },
         None,
     )
     .expect("list_functions_custom_domains request failed");
@@ -6505,10 +7009,12 @@ fn list_functions_custom_domains_list_functions_custom_domains_418_decodes_decla
     };
     let result = functions::list_functions_custom_domains(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""cursor""#))),
-        Some(decode(fixture(r#"1"#))),
+        functions::ListFunctionsCustomDomainsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            cursor: Some(decode(fixture(r#""cursor""#))),
+            limit: Some(decode(fixture(r#"1"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6531,8 +7037,10 @@ fn list_functions_triggers_list_functions_triggers_reaches_mock_and_decodes_resp
     let _ = &config;
     let actual = functions::list_functions_triggers(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        functions::ListFunctionsTriggersParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_functions_triggers request failed");
@@ -6559,8 +7067,10 @@ fn list_functions_triggers_list_functions_triggers_418_decodes_declared_error() 
     };
     let result = functions::list_functions_triggers(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        functions::ListFunctionsTriggersParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6583,8 +7093,10 @@ fn list_logs_fields_list_logs_fields_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = logs::list_logs_fields(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        logs::ListLogsFieldsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_logs_fields request failed");
@@ -6609,8 +7121,10 @@ fn list_logs_fields_list_logs_fields_404_decodes_declared_error() {
     };
     let result = logs::list_logs_fields(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        logs::ListLogsFieldsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6703,9 +7217,11 @@ fn list_operation_list_operation_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = operation::list_operation(
         &config,
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""cursor""#))),
-        Some(decode(fixture(r#"1"#))),
+        operation::ListOperationParams {
+            project_id: decode(fixture(r#""a""#)),
+            cursor: Some(decode(fixture(r#""cursor""#))),
+            limit: Some(decode(fixture(r#"1"#))),
+        },
         None,
     )
     .expect("list_operation request failed");
@@ -6732,9 +7248,11 @@ fn list_operation_list_operation_418_decodes_declared_error() {
     };
     let result = operation::list_operation(
         &config,
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""cursor""#))),
-        Some(decode(fixture(r#"1"#))),
+        operation::ListOperationParams {
+            project_id: decode(fixture(r#""a""#)),
+            cursor: Some(decode(fixture(r#""cursor""#))),
+            limit: Some(decode(fixture(r#"1"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6755,9 +7273,14 @@ fn list_organizations_api_keys_list_organizations_api_keys_reaches_mock_and_deco
         return;
     };
     let _ = &config;
-    let actual =
-        organizations::list_organizations_api_keys(&config, decode(fixture(r#""a""#)), None)
-            .expect("list_organizations_api_keys request failed");
+    let actual = organizations::list_organizations_api_keys(
+        &config,
+        organizations::ListOrganizationsApiKeysParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("list_organizations_api_keys request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"[{"id":165432,"name":"orgkey_1","created_at":"2022-11-15T20:13:35Z","created_by":{"id":"629982cc-de05-43db-ae16-28f2399c4910","name":"John Smith","image":"http://link.to.image"},"last_used_at":"2022-11-15T20:22:51Z","last_used_from_addr":"192.0.2.255"},{"id":165433,"name":"orgkey_2","created_at":"2022-11-15T20:12:36Z","created_by":{"id":"629982cc-de05-43db-ae16-28f2399c4910","name":"John Smith","image":"http://link.to.image"},"last_used_at":"2022-11-15T20:15:04Z","last_used_from_addr":"192.0.2.255"}]"#,
@@ -6779,8 +7302,13 @@ fn list_organizations_api_keys_list_organizations_api_keys_418_decodes_declared_
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result =
-        organizations::list_organizations_api_keys(&config, decode(fixture(r#""a""#)), None);
+    let result = organizations::list_organizations_api_keys(
+        &config,
+        organizations::ListOrganizationsApiKeysParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("list_organizations_api_keys did not fail with SdkError::Http on 418");
     };
@@ -6800,9 +7328,14 @@ fn list_organizations_invitations_list_organizations_invitations_reaches_mock_an
         return;
     };
     let _ = &config;
-    let actual =
-        organizations::list_organizations_invitations(&config, decode(fixture(r#""a""#)), None)
-            .expect("list_organizations_invitations request failed");
+    let actual = organizations::list_organizations_invitations(
+        &config,
+        organizations::ListOrganizationsInvitationsParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("list_organizations_invitations request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"invitations":[{"id":"db8faf32-b07f-4b0f-94c8-5c288909f5d3","email":"invited1@email.com","org_id":"my-organization-morning-bread-81040908","invited_by":"a1b2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d","role":"admin","invited_at":"2024-02-23T17:42:25Z"},{"id":"c52f0d22-ebd9-4708-ae44-2872cae49a83","email":"invited2@email.com","org_id":"my-organization-morning-bread-81040908","invited_by":"a1b2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d","role":"member","invited_at":"2024-02-23T12:42:25Z"}]}"#,
@@ -6824,8 +7357,13 @@ fn list_organizations_invitations_list_organizations_invitations_418_decodes_dec
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result =
-        organizations::list_organizations_invitations(&config, decode(fixture(r#""a""#)), None);
+    let result = organizations::list_organizations_invitations(
+        &config,
+        organizations::ListOrganizationsInvitationsParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("list_organizations_invitations did not fail with SdkError::Http on 418");
     };
@@ -6909,8 +7447,10 @@ fn list_organization_vpc_endpoints_list_organization_vpc_endpoints_reaches_mock_
     let _ = &config;
     let actual = organizations::list_organization_vpc_endpoints(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""region-1""#)),
+        organizations::ListOrganizationVpcEndpointsParams {
+            org_id: decode(fixture(r#""a""#)),
+            region_id: decode(fixture(r#""region-1""#)),
+        },
         None,
     )
     .expect("list_organization_vpc_endpoints request failed");
@@ -6936,8 +7476,10 @@ fn list_organization_vpc_endpoints_list_organization_vpc_endpoints_418_decodes_d
     };
     let result = organizations::list_organization_vpc_endpoints(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""region-1""#)),
+        organizations::ListOrganizationVpcEndpointsParams {
+            org_id: decode(fixture(r#""a""#)),
+            region_id: decode(fixture(r#""region-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -6961,7 +7503,9 @@ fn list_organization_vpc_endpoints_all_regions_list_organization_vpc_endpoints_a
     let _ = &config;
     let actual = organizations::list_organization_vpc_endpoints_all_regions(
         &config,
-        decode(fixture(r#""a""#)),
+        organizations::ListOrganizationVpcEndpointsAllRegionsParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("list_organization_vpc_endpoints_all_regions request failed");
@@ -6989,7 +7533,9 @@ fn list_organization_vpc_endpoints_all_regions_list_organization_vpc_endpoints_a
     };
     let result = organizations::list_organization_vpc_endpoints_all_regions(
         &config,
-        decode(fixture(r#""a""#)),
+        organizations::ListOrganizationVpcEndpointsAllRegionsParams {
+            org_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -7014,9 +7560,11 @@ fn list_project_members_list_project_members_reaches_mock_and_decodes_response()
     let _ = &config;
     let actual = project::list_project_members(
         &config,
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""cursor""#))),
-        Some(decode(fixture(r#"1"#))),
+        project::ListProjectMembersParams {
+            project_id: decode(fixture(r#""a""#)),
+            cursor: Some(decode(fixture(r#""cursor""#))),
+            limit: Some(decode(fixture(r#"1"#))),
+        },
         None,
     )
     .expect("list_project_members request failed");
@@ -7043,9 +7591,11 @@ fn list_project_members_list_project_members_418_decodes_declared_error() {
     };
     let result = project::list_project_members(
         &config,
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""cursor""#))),
-        Some(decode(fixture(r#"1"#))),
+        project::ListProjectMembersParams {
+            project_id: decode(fixture(r#""a""#)),
+            cursor: Some(decode(fixture(r#""cursor""#))),
+            limit: Some(decode(fixture(r#"1"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -7066,8 +7616,14 @@ fn list_project_permissions_list_project_permissions_reaches_mock_and_decodes_re
         return;
     };
     let _ = &config;
-    let actual = project::list_project_permissions(&config, decode(fixture(r#""a""#)), None)
-        .expect("list_project_permissions request failed");
+    let actual = project::list_project_permissions(
+        &config,
+        project::ListProjectPermissionsParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("list_project_permissions request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"project_permissions":[{"id":"id-1","granted_to_email":"user@example.com","granted_at":"2024-01-01T00:00:00Z","revoked_at":"2024-01-01T00:00:00Z"}]}"#,
@@ -7089,7 +7645,13 @@ fn list_project_permissions_list_project_permissions_418_decodes_declared_error(
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = project::list_project_permissions(&config, decode(fixture(r#""a""#)), None);
+    let result = project::list_project_permissions(
+        &config,
+        project::ListProjectPermissionsParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("list_project_permissions did not fail with SdkError::Http on 418");
     };
@@ -7172,8 +7734,14 @@ fn list_project_vpc_endpoints_list_project_vpc_endpoints_reaches_mock_and_decode
         return;
     };
     let _ = &config;
-    let actual = project::list_project_vpc_endpoints(&config, decode(fixture(r#""a""#)), None)
-        .expect("list_project_vpc_endpoints request failed");
+    let actual = project::list_project_vpc_endpoints(
+        &config,
+        project::ListProjectVpcEndpointsParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("list_project_vpc_endpoints request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected =
         fixture(r#"{"endpoints":[{"vpc_endpoint_id":"vpc_endpoint-1","label":"label"}]}"#);
@@ -7194,7 +7762,13 @@ fn list_project_vpc_endpoints_list_project_vpc_endpoints_418_decodes_declared_er
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = project::list_project_vpc_endpoints(&config, decode(fixture(r#""a""#)), None);
+    let result = project::list_project_vpc_endpoints(
+        &config,
+        project::ListProjectVpcEndpointsParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("list_project_vpc_endpoints did not fail with SdkError::Http on 418");
     };
@@ -7215,10 +7789,12 @@ fn list_shared_projects_list_shared_projects_reaches_mock_and_decodes_response()
     let _ = &config;
     let actual = project::list_shared_projects(
         &config,
-        Some(decode(fixture(r#""cursor""#))),
-        Some(decode(fixture(r#"10"#))),
-        Some(decode(fixture(r#""search""#))),
-        Some(decode(fixture(r#"100"#))),
+        project::ListSharedProjectsParams {
+            cursor: Some(decode(fixture(r#""cursor""#))),
+            limit: Some(decode(fixture(r#"10"#))),
+            search: Some(decode(fixture(r#""search""#))),
+            timeout: Some(decode(fixture(r#"100"#))),
+        },
         None,
     )
     .expect("list_shared_projects request failed");
@@ -7245,10 +7821,12 @@ fn list_shared_projects_list_shared_projects_418_decodes_declared_error() {
     };
     let result = project::list_shared_projects(
         &config,
-        Some(decode(fixture(r#""cursor""#))),
-        Some(decode(fixture(r#"10"#))),
-        Some(decode(fixture(r#""search""#))),
-        Some(decode(fixture(r#"100"#))),
+        project::ListSharedProjectsParams {
+            cursor: Some(decode(fixture(r#""cursor""#))),
+            limit: Some(decode(fixture(r#"10"#))),
+            search: Some(decode(fixture(r#""search""#))),
+            timeout: Some(decode(fixture(r#"100"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -7269,8 +7847,14 @@ fn list_snapshots_list_snapshots_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = snapshot::list_snapshots(&config, decode(fixture(r#""a""#)), None)
-        .expect("list_snapshots request failed");
+    let actual = snapshot::list_snapshots(
+        &config,
+        snapshot::ListSnapshotsParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("list_snapshots request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"snapshots":[{"id":"a","name":"Example Name","lsn":"lsn","timestamp":"2024-01-01T00:00:00Z","source_branch_id":"a","created_at":"2025-01-15T10:30:00Z","expires_at":"2024-01-01T00:00:00Z","manual":false,"full_size":1,"diff_size":1}]}"#,
@@ -7292,7 +7876,13 @@ fn list_snapshots_list_snapshots_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = snapshot::list_snapshots(&config, decode(fixture(r#""a""#)), None);
+    let result = snapshot::list_snapshots(
+        &config,
+        snapshot::ListSnapshotsParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("list_snapshots did not fail with SdkError::Http on 418");
     };
@@ -7467,8 +8057,14 @@ fn recover_project_recover_project_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = project::recover_project(&config, decode(fixture(r#""a""#)), None)
-        .expect("recover_project request failed");
+    let actual = project::recover_project(
+        &config,
+        project::RecoverProjectParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    )
+    .expect("recover_project request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"project":{"id":"spring-example-302709","platform_id":"aws","region_id":"aws-us-east-2","name":"spring-example-302709","provisioner":"k8s-pod","pg_version":15,"proxy_host":"us-east-2.aws.neon.tech","store_passwords":true,"creation_source":"console","history_retention_seconds":604800,"created_at":"2022-12-13T01:30:55Z","updated_at":"2022-12-13T01:30:55Z","owner":{"name":"John Smith","email":"some@email.com","branches_limit":10,"subscription_type":"scale"},"org_id":"org-morning-bread-81040908","owner_id":"629982cc-de05-43db-ae16-28f2399c4910","data_storage_bytes_hour":2831928,"branch_logical_size_limit":10,"branch_logical_size_limit_bytes":10485760,"data_transfer_bytes":1000,"written_data_bytes":193990002,"compute_time_seconds":2485760,"active_time_seconds":621440,"cpu_used_sec":155350,"consumption_period_start":"2022-11-01T00:00:00Z","consumption_period_end":"2022-12-01T00:00:00Z"},"branches":[{"id":"br-wispy-meadow-118737","project_id":"spring-example-302709","parent_id":"br-aged-salad-637688","parent_lsn":"0/1DE2850","name":"dev2","protected":false,"current_state":"ready","state_changed_at":"2022-11-30T20:09:48Z","creation_source":"console","created_at":"2022-11-30T19:09:48Z","updated_at":"2022-12-01T19:53:05Z","default":true,"init_source":"parent-data","data_transfer_bytes":72911987,"written_data_bytes":542998300,"compute_time_seconds":823880990,"active_time_seconds":922200,"cpu_used_sec":461100}]}"#,
@@ -7490,7 +8086,13 @@ fn recover_project_recover_project_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = project::recover_project(&config, decode(fixture(r#""a""#)), None);
+    let result = project::recover_project(
+        &config,
+        project::RecoverProjectParams {
+            project_id: decode(fixture(r#""a""#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("recover_project did not fail with SdkError::Http on 418");
     };
@@ -7574,8 +8176,10 @@ fn remove_organization_member_remove_organization_member_reaches_mock_and_decode
     let _ = &config;
     let actual = organizations::remove_organization_member(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        organizations::RemoveOrganizationMemberParams {
+            org_id: decode(fixture(r#""a""#)),
+            member_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        },
         None,
     )
     .expect("remove_organization_member request failed");
@@ -7600,8 +8204,10 @@ fn remove_organization_member_remove_organization_member_418_decodes_declared_er
     };
     let result = organizations::remove_organization_member(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        organizations::RemoveOrganizationMemberParams {
+            org_id: decode(fixture(r#""a""#)),
+            member_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -7624,9 +8230,11 @@ fn remove_project_member_role_remove_project_member_role_reaches_mock_and_decode
     let _ = &config;
     let actual = project::remove_project_member_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
-        Some(decode(fixture(r#"false"#))),
+        project::RemoveProjectMemberRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            member_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+            confirm_self_lockout: Some(decode(fixture(r#"false"#))),
+        },
         None,
     )
     .expect("remove_project_member_role request failed");
@@ -7653,9 +8261,11 @@ fn remove_project_member_role_remove_project_member_role_418_decodes_declared_er
     };
     let result = project::remove_project_member_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
-        Some(decode(fixture(r#"false"#))),
+        project::RemoveProjectMemberRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            member_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+            confirm_self_lockout: Some(decode(fixture(r#"false"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -7678,9 +8288,11 @@ fn reset_branch_role_password_reset_branch_role_password_reaches_mock_and_decode
     let _ = &config;
     let actual = branch::reset_branch_role_password(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::ResetBranchRolePasswordParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            role_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     )
     .expect("reset_branch_role_password request failed");
@@ -7707,9 +8319,11 @@ fn reset_branch_role_password_reset_branch_role_password_418_decodes_declared_er
     };
     let result = branch::reset_branch_role_password(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        branch::ResetBranchRolePasswordParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            role_name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -7732,8 +8346,10 @@ fn restart_endpoint_restart_endpoint_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = endpoint::restart_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        endpoint::RestartEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("restart_endpoint request failed");
@@ -7760,8 +8376,10 @@ fn restart_endpoint_restart_endpoint_418_decodes_declared_error() {
     };
     let result = endpoint::restart_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        endpoint::RestartEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -7912,9 +8530,11 @@ fn reveal_credential_reveal_credential_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = credentials::reveal_credential(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""token-1""#)),
+        credentials::RevealCredentialParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            token_id: decode(fixture(r#""token-1""#)),
+        },
         None,
     )
     .expect("reveal_credential request failed");
@@ -7941,9 +8561,11 @@ fn reveal_credential_reveal_credential_404_decodes_declared_error() {
     };
     let result = credentials::reveal_credential(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""token-1""#)),
+        credentials::RevealCredentialParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            token_id: decode(fixture(r#""token-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -7964,8 +8586,14 @@ fn revoke_api_key_revoke_api_key_reaches_mock_and_decodes_response() {
         return;
     };
     let _ = &config;
-    let actual = api_key::revoke_api_key(&config, decode(fixture(r#"1"#)), None)
-        .expect("revoke_api_key request failed");
+    let actual = api_key::revoke_api_key(
+        &config,
+        api_key::RevokeApiKeyParams {
+            key_id: decode(fixture(r#"1"#)),
+        },
+        None,
+    )
+    .expect("revoke_api_key request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"id":165435,"name":"mykey","created_at":"2022-11-15T20:13:35Z","created_by":"629982cc-de05-43db-ae16-28f2399c4910","last_used_at":"2022-11-15T20:15:04Z","last_used_from_addr":"192.0.2.255","revoked":true}"#,
@@ -7987,7 +8615,13 @@ fn revoke_api_key_revoke_api_key_418_decodes_declared_error() {
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = api_key::revoke_api_key(&config, decode(fixture(r#"1"#)), None);
+    let result = api_key::revoke_api_key(
+        &config,
+        api_key::RevokeApiKeyParams {
+            key_id: decode(fixture(r#"1"#)),
+        },
+        None,
+    );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
         panic!("revoke_api_key did not fail with SdkError::Http on 418");
     };
@@ -8008,9 +8642,11 @@ fn revoke_credential_revoke_credential_reaches_mock_and_decodes_response() {
     let _ = &config;
     credentials::revoke_credential(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""token-1""#)),
+        credentials::RevokeCredentialParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            token_id: decode(fixture(r#""token-1""#)),
+        },
         None,
     )
     .expect("revoke_credential request failed");
@@ -8029,9 +8665,11 @@ fn revoke_credential_revoke_credential_404_decodes_declared_error() {
     };
     let result = credentials::revoke_credential(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""token-1""#)),
+        credentials::RevokeCredentialParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            token_id: decode(fixture(r#""token-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8054,8 +8692,10 @@ fn revoke_organizations_api_key_revoke_organizations_api_key_reaches_mock_and_de
     let _ = &config;
     let actual = organizations::revoke_organizations_api_key(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"1"#)),
+        organizations::RevokeOrganizationsApiKeyParams {
+            org_id: decode(fixture(r#""a""#)),
+            key_id: decode(fixture(r#"1"#)),
+        },
         None,
     )
     .expect("revoke_organizations_api_key request failed");
@@ -8082,8 +8722,10 @@ fn revoke_organizations_api_key_revoke_organizations_api_key_418_decodes_declare
     };
     let result = organizations::revoke_organizations_api_key(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"1"#)),
+        organizations::RevokeOrganizationsApiKeyParams {
+            org_id: decode(fixture(r#""a""#)),
+            key_id: decode(fixture(r#"1"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8106,8 +8748,10 @@ fn revoke_project_permission_revoke_project_permission_reaches_mock_and_decodes_
     let _ = &config;
     let actual = project::revoke_project_permission(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""permission-1""#)),
+        project::RevokeProjectPermissionParams {
+            project_id: decode(fixture(r#""a""#)),
+            permission_id: decode(fixture(r#""permission-1""#)),
+        },
         None,
     )
     .expect("revoke_project_permission request failed");
@@ -8134,8 +8778,10 @@ fn revoke_project_permission_revoke_project_permission_418_decodes_declared_erro
     };
     let result = project::revoke_project_permission(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""permission-1""#)),
+        project::RevokeProjectPermissionParams {
+            project_id: decode(fixture(r#""a""#)),
+            permission_id: decode(fixture(r#""permission-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8159,9 +8805,11 @@ fn rotate_auth_oauth_client_secret_rotate_auth_oauth_client_secret_reaches_mock_
     let _ = &config;
     let actual = auth::rotate_auth_oauth_client_secret(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::RotateAuthOauthClientSecretParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            client_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("rotate_auth_oauth_client_secret request failed");
@@ -8186,9 +8834,11 @@ fn rotate_auth_oauth_client_secret_rotate_auth_oauth_client_secret_418_decodes_d
     };
     let result = auth::rotate_auth_oauth_client_secret(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        auth::RotateAuthOauthClientSecretParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            client_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8211,9 +8861,11 @@ fn rotate_credential_rotate_credential_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = credentials::rotate_credential(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""token-1""#)),
+        credentials::RotateCredentialParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            token_id: decode(fixture(r#""token-1""#)),
+        },
         None,
     )
     .expect("rotate_credential request failed");
@@ -8240,9 +8892,11 @@ fn rotate_credential_rotate_credential_418_decodes_declared_error() {
     };
     let result = credentials::rotate_credential(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""token-1""#)),
+        credentials::RotateCredentialParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            token_id: decode(fixture(r#""token-1""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8265,8 +8919,10 @@ fn rotate_realtime_secret_rotate_realtime_secret_reaches_mock_and_decodes_respon
     let _ = &config;
     realtime::rotate_realtime_secret(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        realtime::RotateRealtimeSecretParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("rotate_realtime_secret request failed");
@@ -8285,8 +8941,10 @@ fn rotate_realtime_secret_rotate_realtime_secret_418_decodes_declared_error() {
     };
     let result = realtime::rotate_realtime_secret(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        realtime::RotateRealtimeSecretParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8309,9 +8967,11 @@ fn send_auth_email_provider_test_send_auth_email_provider_test_reaches_mock_and_
     let _ = &config;
     let actual = auth::send_auth_email_provider_test(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""user@example.com""#)),
+        auth::SendAuthEmailProviderTestParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            recipient_email: decode(fixture(r#""user@example.com""#)),
+        },
         None,
     )
     .expect("send_auth_email_provider_test request failed");
@@ -8336,9 +8996,11 @@ fn send_auth_email_provider_test_send_auth_email_provider_test_418_decodes_decla
     };
     let result = auth::send_auth_email_provider_test(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""user@example.com""#)),
+        auth::SendAuthEmailProviderTestParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            recipient_email: decode(fixture(r#""user@example.com""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8429,8 +9091,10 @@ fn set_branch_default_set_branch_default_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::set_branch_default(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::SetBranchDefaultParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("set_branch_default request failed");
@@ -8457,8 +9121,10 @@ fn set_branch_default_set_branch_default_418_decodes_declared_error() {
     };
     let result = branch::set_branch_default(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::SetBranchDefaultParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8482,8 +9148,10 @@ fn set_organization_spending_limit_set_organization_spending_limit_reaches_mock_
     let _ = &config;
     let actual = organizations::set_organization_spending_limit(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"1"#)),
+        organizations::SetOrganizationSpendingLimitParams {
+            org_id: decode(fixture(r#""a""#)),
+            spending_limit_cents: decode(fixture(r#"1"#)),
+        },
         None,
     )
     .expect("set_organization_spending_limit request failed");
@@ -8508,8 +9176,10 @@ fn set_organization_spending_limit_set_organization_spending_limit_418_decodes_d
     };
     let result = organizations::set_organization_spending_limit(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"1"#)),
+        organizations::SetOrganizationSpendingLimitParams {
+            org_id: decode(fixture(r#""a""#)),
+            spending_limit_cents: decode(fixture(r#"1"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8532,10 +9202,12 @@ fn set_project_member_role_set_project_member_role_reaches_mock_and_decodes_resp
     let _ = &config;
     let actual = project::set_project_member_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
-        decode(fixture(r#""viewer""#)),
-        Some(decode(fixture(r#"false"#))),
+        project::SetProjectMemberRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            member_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+            role: decode(fixture(r#""viewer""#)),
+            confirm_self_demotion: Some(decode(fixture(r#"false"#))),
+        },
         None,
     )
     .expect("set_project_member_role request failed");
@@ -8562,10 +9234,12 @@ fn set_project_member_role_set_project_member_role_418_decodes_declared_error() 
     };
     let result = project::set_project_member_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
-        decode(fixture(r#""viewer""#)),
-        Some(decode(fixture(r#"false"#))),
+        project::SetProjectMemberRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            member_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+            role: decode(fixture(r#""viewer""#)),
+            confirm_self_demotion: Some(decode(fixture(r#"false"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8588,11 +9262,13 @@ fn set_snapshot_schedule_set_snapshot_schedule_reaches_mock_and_decodes_response
     let _ = &config;
     let actual = snapshot::set_snapshot_schedule(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"[{"frequency":"daily","hour":0,"day":1,"month":1,"retention_seconds":3024000}]"#,
-        )),
+        snapshot::SetSnapshotScheduleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            schedule: decode(fixture(
+                r#"[{"frequency":"daily","hour":0,"day":1,"month":1,"retention_seconds":3024000}]"#,
+            )),
+        },
         None,
     )
     .expect("set_snapshot_schedule request failed");
@@ -8617,11 +9293,13 @@ fn set_snapshot_schedule_set_snapshot_schedule_418_decodes_declared_error() {
     };
     let result = snapshot::set_snapshot_schedule(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"[{"frequency":"daily","hour":0,"day":1,"month":1,"retention_seconds":3024000}]"#,
-        )),
+        snapshot::SetSnapshotScheduleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            schedule: decode(fixture(
+                r#"[{"frequency":"daily","hour":0,"day":1,"month":1,"retention_seconds":3024000}]"#,
+            )),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8644,8 +9322,10 @@ fn start_anonymization_start_anonymization_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::start_anonymization(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::StartAnonymizationParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("start_anonymization request failed");
@@ -8672,8 +9352,10 @@ fn start_anonymization_start_anonymization_418_decodes_declared_error() {
     };
     let result = branch::start_anonymization(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        branch::StartAnonymizationParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8696,8 +9378,10 @@ fn start_endpoint_start_endpoint_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = endpoint::start_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        endpoint::StartEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("start_endpoint request failed");
@@ -8724,8 +9408,10 @@ fn start_endpoint_start_endpoint_418_decodes_declared_error() {
     };
     let result = endpoint::start_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        endpoint::StartEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8748,8 +9434,10 @@ fn suspend_endpoint_suspend_endpoint_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = endpoint::suspend_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        endpoint::SuspendEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+        },
         None,
     )
     .expect("suspend_endpoint request failed");
@@ -8776,8 +9464,10 @@ fn suspend_endpoint_suspend_endpoint_418_decodes_declared_error() {
     };
     let result = endpoint::suspend_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
+        endpoint::SuspendEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8800,8 +9490,10 @@ fn transfer_auth_legacy_provider_transfer_auth_legacy_provider_reaches_mock_and_
     let _ = &config;
     let actual = auth_legacy::transfer_auth_legacy_provider(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
+        auth_legacy::TransferAuthLegacyProviderParams {
+            project_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+        },
         None,
     )
     .expect("transfer_auth_legacy_provider request failed");
@@ -8826,8 +9518,10 @@ fn transfer_auth_legacy_provider_transfer_auth_legacy_provider_418_decodes_decla
     };
     let result = auth_legacy::transfer_auth_legacy_provider(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""mock""#)),
+        auth_legacy::TransferAuthLegacyProviderParams {
+            project_id: decode(fixture(r#""a""#)),
+            auth_provider: decode(fixture(r#""mock""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8851,9 +9545,11 @@ fn transfer_organizations_projects_transfer_organizations_projects_reaches_mock_
     let _ = &config;
     let actual = organizations::transfer_organizations_projects(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"["a"]"#)),
+        organizations::TransferOrganizationsProjectsParams {
+            source_org_id: decode(fixture(r#""a""#)),
+            destination_org_id: decode(fixture(r#""a""#)),
+            project_ids: decode(fixture(r#"["a"]"#)),
+        },
         None,
     )
     .expect("transfer_organizations_projects request failed");
@@ -8878,9 +9574,11 @@ fn transfer_organizations_projects_transfer_organizations_projects_406_decodes_d
     };
     let result = organizations::transfer_organizations_projects(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"["a"]"#)),
+        organizations::TransferOrganizationsProjectsParams {
+            source_org_id: decode(fixture(r#""a""#)),
+            destination_org_id: decode(fixture(r#""a""#)),
+            project_ids: decode(fixture(r#"["a"]"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8905,8 +9603,10 @@ fn transfer_users_projects_transfer_users_projects_reaches_mock_and_decodes_resp
     let _ = &config;
     let actual = users::transfer_users_projects(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"["a"]"#)),
+        users::TransferUsersProjectsParams {
+            destination_org_id: decode(fixture(r#""a""#)),
+            project_ids: decode(fixture(r#"["a"]"#)),
+        },
         None,
     )
     .expect("transfer_users_projects request failed");
@@ -8931,8 +9631,10 @@ fn transfer_users_projects_transfer_users_projects_406_decodes_declared_error() 
     };
     let result = users::transfer_users_projects(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"["a"]"#)),
+        users::TransferUsersProjectsParams {
+            destination_org_id: decode(fixture(r#""a""#)),
+            project_ids: decode(fixture(r#"["a"]"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -8957,9 +9659,11 @@ fn update_auth_allow_localhost_update_auth_allow_localhost_reaches_mock_and_deco
     let _ = &config;
     let actual = auth::update_auth_allow_localhost(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"false"#)),
+        auth::UpdateAuthAllowLocalhostParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            allow_localhost: decode(fixture(r#"false"#)),
+        },
         None,
     )
     .expect("update_auth_allow_localhost request failed");
@@ -8984,9 +9688,11 @@ fn update_auth_allow_localhost_update_auth_allow_localhost_418_decodes_declared_
     };
     let result = auth::update_auth_allow_localhost(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"false"#)),
+        auth::UpdateAuthAllowLocalhostParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            allow_localhost: decode(fixture(r#"false"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -9009,9 +9715,11 @@ fn update_auth_config_update_auth_config_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = auth::update_auth_config(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        auth::UpdateAuthConfigParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     )
     .expect("update_auth_config request failed");
@@ -9036,9 +9744,11 @@ fn update_auth_config_update_auth_config_418_decodes_declared_error() {
     };
     let result = auth::update_auth_config(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
+        auth::UpdateAuthConfigParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            name: decode(fixture(r#""Example Name""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -9133,9 +9843,11 @@ fn update_auth_email_provider_update_auth_email_provider_reaches_mock_and_decode
     let _ = &config;
     let actual = auth::update_auth_email_provider(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"host":"host","port":1,"username":"Example Name","password":"password","sender_email":"user@example.com","sender_name":"Example Name","type":"standard"}"#)),
+        auth::UpdateAuthEmailProviderParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(r#"{"host":"host","port":1,"username":"Example Name","password":"password","sender_email":"user@example.com","sender_name":"Example Name","type":"standard"}"#)),
+        },
         None,
     )
     .expect("update_auth_email_provider request failed");
@@ -9162,11 +9874,13 @@ fn update_auth_email_provider_update_auth_email_provider_418_decodes_declared_er
     };
     let result = auth::update_auth_email_provider(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"{"host":"host","port":1,"username":"Example Name","password":"password","sender_email":"user@example.com","sender_name":"Example Name","type":"standard"}"#,
-        )),
+        auth::UpdateAuthEmailProviderParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(
+                r#"{"host":"host","port":1,"username":"Example Name","password":"password","sender_email":"user@example.com","sender_name":"Example Name","type":"standard"}"#,
+            )),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -9190,8 +9904,10 @@ fn update_auth_legacy_email_server_update_auth_legacy_email_server_reaches_mock_
     let _ = &config;
     let actual = auth_legacy::update_auth_legacy_email_server(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"host":"host","port":1,"username":"Example Name","password":"password","sender_email":"user@example.com","sender_name":"Example Name","type":"standard"}"#)),
+        auth_legacy::UpdateAuthLegacyEmailServerParams {
+            project_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(r#"{"host":"host","port":1,"username":"Example Name","password":"password","sender_email":"user@example.com","sender_name":"Example Name","type":"standard"}"#)),
+        },
         None,
     )
     .expect("update_auth_legacy_email_server request failed");
@@ -9218,10 +9934,12 @@ fn update_auth_legacy_email_server_update_auth_legacy_email_server_418_decodes_d
     };
     let result = auth_legacy::update_auth_legacy_email_server(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"{"host":"host","port":1,"username":"Example Name","password":"password","sender_email":"user@example.com","sender_name":"Example Name","type":"standard"}"#,
-        )),
+        auth_legacy::UpdateAuthLegacyEmailServerParams {
+            project_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(
+                r#"{"host":"host","port":1,"username":"Example Name","password":"password","sender_email":"user@example.com","sender_name":"Example Name","type":"standard"}"#,
+            )),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -9640,10 +10358,12 @@ fn update_auth_phone_number_plugin_update_auth_phone_number_plugin_reaches_mock_
     let _ = &config;
     let actual = auth::update_auth_phone_number_plugin(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#"false"#))),
-        Some(decode(fixture(r#"60"#))),
+        auth::UpdateAuthPhoneNumberPluginParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            enabled: Some(decode(fixture(r#"false"#))),
+            otp_expires_in: Some(decode(fixture(r#"60"#))),
+        },
         None,
     )
     .expect("update_auth_phone_number_plugin request failed");
@@ -9668,10 +10388,12 @@ fn update_auth_phone_number_plugin_update_auth_phone_number_plugin_418_decodes_d
     };
     let result = auth::update_auth_phone_number_plugin(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#"false"#))),
-        Some(decode(fixture(r#"60"#))),
+        auth::UpdateAuthPhoneNumberPluginParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            enabled: Some(decode(fixture(r#"false"#))),
+            otp_expires_in: Some(decode(fixture(r#"60"#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -9694,10 +10416,12 @@ fn update_auth_user_role_update_auth_user_role_reaches_mock_and_decodes_response
     let _ = &config;
     let actual = auth::update_auth_user_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""auth_user-1""#)),
-        decode(fixture(r#"["admin"]"#)),
+        auth::UpdateAuthUserRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            auth_user_id: decode(fixture(r#""auth_user-1""#)),
+            roles: decode(fixture(r#"["admin"]"#)),
+        },
         None,
     )
     .expect("update_auth_user_role request failed");
@@ -9722,10 +10446,12 @@ fn update_auth_user_role_update_auth_user_role_418_decodes_declared_error() {
     };
     let result = auth::update_auth_user_role(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""auth_user-1""#)),
-        decode(fixture(r#"["admin"]"#)),
+        auth::UpdateAuthUserRoleParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            auth_user_id: decode(fixture(r#""auth_user-1""#)),
+            roles: decode(fixture(r#"["admin"]"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -9812,9 +10538,11 @@ fn update_branch_update_branch_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = branch::update_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"name":"mybranch"}"#)),
+        branch::UpdateBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            branch: decode(fixture(r#"{"name":"mybranch"}"#)),
+        },
         None,
     )
     .expect("update_branch request failed");
@@ -9841,9 +10569,11 @@ fn update_branch_update_branch_418_decodes_declared_error() {
     };
     let result = branch::update_branch(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"name":"mybranch"}"#)),
+        branch::UpdateBranchParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            branch: decode(fixture(r#"{"name":"mybranch"}"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -9866,10 +10596,12 @@ fn update_branch_database_update_branch_database_reaches_mock_and_decodes_respon
     let _ = &config;
     let actual = branch::update_branch_database(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        decode(fixture(r#"{"name":"mydb","owner_name":"sally"}"#)),
+        branch::UpdateBranchDatabaseParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+            database: decode(fixture(r#"{"name":"mydb","owner_name":"sally"}"#)),
+        },
         None,
     )
     .expect("update_branch_database request failed");
@@ -9896,10 +10628,12 @@ fn update_branch_database_update_branch_database_418_decodes_declared_error() {
     };
     let result = branch::update_branch_database(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        decode(fixture(r#"{"name":"mydb","owner_name":"sally"}"#)),
+        branch::UpdateBranchDatabaseParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+            database: decode(fixture(r#"{"name":"mydb","owner_name":"sally"}"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -9922,10 +10656,12 @@ fn update_data_api_update_data_api_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = data_api::update_data_api(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        Some(decode(fixture(r#"{"db_aggregates_enabled":true,"db_anon_role":"anonymous","db_extra_search_path":"db_extra_search_path","db_max_rows":1,"db_schemas":["db_schemas"],"jwt_role_claim_key":".role","jwt_cache_max_lifetime":1,"openapi_mode":"disabled","server_cors_allowed_origins":"server_cors_allowed_origins","server_timing_enabled":false}"#))),
+        data_api::UpdateDataApiParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+            settings: Some(decode(fixture(r#"{"db_aggregates_enabled":true,"db_anon_role":"anonymous","db_extra_search_path":"db_extra_search_path","db_max_rows":1,"db_schemas":["db_schemas"],"jwt_role_claim_key":".role","jwt_cache_max_lifetime":1,"openapi_mode":"disabled","server_cors_allowed_origins":"server_cors_allowed_origins","server_timing_enabled":false}"#))),
+        },
         None,
     )
     .expect("update_data_api request failed");
@@ -9950,12 +10686,14 @@ fn update_data_api_update_data_api_418_decodes_declared_error() {
     };
     let result = data_api::update_data_api(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""Example Name""#)),
-        Some(decode(fixture(
-            r#"{"db_aggregates_enabled":true,"db_anon_role":"anonymous","db_extra_search_path":"db_extra_search_path","db_max_rows":1,"db_schemas":["db_schemas"],"jwt_role_claim_key":".role","jwt_cache_max_lifetime":1,"openapi_mode":"disabled","server_cors_allowed_origins":"server_cors_allowed_origins","server_timing_enabled":false}"#,
-        ))),
+        data_api::UpdateDataApiParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            database_name: decode(fixture(r#""Example Name""#)),
+            settings: Some(decode(fixture(
+                r#"{"db_aggregates_enabled":true,"db_anon_role":"anonymous","db_extra_search_path":"db_extra_search_path","db_max_rows":1,"db_schemas":["db_schemas"],"jwt_role_claim_key":".role","jwt_cache_max_lifetime":1,"openapi_mode":"disabled","server_cors_allowed_origins":"server_cors_allowed_origins","server_timing_enabled":false}"#,
+            ))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -9978,9 +10716,11 @@ fn update_endpoint_update_endpoint_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = endpoint::update_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"suspend_timeout_seconds":300}"#)),
+        endpoint::UpdateEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+            endpoint: decode(fixture(r#"{"suspend_timeout_seconds":300}"#)),
+        },
         None,
     )
     .expect("update_endpoint request failed");
@@ -10007,9 +10747,11 @@ fn update_endpoint_update_endpoint_418_decodes_declared_error() {
     };
     let result = endpoint::update_endpoint(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"suspend_timeout_seconds":300}"#)),
+        endpoint::UpdateEndpointParams {
+            project_id: decode(fixture(r#""a""#)),
+            endpoint_id: decode(fixture(r#""a""#)),
+            endpoint: decode(fixture(r#"{"suspend_timeout_seconds":300}"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -10032,10 +10774,12 @@ fn update_functions_update_functions_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = functions::update_functions(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""Example Name""#))),
+        functions::UpdateFunctionsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            slug: decode(fixture(r#""a""#)),
+            name: Some(decode(fixture(r#""Example Name""#))),
+        },
         None,
     )
     .expect("update_functions request failed");
@@ -10062,10 +10806,12 @@ fn update_functions_update_functions_418_decodes_declared_error() {
     };
     let result = functions::update_functions(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        Some(decode(fixture(r#""Example Name""#))),
+        functions::UpdateFunctionsParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            slug: decode(fixture(r#""a""#)),
+            name: Some(decode(fixture(r#""Example Name""#))),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -10081,32 +10827,34 @@ fn update_functions_update_functions_418_decodes_declared_error() {
 }
 
 #[test]
-fn update_functions_trigger_update_functions_trigger_reaches_mock_and_decodes_response() {
+fn update_function_trigger_update_function_trigger_reaches_mock_and_decodes_response() {
     let Some(config) = configured_client() else {
         return;
     };
     let _ = &config;
-    let actual = functions::update_functions_trigger(
+    let actual = functions::update_function_trigger(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"type":"schedule","function_slug":"a","name":"Example Name","function_path":"x","schedule":{"cron":"0 9 * * 1-5"},"enabled":false}"#)),
+        functions::UpdateFunctionTriggerParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            trigger_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(r#"{"type":"schedule","function_slug":"a","name":"Example Name","function_path":"x","schedule":{"cron":"0 9 * * 1-5"},"enabled":false}"#)),
+        },
         None,
     )
-    .expect("update_functions_trigger request failed");
+    .expect("update_function_trigger request failed");
     let actual = serde_json::to_value(actual).expect("serialize generated response");
     let expected = fixture(
         r#"{"trigger":{"type":"schedule","trigger_id":"a","function_slug":"function_slug","name":"Example Name","function_path":"function_path","schedule":{"cron":"0 9 * * 1-5"},"enabled":false,"version":1,"next_run_at":"2024-01-01T00:00:00Z","inherited":false}}"#,
     );
     assert!(
         representative(&actual, &expected),
-        "update_functions_trigger decoded {actual}, expected representative {expected}"
+        "update_function_trigger decoded {actual}, expected representative {expected}"
     );
 }
 
 #[test]
-fn update_functions_trigger_update_functions_trigger_418_decodes_declared_error() {
+fn update_function_trigger_update_function_trigger_418_decodes_declared_error() {
     let Some(config) = configured_client() else {
         return;
     };
@@ -10116,25 +10864,27 @@ fn update_functions_trigger_update_functions_trigger_418_decodes_declared_error(
             .map(|base_url| format!("{base_url}/__mockStatus/418")),
         ..config
     };
-    let result = functions::update_functions_trigger(
+    let result = functions::update_function_trigger(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"{"type":"schedule","function_slug":"a","name":"Example Name","function_path":"x","schedule":{"cron":"0 9 * * 1-5"},"enabled":false}"#,
-        )),
+        functions::UpdateFunctionTriggerParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            trigger_id: decode(fixture(r#""a""#)),
+            body: decode(fixture(
+                r#"{"type":"schedule","function_slug":"a","name":"Example Name","function_path":"x","schedule":{"cron":"0 9 * * 1-5"},"enabled":false}"#,
+            )),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
-        panic!("update_functions_trigger did not fail with SdkError::Http on 418");
+        panic!("update_function_trigger did not fail with SdkError::Http on 418");
     };
     assert_eq!(error.status_code, 418);
     let actual = serde_json::to_value(&error.data).expect("serialize declared error body");
     let expected = fixture(r#"{"request_id":"request-1","code":"","message":"example text"}"#);
     assert!(
         representative(&actual, &expected),
-        "update_functions_trigger decoded error body {actual}, expected representative {expected}"
+        "update_function_trigger decoded error body {actual}, expected representative {expected}"
     );
 }
 
@@ -10146,9 +10896,11 @@ fn update_masking_rules_update_masking_rules_reaches_mock_and_decodes_response()
     let _ = &config;
     let actual = branch::update_masking_rules(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"[{"database_name":"neondb","schema_name":"public","table_name":"users","column_name":"email","masking_function":"anon.fake_email()"}]"#)),
+        branch::UpdateMaskingRulesParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            masking_rules: decode(fixture(r#"[{"database_name":"neondb","schema_name":"public","table_name":"users","column_name":"email","masking_function":"anon.fake_email()"}]"#)),
+        },
         None,
     )
     .expect("update_masking_rules request failed");
@@ -10175,11 +10927,13 @@ fn update_masking_rules_update_masking_rules_418_decodes_declared_error() {
     };
     let result = branch::update_masking_rules(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"[{"database_name":"neondb","schema_name":"public","table_name":"users","column_name":"email","masking_function":"anon.fake_email()"}]"#,
-        )),
+        branch::UpdateMaskingRulesParams {
+            project_id: decode(fixture(r#""a""#)),
+            branch_id: decode(fixture(r#""a""#)),
+            masking_rules: decode(fixture(
+                r#"[{"database_name":"neondb","schema_name":"public","table_name":"users","column_name":"email","masking_function":"anon.fake_email()"}]"#,
+            )),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -10202,9 +10956,11 @@ fn update_organization_member_update_organization_member_reaches_mock_and_decode
     let _ = &config;
     let actual = organizations::update_organization_member(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
-        decode(fixture(r#""member""#)),
+        organizations::UpdateOrganizationMemberParams {
+            org_id: decode(fixture(r#""a""#)),
+            member_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+            role: decode(fixture(r#""member""#)),
+        },
         None,
     )
     .expect("update_organization_member request failed");
@@ -10231,9 +10987,11 @@ fn update_organization_member_update_organization_member_418_decodes_declared_er
     };
     let result = organizations::update_organization_member(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
-        decode(fixture(r#""member""#)),
+        organizations::UpdateOrganizationMemberParams {
+            org_id: decode(fixture(r#""a""#)),
+            member_id: decode(fixture(r#""00000000-0000-4000-8000-000000000000""#)),
+            role: decode(fixture(r#""member""#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -10256,8 +11014,10 @@ fn update_project_update_project_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = project::update_project(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"name":"myproject"}"#)),
+        project::UpdateProjectParams {
+            project_id: decode(fixture(r#""a""#)),
+            project: decode(fixture(r#"{"name":"myproject"}"#)),
+        },
         None,
     )
     .expect("update_project request failed");
@@ -10284,8 +11044,10 @@ fn update_project_update_project_418_decodes_declared_error() {
     };
     let result = project::update_project(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#"{"name":"myproject"}"#)),
+        project::UpdateProjectParams {
+            project_id: decode(fixture(r#""a""#)),
+            project: decode(fixture(r#"{"name":"myproject"}"#)),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {
@@ -10308,11 +11070,13 @@ fn update_snapshot_update_snapshot_reaches_mock_and_decodes_response() {
     let _ = &config;
     let actual = snapshot::update_snapshot(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"{"name":"Example Name","expires_at":"2030-06-09T18:02:16Z"}"#,
-        )),
+        snapshot::UpdateSnapshotParams {
+            project_id: decode(fixture(r#""a""#)),
+            snapshot_id: decode(fixture(r#""a""#)),
+            snapshot: decode(fixture(
+                r#"{"name":"Example Name","expires_at":"2030-06-09T18:02:16Z"}"#,
+            )),
+        },
         None,
     )
     .expect("update_snapshot request failed");
@@ -10339,11 +11103,13 @@ fn update_snapshot_update_snapshot_418_decodes_declared_error() {
     };
     let result = snapshot::update_snapshot(
         &config,
-        decode(fixture(r#""a""#)),
-        decode(fixture(r#""a""#)),
-        decode(fixture(
-            r#"{"name":"Example Name","expires_at":"2030-06-09T18:02:16Z"}"#,
-        )),
+        snapshot::UpdateSnapshotParams {
+            project_id: decode(fixture(r#""a""#)),
+            snapshot_id: decode(fixture(r#""a""#)),
+            snapshot: decode(fixture(
+                r#"{"name":"Example Name","expires_at":"2030-06-09T18:02:16Z"}"#,
+            )),
+        },
         None,
     );
     let Err(::octridev_neon::errors::SdkError::Http(error)) = result else {

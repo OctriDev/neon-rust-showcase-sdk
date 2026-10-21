@@ -10,6 +10,12 @@ use crate::types::{
 };
 use crate::validation::validate_pattern;
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateEndpointParams {
+    pub project_id: String,
+    pub endpoint: EndpointCreateRequestEndpoint,
+}
+
 /// Creates a compute endpoint for the specified branch. A compute endpoint is a Neon compute instance. There is a maximum of one read-write compute endpoint per branch. If the specified branch already has a read-write compute endpoint, the operation fails. A branch can have multiple read-only compute endpoints. For more information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
 ///
 /// # Arguments
@@ -18,10 +24,13 @@ use crate::validation::validate_pattern;
 /// * `endpoint` - Configuration for the compute endpoint to create.
 pub fn create_endpoint(
     config: &ClientConfig,
-    project_id: String,
-    endpoint: EndpointCreateRequestEndpoint,
+    params: CreateEndpointParams,
     options: Option<&RequestOptions>,
 ) -> Result<EndpointOperations, SdkError> {
+    let CreateEndpointParams {
+        project_id,
+        endpoint,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
 
     let mut __body_map = serde_json::Map::new();
@@ -55,6 +64,11 @@ pub fn create_endpoint(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListEndpointParams {
+    pub project_id: String,
+}
+
 /// Retrieves a list of compute endpoints for the specified project. A compute endpoint is a Neon compute instance. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
 ///
 /// # Arguments
@@ -62,9 +76,10 @@ pub fn create_endpoint(
 /// * `project_id` - The Neon project ID
 pub fn list_endpoint(
     config: &ClientConfig,
-    project_id: String,
+    params: ListEndpointParams,
     options: Option<&RequestOptions>,
 ) -> Result<EndpointsResponse, SdkError> {
+    let ListEndpointParams { project_id } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
 
     Ok(sdk_request::<EndpointsResponse>(
@@ -85,6 +100,12 @@ pub fn list_endpoint(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct GetEndpointParams {
+    pub project_id: String,
+    pub endpoint_id: String,
+}
+
 /// Retrieves information about the specified compute endpoint. A compute endpoint is a Neon compute instance. An `endpoint_id` has an `ep-` prefix. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
 ///
 /// # Arguments
@@ -93,10 +114,13 @@ pub fn list_endpoint(
 /// * `endpoint_id` - The endpoint ID
 pub fn get_endpoint(
     config: &ClientConfig,
-    project_id: String,
-    endpoint_id: String,
+    params: GetEndpointParams,
     options: Option<&RequestOptions>,
 ) -> Result<EndpointResponse, SdkError> {
+    let GetEndpointParams {
+        project_id,
+        endpoint_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("endpoint_id", &endpoint_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -119,6 +143,12 @@ pub fn get_endpoint(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteEndpointParams {
+    pub project_id: String,
+    pub endpoint_id: String,
+}
+
 /// Deletes the specified compute endpoint. A compute endpoint is a Neon compute instance. Deleting a compute endpoint drops existing network connections to the compute endpoint. The deletion is completed when the last operation in the chain finishes successfully. An `endpoint_id` has an `ep-` prefix. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
 ///
 /// # Arguments
@@ -127,10 +157,13 @@ pub fn get_endpoint(
 /// * `endpoint_id` - The endpoint ID
 pub fn delete_endpoint(
     config: &ClientConfig,
-    project_id: String,
-    endpoint_id: String,
+    params: DeleteEndpointParams,
     options: Option<&RequestOptions>,
 ) -> Result<EndpointOperations, SdkError> {
+    let DeleteEndpointParams {
+        project_id,
+        endpoint_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("endpoint_id", &endpoint_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -153,6 +186,13 @@ pub fn delete_endpoint(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateEndpointParams {
+    pub project_id: String,
+    pub endpoint_id: String,
+    pub endpoint: EndpointUpdateRequestEndpoint,
+}
+
 /// Updates the specified compute endpoint. An `endpoint_id` has an `ep-` prefix. A `branch_id` has a `br-` prefix. For more information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/). If the returned list of operations is not empty, the compute endpoint is not ready to use. The client must wait for the last operation to finish before using the compute endpoint. If the compute endpoint was idle before the update, it becomes active for a short period of time, and the control plane suspends it again after the update.
 ///
 /// # Arguments
@@ -162,11 +202,14 @@ pub fn delete_endpoint(
 /// * `endpoint` - Parameters for the compute endpoint update.
 pub fn update_endpoint(
     config: &ClientConfig,
-    project_id: String,
-    endpoint_id: String,
-    endpoint: EndpointUpdateRequestEndpoint,
+    params: UpdateEndpointParams,
     options: Option<&RequestOptions>,
 ) -> Result<EndpointOperations, SdkError> {
+    let UpdateEndpointParams {
+        project_id,
+        endpoint_id,
+        endpoint,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("endpoint_id", &endpoint_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -202,6 +245,12 @@ pub fn update_endpoint(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct StartEndpointParams {
+    pub project_id: String,
+    pub endpoint_id: String,
+}
+
 /// Starts a compute endpoint. The compute endpoint is ready to use after the last operation in the chain finishes successfully. An `endpoint_id` has an `ep-` prefix. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
 ///
 /// # Arguments
@@ -210,10 +259,13 @@ pub fn update_endpoint(
 /// * `endpoint_id` - The endpoint ID
 pub fn start_endpoint(
     config: &ClientConfig,
-    project_id: String,
-    endpoint_id: String,
+    params: StartEndpointParams,
     options: Option<&RequestOptions>,
 ) -> Result<EndpointOperations, SdkError> {
+    let StartEndpointParams {
+        project_id,
+        endpoint_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("endpoint_id", &endpoint_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -236,6 +288,12 @@ pub fn start_endpoint(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct SuspendEndpointParams {
+    pub project_id: String,
+    pub endpoint_id: String,
+}
+
 /// Suspends the specified compute endpoint. An `endpoint_id` has an `ep-` prefix. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
 ///
 /// # Arguments
@@ -244,10 +302,13 @@ pub fn start_endpoint(
 /// * `endpoint_id` - The endpoint ID
 pub fn suspend_endpoint(
     config: &ClientConfig,
-    project_id: String,
-    endpoint_id: String,
+    params: SuspendEndpointParams,
     options: Option<&RequestOptions>,
 ) -> Result<EndpointOperations, SdkError> {
+    let SuspendEndpointParams {
+        project_id,
+        endpoint_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("endpoint_id", &endpoint_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -270,6 +331,12 @@ pub fn suspend_endpoint(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct RestartEndpointParams {
+    pub project_id: String,
+    pub endpoint_id: String,
+}
+
 /// Restarts the specified compute endpoint by immediately suspending it and then starting it again. An `endpoint_id` has an `ep-` prefix. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
 ///
 /// # Arguments
@@ -278,10 +345,13 @@ pub fn suspend_endpoint(
 /// * `endpoint_id` - The endpoint ID
 pub fn restart_endpoint(
     config: &ClientConfig,
-    project_id: String,
-    endpoint_id: String,
+    params: RestartEndpointParams,
     options: Option<&RequestOptions>,
 ) -> Result<EndpointOperations, SdkError> {
+    let RestartEndpointParams {
+        project_id,
+        endpoint_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("endpoint_id", &endpoint_id, "^[a-z0-9-]{1,60}$")?;
 

@@ -27,6 +27,11 @@ pub fn list_api_key(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateApiKeyParams {
+    pub key_name: String,
+}
+
 /// Creates an API key. The `key_name` is a user-specified name for the key. Returns an `id` and `key`; the `key` is a randomly generated, 64-bit token required to access the Neon API. Store the key securely — it is only returned once. API keys can also be managed in the Neon Console. See [Manage API keys](https://neon.com/docs/manage/api-keys/).
 ///
 /// # Arguments
@@ -35,9 +40,10 @@ pub fn list_api_key(
 ///   creating an API key.
 pub fn create_api_key(
     config: &ClientConfig,
-    key_name: String,
+    params: CreateApiKeyParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiKeyCreateResponse, SdkError> {
+    let CreateApiKeyParams { key_name } = params;
     validate_length(
         "key_name",
         &key_name,
@@ -75,6 +81,11 @@ pub fn create_api_key(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct RevokeApiKeyParams {
+    pub key_id: i64,
+}
+
 /// Revokes the specified API key. An API key that is no longer needed can be revoked. This action cannot be reversed. API keys can also be managed in the Neon Console. See [Manage API keys](https://neon.com/docs/manage/api-keys/).
 ///
 /// # Arguments
@@ -82,9 +93,10 @@ pub fn create_api_key(
 /// * `key_id` - The API key ID
 pub fn revoke_api_key(
     config: &ClientConfig,
-    key_id: i64,
+    params: RevokeApiKeyParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiKeyRevokeResponse, SdkError> {
+    let RevokeApiKeyParams { key_id } = params;
     Ok(sdk_request::<ApiKeyRevokeResponse>(
         "DELETE",
         &format!("/api_keys/{}", crate::client::encode_path_segment(&key_id)),

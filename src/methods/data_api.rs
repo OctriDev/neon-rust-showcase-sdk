@@ -173,6 +173,14 @@ pub fn create_data_api(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateDataApiParams {
+    pub project_id: String,
+    pub branch_id: String,
+    pub database_name: String,
+    pub settings: Option<DataAPISettings>,
+}
+
 /// Updates the Neon Data API configuration for the specified branch. You can optionally provide settings to update the Data API configuration. The schema cache is always refreshed as part of this operation.
 ///
 /// # Arguments
@@ -183,12 +191,15 @@ pub fn create_data_api(
 /// * `settings` - Configuration settings for the Neon Data API.
 pub fn update_data_api(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
-    database_name: String,
-    settings: Option<DataAPISettings>,
+    params: UpdateDataApiParams,
     options: Option<&RequestOptions>,
 ) -> Result<EmptyResponse, SdkError> {
+    let UpdateDataApiParams {
+        project_id,
+        branch_id,
+        database_name,
+        settings,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -227,6 +238,13 @@ pub fn update_data_api(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteDataApiParams {
+    pub project_id: String,
+    pub branch_id: String,
+    pub database_name: String,
+}
+
 /// Deletes the Neon Data API for the specified branch. Existing connections using the Data API endpoint will fail after deletion.
 ///
 /// # Arguments
@@ -236,11 +254,14 @@ pub fn update_data_api(
 /// * `database_name` - The database name
 pub fn delete_data_api(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
-    database_name: String,
+    params: DeleteDataApiParams,
     options: Option<&RequestOptions>,
 ) -> Result<EmptyResponse, SdkError> {
+    let DeleteDataApiParams {
+        project_id,
+        branch_id,
+        database_name,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -264,6 +285,13 @@ pub fn delete_data_api(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct GetDataApiParams {
+    pub project_id: String,
+    pub branch_id: String,
+    pub database_name: String,
+}
+
 /// Retrieves the Neon Data API configuration for the specified branch, including endpoint URL, enabled state, and database settings.
 ///
 /// # Arguments
@@ -273,11 +301,14 @@ pub fn delete_data_api(
 /// * `database_name` - The database name
 pub fn get_data_api(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
-    database_name: String,
+    params: GetDataApiParams,
     options: Option<&RequestOptions>,
 ) -> Result<DataAPIReponse, SdkError> {
+    let GetDataApiParams {
+        project_id,
+        branch_id,
+        database_name,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 

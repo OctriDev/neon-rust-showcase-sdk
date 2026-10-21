@@ -7,6 +7,11 @@ use crate::errors::SdkError;
 use crate::types::ActiveRegionsResponse;
 use crate::validation::validate_pattern;
 
+#[derive(Debug, Clone, Default)]
+pub struct GetActiveRegionsParams {
+    pub org_id: Option<String>,
+}
+
 /// Lists supported Neon regions. \*\*Note:\*\* Not all regions are available to all organizations. Pass the `org_id` parameter to get an accurate list of regions available to your organization.
 ///
 /// # Arguments
@@ -15,9 +20,10 @@ use crate::validation::validate_pattern;
 ///   to this organization. Recommended for accurate region availability.
 pub fn get_active_regions(
     config: &ClientConfig,
-    org_id: Option<String>,
+    params: GetActiveRegionsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ActiveRegionsResponse, SdkError> {
+    let GetActiveRegionsParams { org_id } = params;
     if let Some(ref org_id_v) = org_id {
         validate_pattern("org_id", org_id_v, "^[a-z0-9-]{1,60}$")?;
     }

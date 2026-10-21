@@ -7,6 +7,12 @@ use crate::errors::{SdkError, SdkNetworkError};
 use crate::types::{Realtime, RealtimeSecret};
 use crate::validation::{validate_items, validate_pattern, LengthOpts};
 
+#[derive(Debug, Clone, Default)]
+pub struct GetRealtimeParams {
+    pub project_id: String,
+    pub branch_id: String,
+}
+
 /// Retrieves whether Realtime is enabled for the branch, whether a change is still being applied, and, once provisioned, its invocation URL and allowed origins. The shared secret is returned by `GET /projects/{project_id}/branches/{branch_id}/realtime/secret`.
 ///
 /// # Arguments
@@ -15,10 +21,13 @@ use crate::validation::{validate_items, validate_pattern, LengthOpts};
 /// * `branch_id` - The branch ID
 pub fn get_realtime(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
+    params: GetRealtimeParams,
     options: Option<&RequestOptions>,
 ) -> Result<Realtime, SdkError> {
+    let GetRealtimeParams {
+        project_id,
+        branch_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -41,6 +50,13 @@ pub fn get_realtime(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct EnableRealtimeParams {
+    pub project_id: String,
+    pub branch_id: String,
+    pub allowed_origins: Option<Vec<String>>,
+}
+
 /// Enables Realtime for the branch, or applies new options to an enabled branch. Provisioning is asynchronous; poll the Realtime state until it is no longer pending.
 ///
 /// # Arguments
@@ -52,11 +68,14 @@ pub fn get_realtime(
 ///   alone, allows any origin. Omitted keeps the current or inherited value.
 pub fn enable_realtime(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
-    allowed_origins: Option<Vec<String>>,
+    params: EnableRealtimeParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let EnableRealtimeParams {
+        project_id,
+        branch_id,
+        allowed_origins,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
     if let Some(ref allowed_origins_v) = allowed_origins {
@@ -104,6 +123,12 @@ pub fn enable_realtime(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DisableRealtimeParams {
+    pub project_id: String,
+    pub branch_id: String,
+}
+
 /// Disables Realtime for the branch and discards its shared secret. Deprovisioning is asynchronous.
 ///
 /// # Arguments
@@ -112,10 +137,13 @@ pub fn enable_realtime(
 /// * `branch_id` - The branch ID
 pub fn disable_realtime(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
+    params: DisableRealtimeParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DisableRealtimeParams {
+        project_id,
+        branch_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -138,6 +166,12 @@ pub fn disable_realtime(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct GetRealtimeSecretParams {
+    pub project_id: String,
+    pub branch_id: String,
+}
+
 /// Retrieves the secret the application backend issues Realtime tokens with. Requires permission to read the project's credentials. Returns 404 while Realtime is disabled or before the secret is provisioned. After a rotation, this returns the previous secret until `pending` is false.
 ///
 /// # Arguments
@@ -146,10 +180,13 @@ pub fn disable_realtime(
 /// * `branch_id` - The branch ID
 pub fn get_realtime_secret(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
+    params: GetRealtimeSecretParams,
     options: Option<&RequestOptions>,
 ) -> Result<RealtimeSecret, SdkError> {
+    let GetRealtimeSecretParams {
+        project_id,
+        branch_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -172,6 +209,12 @@ pub fn get_realtime_secret(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct RotateRealtimeSecretParams {
+    pub project_id: String,
+    pub branch_id: String,
+}
+
 /// Replaces the branch's Realtime shared secret. Rotation is asynchronous: once the Realtime state is no longer pending, the previous secret stops working and `GET /projects/{project_id}/branches/{branch_id}/realtime/secret` returns the new one.
 ///
 /// # Arguments
@@ -180,10 +223,13 @@ pub fn get_realtime_secret(
 /// * `branch_id` - The branch ID
 pub fn rotate_realtime_secret(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
+    params: RotateRealtimeSecretParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let RotateRealtimeSecretParams {
+        project_id,
+        branch_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 

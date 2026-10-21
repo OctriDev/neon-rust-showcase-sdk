@@ -38,204 +38,146 @@ impl ProjectNamespace {
     /// Creates a Neon project within an organization. If using a personal API key, include the `org_id` parameter to specify which organization to create the project in. If using an org API key, `org_id` is automatically inferred from the key. Plan limits define how many projects you can create. For more information, see [Manage projects](https://neon.com/docs/manage/projects/). You can specify a region and Postgres version in the request body. Neon supports Postgres 14 through 18, with 19 rolling out to enabled regions. For supported regions and `region_id` values, see [Regions](https://neon.com/docs/introduction/regions/).
     pub fn create(
         &self,
-        project: ProjectCreateRequestProject,
+        params: crate::methods::project::CreateProjectParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<CreateProjectResponse, crate::errors::SdkError> {
-        crate::methods::project::create_project(&self.config, project, options)
+        crate::methods::project::create_project(&self.config, params, options)
     }
     /// Retrieves a list of projects shared with your Neon account. For more information, see [Manage projects](https://neon.com/docs/manage/projects/).
     pub fn list_shared(
         &self,
-        cursor: Option<String>,
-        limit: Option<i64>,
-        search: Option<String>,
-        timeout: Option<i64>,
+        params: crate::methods::project::ListSharedProjectsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ListSharedProjectsResponse, crate::errors::SdkError> {
-        crate::methods::project::list_shared_projects(
-            &self.config,
-            cursor,
-            limit,
-            search,
-            timeout,
-            options,
-        )
+        crate::methods::project::list_shared_projects(&self.config, params, options)
     }
     /// Retrieves information about the specified project. Returned details include the project settings, compute configuration, history retention, owner information, and current usage metrics.
     pub fn get(
         &self,
-        project_id: String,
+        params: crate::methods::project::GetProjectParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectResponse, crate::errors::SdkError> {
-        crate::methods::project::get_project(&self.config, project_id, options)
+        crate::methods::project::get_project(&self.config, params, options)
     }
     /// Updates configurable properties of a Neon project, including its name, project settings, default endpoint settings, and history retention period. Supply the required `project` object and include only the properties you want to change. The response includes the updated project and any operations associated with the update.
     ///
     /// Updates the specified project. Configurable properties include the project name, default compute settings, history retention period, and IP allowlist.
     pub fn update(
         &self,
-        project_id: String,
-        project: ProjectUpdateRequestProject,
+        params: crate::methods::project::UpdateProjectParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<UpdateProjectResponse, crate::errors::SdkError> {
-        crate::methods::project::update_project(&self.config, project_id, project, options)
+        crate::methods::project::update_project(&self.config, params, options)
     }
     /// Deletes the specified project and all its endpoints, branches, databases, and users. Deleted projects can be recovered within 7 days using `POST /projects/{project_id}/recover`. To list recoverable projects, use `GET /projects?recoverable=true`.
     pub fn delete(
         &self,
-        project_id: String,
+        params: crate::methods::project::DeleteProjectParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectResponse, crate::errors::SdkError> {
-        crate::methods::project::delete_project(&self.config, project_id, options)
+        crate::methods::project::delete_project(&self.config, params, options)
     }
     /// Recovers a deleted project within the 7-day deletion recovery period. Restores branches, endpoints, settings, and connection strings. Some integrations require manual reconfiguration after recovery. To list recoverable projects, use `GET /projects?recoverable=true`.
     pub fn recover(
         &self,
-        project_id: String,
+        params: crate::methods::project::RecoverProjectParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectRecoverResponse, crate::errors::SdkError> {
-        crate::methods::project::recover_project(&self.config, project_id, options)
+        crate::methods::project::recover_project(&self.config, params, options)
     }
     /// Lists users who have access to a project, including each permission ID, the granted-to email address, and the grant date. Use the permission ID to identify a specific project access grant when you need to revoke it.
     ///
     /// Retrieves details about users who have access to the project, including the permission `id`, the granted-to email address, and the date project access was granted.
     pub fn list_permissions(
         &self,
-        project_id: String,
+        params: crate::methods::project::ListProjectPermissionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectPermissions, crate::errors::SdkError> {
-        crate::methods::project::list_project_permissions(&self.config, project_id, options)
+        crate::methods::project::list_project_permissions(&self.config, params, options)
     }
     /// Grants project access to the account associated with an email address. Supply the recipient's `email` in the request body to create a project permission. The response includes the new permission's identifier and grant details.
     ///
     /// Grants project access to the account associated with the specified email address.
     pub fn grant_permission(
         &self,
-        project_id: String,
-        email: String,
+        params: crate::methods::project::GrantProjectPermissionParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectPermission, crate::errors::SdkError> {
-        crate::methods::project::grant_project_permission(&self.config, project_id, email, options)
+        crate::methods::project::grant_project_permission(&self.config, params, options)
     }
     /// Lists organization members and their project roles for an organization-owned project. The members shown depend on the authenticated user's access: VIEWER and EDITOR see members with effective project access, while ADMIN also sees unassigned organization members. Use `limit` and the response's `pagination.next` cursor to retrieve subsequent pages.
     ///
     /// Lists organization members and their per-project roles for an org-owned project. Returns 404 when the project is not org-owned, per-project role management is disabled, or the caller has no access. Callers with VIEWER or EDITOR see members with effective project access. Callers with ADMIN also see unassigned org members.
     pub fn list_members(
         &self,
-        project_id: String,
-        cursor: Option<String>,
-        limit: Option<i64>,
+        params: crate::methods::project::ListProjectMembersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectMembers, crate::errors::SdkError> {
-        crate::methods::project::list_project_members(
-            &self.config,
-            project_id,
-            cursor,
-            limit,
-            options,
-        )
+        crate::methods::project::list_project_members(&self.config, params, options)
     }
     /// Sets or updates an organization's member's explicit role on a project. Provide `role` as `viewer`, `editor`, or `admin` to set the corresponding project permission. If the authenticated user is demoting themself, set `confirm_self_demotion` to true.
     ///
     /// Idempotently sets or updates the explicit project grant of the specified org member. Self-demotion requires `confirm_self_demotion=true`.
     pub fn set_member_role(
         &self,
-        project_id: String,
-        member_id: String,
-        role: ProjectRole,
-        confirm_self_demotion: Option<bool>,
+        params: crate::methods::project::SetProjectMemberRoleParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectMemberRoleResponse, crate::errors::SdkError> {
-        crate::methods::project::set_project_member_role(
-            &self.config,
-            project_id,
-            member_id,
-            role,
-            confirm_self_demotion,
-            options,
-        )
+        crate::methods::project::set_project_member_role(&self.config, params, options)
     }
     /// Removes an organization's member's explicit role on a project. The member's organization-role default project permission continues to apply, and the operation is a no-op if no explicit role exists. If removing your own role would remove your effective management access, confirm the change with `confirm_self_lockout`.
     ///
     /// Idempotently removes the explicit project grant. The member's organization-role default project permission still applies. Self-DELETE requires `confirm_self_lockout=true` when effective manage access would be lost.
     pub fn remove_member_role(
         &self,
-        project_id: String,
-        member_id: String,
-        confirm_self_lockout: Option<bool>,
+        params: crate::methods::project::RemoveProjectMemberRoleParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectMemberRoleResponse, crate::errors::SdkError> {
-        crate::methods::project::remove_project_member_role(
-            &self.config,
-            project_id,
-            member_id,
-            confirm_self_lockout,
-            options,
-        )
+        crate::methods::project::remove_project_member_role(&self.config, params, options)
     }
     /// Revokes a user's access to a project using the ID of the access permission. Retrieve the permission ID by listing project access, then provide it with the project identifier. The response includes the permission's grant and revocation details.
     ///
     /// Revokes project access from the user associated with the specified permission `id`. You can retrieve a user's permission `id` by listing project access.
     pub fn revoke_permission(
         &self,
-        project_id: String,
-        permission_id: String,
+        params: crate::methods::project::RevokeProjectPermissionParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectPermission, crate::errors::SdkError> {
-        crate::methods::project::revoke_project_permission(
-            &self.config,
-            project_id,
-            permission_id,
-            options,
-        )
+        crate::methods::project::revoke_project_permission(&self.config, params, options)
     }
     /// Lists the shared preload libraries available for the specified project's Postgres version. Use the list to choose libraries for the project's `settings.preload_libraries` configuration; activating these libraries requires a compute restart.
     ///
     /// Returns the shared preload libraries available for the specified project's Postgres version. Shared preload libraries are Postgres extensions that require the `shared_preload_libraries` setting and a compute restart to activate. Use this list to determine which libraries can be enabled in the project's `settings.preload_libraries` configuration.
     pub fn get_available_preload_libraries(
         &self,
-        project_id: String,
+        params: crate::methods::project::GetAvailablePreloadLibrariesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<AvailablePreloadLibraries, crate::errors::SdkError> {
-        crate::methods::project::get_available_preload_libraries(&self.config, project_id, options)
+        crate::methods::project::get_available_preload_libraries(&self.config, params, options)
     }
     /// Creates a transfer request for the specified project. The request expires after a set period. To accept the request, the recipient calls `PUT /projects/{project_id}/transfer_requests/{request_id}` or uses the Neon Console claim link. The optional `ru` parameter redirects the recipient after acceptance.
     pub fn create_transfer_request(
         &self,
-        project_id: String,
-        ttl_seconds: Option<i64>,
+        params: crate::methods::project::CreateProjectTransferRequestParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectTransferRequestResponse, crate::errors::SdkError> {
-        crate::methods::project::create_project_transfer_request(
-            &self.config,
-            project_id,
-            ttl_seconds,
-            options,
-        )
+        crate::methods::project::create_project_transfer_request(&self.config, params, options)
     }
     /// Accepts a transfer request for the specified project, transferring it to the specified organization or user. If org_id is not passed, the project will be transferred to the current user or organization account.
     pub fn accept_transfer_request(
         &self,
-        project_id: String,
-        request_id: String,
-        org_id: Option<String>,
+        params: crate::methods::project::AcceptProjectTransferRequestParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::project::accept_project_transfer_request(
-            &self.config,
-            project_id,
-            request_id,
-            org_id,
-            options,
-        )
+        crate::methods::project::accept_project_transfer_request(&self.config, params, options)
     }
     /// Returns the JWKS URLs available for verifying JWTs used as the authentication mechanism for the specified project.
     pub fn get_jwks(
         &self,
-        project_id: String,
+        params: crate::methods::project::GetProjectJwksParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectJWKSResponse, crate::errors::SdkError> {
-        crate::methods::project::get_project_jwks(&self.config, project_id, options)
+        crate::methods::project::get_project_jwks(&self.config, params, options)
     }
     /// Adds a JWKS URL to the specified project for verifying JWTs used as the authentication mechanism. The URL must be a valid HTTPS URL that returns a JSON Web Key Set. The `provider_name` field allows you to specify which authentication provider you're using (e.g., Clerk, Auth0, AWS Cognito). The `branch_id` scopes the JWKS URL to specific branches; if not specified, it applies to all branches. The `role_names` scopes the URL to specific roles; if not specified, default roles are used (`authenticator`, `authenticated`, `anonymous`). The `jwt_audience` specifies which `aud` values are accepted in JWTs.
     pub fn add_jwks(
@@ -248,11 +190,10 @@ impl ProjectNamespace {
     /// Removes the specified JWKS URL from the project. JWTs signed by keys from the removed URL can no longer authenticate to the project's endpoints.
     pub fn delete_jwks(
         &self,
-        project_id: String,
-        jwks_id: String,
+        params: crate::methods::project::DeleteProjectJwksParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<JWKS, crate::errors::SdkError> {
-        crate::methods::project::delete_project_jwks(&self.config, project_id, jwks_id, options)
+        crate::methods::project::delete_project_jwks(&self.config, params, options)
     }
     /// Retrieves a connection URI for the specified database. The URI uses the standard PostgreSQL connection string format. Set `pooled=true` to include the `-pooler` suffix for a connection pooler URI.
     pub fn get_connection_uri(
@@ -265,40 +206,26 @@ impl ProjectNamespace {
     /// Lists VPC endpoint restrictions for the specified Neon project.
     pub fn list_vpc_endpoints(
         &self,
-        project_id: String,
+        params: crate::methods::project::ListProjectVpcEndpointsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<VPCEndpointsResponse, crate::errors::SdkError> {
-        crate::methods::project::list_project_vpc_endpoints(&self.config, project_id, options)
+        crate::methods::project::list_project_vpc_endpoints(&self.config, params, options)
     }
     /// Sets or updates a VPC endpoint restriction for a Neon project. When a VPC endpoint restriction is set, the project only accepts connections from the specified VPC. A VPC endpoint can be set as a restriction only after it is assigned to the parent organization of the Neon project.
     pub fn assign_vpc_endpoint(
         &self,
-        project_id: String,
-        vpc_endpoint_id: String,
-        label: String,
+        params: crate::methods::project::AssignProjectVpcEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::project::assign_project_vpc_endpoint(
-            &self.config,
-            project_id,
-            vpc_endpoint_id,
-            label,
-            options,
-        )
+        crate::methods::project::assign_project_vpc_endpoint(&self.config, params, options)
     }
     /// Removes the specified VPC endpoint restriction from a Neon project.
     pub fn delete_vpc_endpoint(
         &self,
-        project_id: String,
-        vpc_endpoint_id: String,
+        params: crate::methods::project::DeleteProjectVpcEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::project::delete_project_vpc_endpoint(
-            &self.config,
-            project_id,
-            vpc_endpoint_id,
-            options,
-        )
+        crate::methods::project::delete_project_vpc_endpoint(&self.config, params, options)
     }
 }
 
@@ -324,18 +251,18 @@ impl ApiKeyNamespace {
     /// Creates an API key. The `key_name` is a user-specified name for the key. Returns an `id` and `key`; the `key` is a randomly generated, 64-bit token required to access the Neon API. Store the key securely — it is only returned once. API keys can also be managed in the Neon Console. See [Manage API keys](https://neon.com/docs/manage/api-keys/).
     pub fn create(
         &self,
-        key_name: String,
+        params: crate::methods::api_key::CreateApiKeyParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiKeyCreateResponse, crate::errors::SdkError> {
-        crate::methods::api_key::create_api_key(&self.config, key_name, options)
+        crate::methods::api_key::create_api_key(&self.config, params, options)
     }
     /// Revokes the specified API key. An API key that is no longer needed can be revoked. This action cannot be reversed. API keys can also be managed in the Neon Console. See [Manage API keys](https://neon.com/docs/manage/api-keys/).
     pub fn revoke(
         &self,
-        key_id: i64,
+        params: crate::methods::api_key::RevokeApiKeyParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiKeyRevokeResponse, crate::errors::SdkError> {
-        crate::methods::api_key::revoke_api_key(&self.config, key_id, options)
+        crate::methods::api_key::revoke_api_key(&self.config, params, options)
     }
 }
 
@@ -354,21 +281,18 @@ impl OperationNamespace {
     /// Retrieves details for the specified operation. An operation is an action performed on a Neon project resource.
     pub fn get(
         &self,
-        project_id: String,
-        operation_id: String,
+        params: crate::methods::operation::GetOperationParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<OperationResponse, crate::errors::SdkError> {
-        crate::methods::operation::get_operation(&self.config, project_id, operation_id, options)
+        crate::methods::operation::get_operation(&self.config, params, options)
     }
     /// Retrieves a list of operations for the specified Neon project. The number of operations returned can be large. To paginate the response, issue an initial request with a `limit` value. Then, add the `cursor` value that was returned in the response to the next request. Operations older than 6 months may be deleted from our systems. If you need more history than that, you should store your own history.
     pub fn list(
         &self,
-        project_id: String,
-        cursor: Option<String>,
-        limit: Option<i64>,
+        params: crate::methods::operation::ListOperationParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ListOperationResponse, crate::errors::SdkError> {
-        crate::methods::operation::list_operation(&self.config, project_id, cursor, limit, options)
+        crate::methods::operation::list_operation(&self.config, params, options)
     }
 }
 
@@ -395,52 +319,26 @@ impl DataApiNamespace {
     /// Updates the Neon Data API configuration for the specified branch. You can optionally provide settings to update the Data API configuration. The schema cache is always refreshed as part of this operation.
     pub fn update(
         &self,
-        project_id: String,
-        branch_id: String,
-        database_name: String,
-        settings: Option<DataAPISettings>,
+        params: crate::methods::data_api::UpdateDataApiParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EmptyResponse, crate::errors::SdkError> {
-        crate::methods::data_api::update_data_api(
-            &self.config,
-            project_id,
-            branch_id,
-            database_name,
-            settings,
-            options,
-        )
+        crate::methods::data_api::update_data_api(&self.config, params, options)
     }
     /// Deletes the Neon Data API for the specified branch. Existing connections using the Data API endpoint will fail after deletion.
     pub fn delete(
         &self,
-        project_id: String,
-        branch_id: String,
-        database_name: String,
+        params: crate::methods::data_api::DeleteDataApiParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EmptyResponse, crate::errors::SdkError> {
-        crate::methods::data_api::delete_data_api(
-            &self.config,
-            project_id,
-            branch_id,
-            database_name,
-            options,
-        )
+        crate::methods::data_api::delete_data_api(&self.config, params, options)
     }
     /// Retrieves the Neon Data API configuration for the specified branch, including endpoint URL, enabled state, and database settings.
     pub fn get(
         &self,
-        project_id: String,
-        branch_id: String,
-        database_name: String,
+        params: crate::methods::data_api::GetDataApiParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<DataAPIReponse, crate::errors::SdkError> {
-        crate::methods::data_api::get_data_api(
-            &self.config,
-            project_id,
-            branch_id,
-            database_name,
-            options,
-        )
+        crate::methods::data_api::get_data_api(&self.config, params, options)
     }
 }
 
@@ -475,12 +373,12 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn list_redirect_uri_whitelist_domains(
         &self,
-        project_id: String,
+        params: crate::methods::auth_legacy::ListAuthLegacyRedirectUriWhitelistDomainsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthRedirectURIWhitelistResponse, crate::errors::SdkError> {
         crate::methods::auth_legacy::list_auth_legacy_redirect_uri_whitelist_domains(
             &self.config,
-            project_id,
+            params,
             options,
         )
     }
@@ -491,16 +389,12 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn add_domain_to_redirect_uri_whitelist(
         &self,
-        project_id: String,
-        domain: String,
-        auth_provider: NeonAuthSupportedAuthProvider,
+        params: crate::methods::auth_legacy::AddAuthLegacyDomainToRedirectUriWhitelistParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::auth_legacy::add_auth_legacy_domain_to_redirect_uri_whitelist(
             &self.config,
-            project_id,
-            domain,
-            auth_provider,
+            params,
             options,
         )
     }
@@ -511,30 +405,24 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn delete_domain_from_redirect_uri_whitelist(
         &self,
-        project_id: String,
-        auth_provider: NeonAuthSupportedAuthProvider,
-        domains: Vec<NeonAuthDeleteDomainFromRedirectURIWhitelistItem>,
+        params: crate::methods::auth_legacy::DeleteAuthLegacyDomainFromRedirectUriWhitelistParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::auth_legacy::delete_auth_legacy_domain_from_redirect_uri_whitelist(
             &self.config,
-            project_id,
-            auth_provider,
-            domains,
+            params,
             options,
         )
     }
     /// Generates SDK or API Keys for the auth provider. These might be called different things depending on the auth provider you're using, but are generally used for setting up the frontend and backend SDKs.
     pub fn create_provider_sdk_keys(
         &self,
-        project_id: String,
-        auth_provider: NeonAuthSupportedAuthProvider,
+        params: crate::methods::auth_legacy::CreateAuthLegacyProviderSdkKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthCreateIntegrationResponse, crate::errors::SdkError> {
         crate::methods::auth_legacy::create_auth_legacy_provider_sdk_keys(
             &self.config,
-            project_id,
-            auth_provider,
+            params,
             options,
         )
     }
@@ -545,20 +433,10 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn create_user(
         &self,
-        project_id: String,
-        auth_provider: NeonAuthSupportedAuthProvider,
-        email: String,
-        name: Option<String>,
+        params: crate::methods::auth_legacy::CreateAuthLegacyUserParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthCreateNewUserResponse, crate::errors::SdkError> {
-        crate::methods::auth_legacy::create_auth_legacy_user(
-            &self.config,
-            project_id,
-            auth_provider,
-            email,
-            name,
-            options,
-        )
+        crate::methods::auth_legacy::create_auth_legacy_user(&self.config, params, options)
     }
     /// Deprecated. Use `/projects/{project_id}/branches/{branch_id}/auth/users/{auth_user_id}` instead. Removal scheduled for March 1, 2026.
     ///
@@ -567,30 +445,18 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn delete_user(
         &self,
-        project_id: String,
-        auth_user_id: String,
+        params: crate::methods::auth_legacy::DeleteAuthLegacyUserParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::auth_legacy::delete_auth_legacy_user(
-            &self.config,
-            project_id,
-            auth_user_id,
-            options,
-        )
+        crate::methods::auth_legacy::delete_auth_legacy_user(&self.config, params, options)
     }
     /// Transfers ownership of your Neon-managed auth project to your own auth provider account.
     pub fn transfer_provider(
         &self,
-        project_id: String,
-        auth_provider: NeonAuthSupportedAuthProvider,
+        params: crate::methods::auth_legacy::TransferAuthLegacyProviderParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthTransferAuthProviderProjectResponse, crate::errors::SdkError> {
-        crate::methods::auth_legacy::transfer_auth_legacy_provider(
-            &self.config,
-            project_id,
-            auth_provider,
-            options,
-        )
+        crate::methods::auth_legacy::transfer_auth_legacy_provider(&self.config, params, options)
     }
     /// Deprecated. Use `/projects/{project_id}/branches/{branch_id}/auth` instead. Removal scheduled for March 1, 2026.
     ///
@@ -599,14 +465,10 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn list_integrations(
         &self,
-        project_id: String,
+        params: crate::methods::auth_legacy::ListAuthLegacyIntegrationsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ListNeonAuthIntegrationsResponse, crate::errors::SdkError> {
-        crate::methods::auth_legacy::list_auth_legacy_integrations(
-            &self.config,
-            project_id,
-            options,
-        )
+        crate::methods::auth_legacy::list_auth_legacy_integrations(&self.config, params, options)
     }
     /// Deprecated. Use `/projects/{project_id}/branches/{branch_id}/auth/oauth_providers` instead. Removal scheduled for March 1, 2026.
     ///
@@ -615,14 +477,10 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn list_oauth_providers(
         &self,
-        project_id: String,
+        params: crate::methods::auth_legacy::ListAuthLegacyOauthProvidersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ListNeonAuthOauthProvidersResponse, crate::errors::SdkError> {
-        crate::methods::auth_legacy::list_auth_legacy_oauth_providers(
-            &self.config,
-            project_id,
-            options,
-        )
+        crate::methods::auth_legacy::list_auth_legacy_oauth_providers(&self.config, params, options)
     }
     /// Deprecated. Use `/projects/{project_id}/branches/{branch_id}/auth/oauth_providers` instead. Removal scheduled for March 1, 2026.
     ///
@@ -659,14 +517,12 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn delete_oauth_provider(
         &self,
-        project_id: String,
-        oauth_provider_id: NeonAuthOauthProviderId,
+        params: crate::methods::auth_legacy::DeleteAuthLegacyOauthProviderParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::auth_legacy::delete_auth_legacy_oauth_provider(
             &self.config,
-            project_id,
-            oauth_provider_id,
+            params,
             options,
         )
     }
@@ -677,10 +533,10 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn get_email_server(
         &self,
-        project_id: String,
+        params: crate::methods::auth_legacy::GetAuthLegacyEmailServerParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthEmailServerConfigResponse, crate::errors::SdkError> {
-        crate::methods::auth_legacy::get_auth_legacy_email_server(&self.config, project_id, options)
+        crate::methods::auth_legacy::get_auth_legacy_email_server(&self.config, params, options)
     }
     /// Updates the email server configuration for a Neon project. This operation is closing down and will be removed on March 1, 2026\. Use `PATCH /projects/{project_id}/branches/{branch_id}/auth/email_provider` instead.
     ///
@@ -691,16 +547,10 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn update_email_server(
         &self,
-        project_id: String,
-        body: NeonAuthEmailServerConfig,
+        params: crate::methods::auth_legacy::UpdateAuthLegacyEmailServerParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthEmailServerConfigResponse, crate::errors::SdkError> {
-        crate::methods::auth_legacy::update_auth_legacy_email_server(
-            &self.config,
-            project_id,
-            body,
-            options,
-        )
+        crate::methods::auth_legacy::update_auth_legacy_email_server(&self.config, params, options)
     }
     /// Deprecated. Use `/projects/{project_id}/branches/{branch_id}/auth` instead. Removal scheduled for March 1, 2026.
     ///
@@ -709,18 +559,10 @@ impl AuthLegacyNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn delete_integration(
         &self,
-        project_id: String,
-        auth_provider: NeonAuthSupportedAuthProvider,
-        delete_data: Option<bool>,
+        params: crate::methods::auth_legacy::DeleteAuthLegacyIntegrationParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::auth_legacy::delete_auth_legacy_integration(
-            &self.config,
-            project_id,
-            auth_provider,
-            delete_data,
-            options,
-        )
+        crate::methods::auth_legacy::delete_auth_legacy_integration(&self.config, params, options)
     }
 }
 
@@ -739,161 +581,82 @@ impl AuthNamespace {
     /// Retrieves the Neon Auth integration details for the specified branch, including the auth provider type and integration status.
     pub fn get(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::GetAuthParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthIntegration, crate::errors::SdkError> {
-        crate::methods::auth::get_auth(&self.config, project_id, branch_id, options)
+        crate::methods::auth::get_auth(&self.config, params, options)
     }
     /// Enables Neon Auth for the specified branch by connecting it to an authentication provider. Creating the integration provisions the `neon_auth` schema in the branch database, which stores user identity data synchronized from the provider.
     pub fn create(
         &self,
-        project_id: String,
-        branch_id: String,
-        auth_provider: NeonAuthSupportedAuthProvider,
-        database_name: Option<String>,
+        params: crate::methods::auth::CreateAuthParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthCreateIntegrationResponse, crate::errors::SdkError> {
-        crate::methods::auth::create_auth(
-            &self.config,
-            project_id,
-            branch_id,
-            auth_provider,
-            database_name,
-            options,
-        )
+        crate::methods::auth::create_auth(&self.config, params, options)
     }
     /// Disables the Neon Auth integration for the specified branch, removing the connection to the authentication provider. If `delete_data` is `true`, also deletes the `neon_auth` schema and all associated tables from the branch database. The integration can be re-enabled by calling `POST /projects/{project_id}/branches/{branch_id}/auth`.
     pub fn disable(
         &self,
-        project_id: String,
-        branch_id: String,
-        delete_data: Option<bool>,
+        params: crate::methods::auth::DisableAuthParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::auth::disable_auth(
-            &self.config,
-            project_id,
-            branch_id,
-            delete_data,
-            options,
-        )
+        crate::methods::auth::disable_auth(&self.config, params, options)
     }
     /// Lists the trusted domains in the redirect URI whitelist for the specified branch. Only domains in this list are permitted as redirect targets after authentication.
     pub fn list_trusted_domains(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::ListAuthTrustedDomainsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthRedirectURIWhitelistResponse, crate::errors::SdkError> {
-        crate::methods::auth::list_auth_trusted_domains(
-            &self.config,
-            project_id,
-            branch_id,
-            options,
-        )
+        crate::methods::auth::list_auth_trusted_domains(&self.config, params, options)
     }
     /// Adds a domain to the redirect URI whitelist for the specified branch. Only domains in this list are permitted as redirect targets after authentication.
     pub fn add_trusted_domain(
         &self,
-        project_id: String,
-        branch_id: String,
-        domain: String,
-        auth_provider: NeonAuthSupportedAuthProvider,
+        params: crate::methods::auth::AddAuthTrustedDomainParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::auth::add_auth_trusted_domain(
-            &self.config,
-            project_id,
-            branch_id,
-            domain,
-            auth_provider,
-            options,
-        )
+        crate::methods::auth::add_auth_trusted_domain(&self.config, params, options)
     }
     /// Removes a domain from the redirect URI whitelist for the specified branch. After removal, the domain can no longer be used as a redirect target after authentication.
     pub fn delete_trusted_domain(
         &self,
-        project_id: String,
-        branch_id: String,
-        auth_provider: NeonAuthSupportedAuthProvider,
-        domains: Vec<NeonAuthDeleteDomainFromRedirectURIWhitelistItem>,
+        params: crate::methods::auth::DeleteAuthTrustedDomainParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::auth::delete_auth_trusted_domain(
-            &self.config,
-            project_id,
-            branch_id,
-            auth_provider,
-            domains,
-            options,
-        )
+        crate::methods::auth::delete_auth_trusted_domain(&self.config, params, options)
     }
     /// Creates a new user in the Neon Auth user directory for the specified branch. The user is created in the `neon_auth.users_sync` table and can immediately authenticate using the branch's configured auth providers.
     pub fn create_user(
         &self,
-        project_id: String,
-        branch_id: String,
-        email: String,
-        name: Option<String>,
+        params: crate::methods::auth::CreateAuthUserParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthCreateNewUserResponse, crate::errors::SdkError> {
-        crate::methods::auth::create_auth_user(
-            &self.config,
-            project_id,
-            branch_id,
-            email,
-            name,
-            options,
-        )
+        crate::methods::auth::create_auth_user(&self.config, params, options)
     }
     /// Deletes the specified user from the Neon Auth user directory for the specified branch. Removes the user record from `neon_auth.users_sync`. This action cannot be undone.
     pub fn delete_user(
         &self,
-        project_id: String,
-        branch_id: String,
-        auth_user_id: String,
+        params: crate::methods::auth::DeleteAuthUserParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::auth::delete_auth_user(
-            &self.config,
-            project_id,
-            branch_id,
-            auth_user_id,
-            options,
-        )
+        crate::methods::auth::delete_auth_user(&self.config, params, options)
     }
     /// Updates the role of a user in the Neon Auth user directory for the specified branch. The role controls the user's level of access within the Neon Auth integration.
     pub fn update_user_role(
         &self,
-        project_id: String,
-        branch_id: String,
-        auth_user_id: String,
-        roles: Vec<String>,
+        params: crate::methods::auth::UpdateAuthUserRoleParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<UpdateNeonAuthUserRoleResponse, crate::errors::SdkError> {
-        crate::methods::auth::update_auth_user_role(
-            &self.config,
-            project_id,
-            branch_id,
-            auth_user_id,
-            roles,
-            options,
-        )
+        crate::methods::auth::update_auth_user_role(&self.config, params, options)
     }
     /// Lists the OAuth providers configured for the specified branch's Neon Auth integration.
     pub fn list_oauth_providers(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::ListAuthOauthProvidersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ListNeonAuthOauthProvidersResponse, crate::errors::SdkError> {
-        crate::methods::auth::list_auth_oauth_providers(
-            &self.config,
-            project_id,
-            branch_id,
-            options,
-        )
+        crate::methods::auth::list_auth_oauth_providers(&self.config, params, options)
     }
     /// Adds an OAuth provider configuration to the specified branch's Neon Auth integration. After adding, users can authenticate using the configured provider.
     pub fn add_oauth_provider(
@@ -914,18 +677,10 @@ impl AuthNamespace {
     /// Deletes an OAuth provider from the specified project.
     pub fn delete_oauth_provider(
         &self,
-        project_id: String,
-        branch_id: String,
-        oauth_provider_id: NeonAuthOauthProviderId,
+        params: crate::methods::auth::DeleteAuthOauthProviderParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::auth::delete_auth_oauth_provider(
-            &self.config,
-            project_id,
-            branch_id,
-            oauth_provider_id,
-            options,
-        )
+        crate::methods::auth::delete_auth_oauth_provider(&self.config, params, options)
     }
     /// Sends a test email using the SMTP server settings supplied in the request body to verify connectivity and credentials. The request body must include the full SMTP server settings (`host`, `port`, `username`, `password`, `sender_email`, `sender_name`) and the `recipient_email` address. Deprecated: to test a branch's already-saved configuration, use `sendNeonAuthEmailProviderTest`, which reuses the stored SMTP password server-side so the caller never has to re-supply (or be able to read) it. This endpoint remains available for testing an unsaved full configuration and for non-Better-Auth providers.
     ///
@@ -942,32 +697,18 @@ impl AuthNamespace {
     /// Sends a test email using the branch's already-saved custom SMTP configuration. Only the `recipient_email` is provided — the stored SMTP settings and password are used server-side, so the caller does not need to re-supply (or be able to read) the password. This avoids the GET response's masked password being sent back, which would fail SMTP authentication. Requires a configured custom SMTP provider on a Better Auth integration. A shared provider, a missing configuration, or a non-Better-Auth integration is rejected.
     pub fn send_email_provider_test(
         &self,
-        project_id: String,
-        branch_id: String,
-        recipient_email: String,
+        params: crate::methods::auth::SendAuthEmailProviderTestParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<SendNeonAuthTestEmailResponse, crate::errors::SdkError> {
-        crate::methods::auth::send_auth_email_provider_test(
-            &self.config,
-            project_id,
-            branch_id,
-            recipient_email,
-            options,
-        )
+        crate::methods::auth::send_auth_email_provider_test(&self.config, params, options)
     }
     /// Retrieves the email and password authentication configuration for the specified branch's Neon Auth integration, including whether it is enabled and the email verification method.
     pub fn get_email_and_password_config(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::GetAuthEmailAndPasswordConfigParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthEmailAndPasswordConfig, crate::errors::SdkError> {
-        crate::methods::auth::get_auth_email_and_password_config(
-            &self.config,
-            project_id,
-            branch_id,
-            options,
-        )
+        crate::methods::auth::get_auth_email_and_password_config(&self.config, params, options)
     }
     /// Updates the email and password authentication configuration for the specified branch's Neon Auth integration. Only the fields provided in the request body are updated.
     pub fn update_email_and_password_config(
@@ -980,63 +721,44 @@ impl AuthNamespace {
     /// Retrieves the email provider configuration for the specified branch's Neon Auth integration, including the provider type and server settings.
     pub fn get_email_provider(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::GetAuthEmailProviderParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthEmailServerConfigResponse, crate::errors::SdkError> {
-        crate::methods::auth::get_auth_email_provider(&self.config, project_id, branch_id, options)
+        crate::methods::auth::get_auth_email_provider(&self.config, params, options)
     }
     /// Updates the email provider configuration for a branch's Neon Auth integration. Use the `standard` fields to configure SMTP settings and the sender identity; Better Auth integrations merge omitted fields, while Legacy Stack Auth integrations require all six standard fields on each update. Returns the updated email provider configuration.
     ///
     /// Updates the email provider configuration for the specified branch's Neon Auth integration. The email provider handles transactional messages such as verification emails and password reset links. Partial `standard` updates — omitting fields to keep their stored values — are supported only for Better Auth integrations, which merge omitted fields server-side. Legacy Stack Auth integrations do not merge and require all six `standard` fields (`host`, `port`, `username`, `password`, `sender_email`, `sender_name`) on every update; a partial `standard` body is rejected with 400.
     pub fn update_email_provider(
         &self,
-        project_id: String,
-        branch_id: String,
-        body: NeonAuthEmailServerConfig,
+        params: crate::methods::auth::UpdateAuthEmailProviderParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthEmailServerConfigResponse, crate::errors::SdkError> {
-        crate::methods::auth::update_auth_email_provider(
-            &self.config,
-            project_id,
-            branch_id,
-            body,
-            options,
-        )
+        crate::methods::auth::update_auth_email_provider(&self.config, params, options)
     }
     /// Retrieves the localhost allow setting for the specified branch's Neon Auth integration. When enabled, authentication flows work from `localhost` without adding it to the redirect URI whitelist.
     pub fn get_allow_localhost(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::GetAuthAllowLocalhostParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthAllowLocalhostResponse, crate::errors::SdkError> {
-        crate::methods::auth::get_auth_allow_localhost(&self.config, project_id, branch_id, options)
+        crate::methods::auth::get_auth_allow_localhost(&self.config, params, options)
     }
     /// Updates the localhost allow setting for the specified branch's Neon Auth integration. When enabled, authentication flows work from `localhost` without adding it to the redirect URI whitelist.
     pub fn update_allow_localhost(
         &self,
-        project_id: String,
-        branch_id: String,
-        allow_localhost: bool,
+        params: crate::methods::auth::UpdateAuthAllowLocalhostParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthAllowLocalhostResponse, crate::errors::SdkError> {
-        crate::methods::auth::update_auth_allow_localhost(
-            &self.config,
-            project_id,
-            branch_id,
-            allow_localhost,
-            options,
-        )
+        crate::methods::auth::update_auth_allow_localhost(&self.config, params, options)
     }
     /// Returns all plugin configurations for Neon Auth in a single response. This endpoint aggregates organization, email provider, email and password, OAuth providers, and localhost settings.
     pub fn get_plugin_configs(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::GetAuthPluginConfigsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthPluginConfigs, crate::errors::SdkError> {
-        crate::methods::auth::get_auth_plugin_configs(&self.config, project_id, branch_id, options)
+        crate::methods::auth::get_auth_plugin_configs(&self.config, params, options)
     }
     /// Updates the organization plugin configuration for Neon Auth. The organization plugin enables multi-tenant organization support.
     pub fn update_organization_plugin(
@@ -1049,12 +771,10 @@ impl AuthNamespace {
     /// Updates the auth configuration for the branch. Currently supports updating the application name used in auth emails.
     pub fn update_config(
         &self,
-        project_id: String,
-        branch_id: String,
-        name: String,
+        params: crate::methods::auth::UpdateAuthConfigParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthConfigResponse, crate::errors::SdkError> {
-        crate::methods::auth::update_auth_config(&self.config, project_id, branch_id, name, options)
+        crate::methods::auth::update_auth_config(&self.config, params, options)
     }
     /// Updates the magic link plugin configuration for Neon Auth. The magic link plugin enables passwordless authentication via email magic links.
     pub fn update_magic_link_plugin(
@@ -1067,48 +787,26 @@ impl AuthNamespace {
     /// Returns the phone number plugin configuration for Neon Auth. The phone number plugin enables phone-based OTP authentication.
     pub fn get_phone_number_plugin(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::GetAuthPhoneNumberPluginParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthPhoneNumberConfig, crate::errors::SdkError> {
-        crate::methods::auth::get_auth_phone_number_plugin(
-            &self.config,
-            project_id,
-            branch_id,
-            options,
-        )
+        crate::methods::auth::get_auth_phone_number_plugin(&self.config, params, options)
     }
     /// Updates the phone number plugin configuration for Neon Auth. Only the fields provided in the request body are updated; omitted fields retain their current values. The phone number plugin enables phone-based OTP authentication. OTP codes are delivered via the `send.otp` webhook event with `delivery_preference: "sms"`. A webhook must be configured with the `send.otp` event enabled for SMS delivery to work.
     pub fn update_phone_number_plugin(
         &self,
-        project_id: String,
-        branch_id: String,
-        enabled: Option<bool>,
-        otp_expires_in: Option<i64>,
+        params: crate::methods::auth::UpdateAuthPhoneNumberPluginParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthPhoneNumberConfig, crate::errors::SdkError> {
-        crate::methods::auth::update_auth_phone_number_plugin(
-            &self.config,
-            project_id,
-            branch_id,
-            enabled,
-            otp_expires_in,
-            options,
-        )
+        crate::methods::auth::update_auth_phone_number_plugin(&self.config, params, options)
     }
     /// Returns the OAuth provider plugin configuration for Neon Auth. The OAuth provider plugin lets Neon Auth act as an OAuth 2.1 authorization server for your own clients, such as MCP clients.
     pub fn get_oauth_provider_plugin(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::GetAuthOauthProviderPluginParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthOAuthProviderConfig, crate::errors::SdkError> {
-        crate::methods::auth::get_auth_oauth_provider_plugin(
-            &self.config,
-            project_id,
-            branch_id,
-            options,
-        )
+        crate::methods::auth::get_auth_oauth_provider_plugin(&self.config, params, options)
     }
     /// Updates the OAuth provider plugin configuration for Neon Auth. Only the fields provided in the request body are updated; omitted fields retain their current values. A provided `resources` list replaces the stored list. A provided `mcp` object replaces the stored MCP configuration and must include `resource`. The plugin can only be enabled on the project's root branch.
     pub fn update_oauth_provider_plugin(
@@ -1121,11 +819,10 @@ impl AuthNamespace {
     /// Lists the OAuth clients registered for the branch's Neon Auth OAuth provider. Client secrets are never returned.
     pub fn list_oauth_clients(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::ListAuthOauthClientsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ListNeonAuthOAuthClientsResponse, crate::errors::SdkError> {
-        crate::methods::auth::list_auth_oauth_clients(&self.config, project_id, branch_id, options)
+        crate::methods::auth::list_auth_oauth_clients(&self.config, params, options)
     }
     /// Registers an OAuth client with the branch's Neon Auth OAuth provider. For `confidential` clients the response includes the `client_secret`, which is shown only once. Every entry in `resources` must be configured on the OAuth provider plugin.
     pub fn create_oauth_client(
@@ -1138,18 +835,10 @@ impl AuthNamespace {
     /// Returns an OAuth client registered with the branch's Neon Auth OAuth provider. The client secret is never returned.
     pub fn get_oauth_client(
         &self,
-        project_id: String,
-        branch_id: String,
-        client_id: String,
+        params: crate::methods::auth::GetAuthOauthClientParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthOAuthClient, crate::errors::SdkError> {
-        crate::methods::auth::get_auth_oauth_client(
-            &self.config,
-            project_id,
-            branch_id,
-            client_id,
-            options,
-        )
+        crate::methods::auth::get_auth_oauth_client(&self.config, params, options)
     }
     /// Updates an OAuth client. Only the fields provided in the request body are updated. A provided `resources` list replaces the client's stored list. The client `type` cannot be changed.
     pub fn update_oauth_client(
@@ -1162,43 +851,26 @@ impl AuthNamespace {
     /// Deletes an OAuth client. Tokens already issued to the client are not revoked.
     pub fn delete_oauth_client(
         &self,
-        project_id: String,
-        branch_id: String,
-        client_id: String,
+        params: crate::methods::auth::DeleteAuthOauthClientParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::auth::delete_auth_oauth_client(
-            &self.config,
-            project_id,
-            branch_id,
-            client_id,
-            options,
-        )
+        crate::methods::auth::delete_auth_oauth_client(&self.config, params, options)
     }
     /// Generates a new secret for a confidential OAuth client and invalidates the previous one. The new secret is shown only once.
     pub fn rotate_oauth_client_secret(
         &self,
-        project_id: String,
-        branch_id: String,
-        client_id: String,
+        params: crate::methods::auth::RotateAuthOauthClientSecretParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthOAuthClientSecret, crate::errors::SdkError> {
-        crate::methods::auth::rotate_auth_oauth_client_secret(
-            &self.config,
-            project_id,
-            branch_id,
-            client_id,
-            options,
-        )
+        crate::methods::auth::rotate_auth_oauth_client_secret(&self.config, params, options)
     }
     /// Returns the webhook configuration for the specified branch's Neon Auth integration, including the endpoint URL and the events that trigger it.
     pub fn get_webhook_config(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::auth::GetAuthWebhookConfigParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonAuthWebhookConfig, crate::errors::SdkError> {
-        crate::methods::auth::get_auth_webhook_config(&self.config, project_id, branch_id, options)
+        crate::methods::auth::get_auth_webhook_config(&self.config, params, options)
     }
     /// Updates the webhook configuration for the specified branch's Neon Auth integration. Webhooks notify an external endpoint when auth events occur, such as user creation or sign-in.
     pub fn update_webhook_config(
@@ -1225,11 +897,10 @@ impl BranchNamespace {
     /// Creates a branch in the specified project. No request body is required, but you can specify one to create a compute endpoint or select a non-default parent branch. By default, the branch is created from the project's default branch with no compute endpoint, and the branch name is auto-generated. To access the branch, add a `read_write` endpoint. Each branch supports one read-write endpoint and multiple read-only endpoints. For related information, see [Manage branches](https://neon.com/docs/manage/branches/).
     pub fn create(
         &self,
-        project_id: String,
-        body: Option<BranchCreateRequest>,
+        params: crate::methods::branch::CreateBranchParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<CreateBranchResponse, crate::errors::SdkError> {
-        crate::methods::branch::create_branch(&self.config, project_id, body, options)
+        crate::methods::branch::create_branch(&self.config, params, options)
     }
     /// Retrieves a list of branches for the specified project. Each Neon project has a root branch named `main`. A `branch_id` value has a `br-` prefix. A project may contain child branches that were branched from `main` or from another branch. A parent branch is identified by the `parent_id` value, which is the `id` of the parent branch. For related information, see [Manage branches](https://neon.com/docs/manage/branches/).
     pub fn list(
@@ -1244,48 +915,42 @@ impl BranchNamespace {
     /// Creates a new branch with anonymized data using PostgreSQL Anonymizer for static masking. This allows developers to work with masked production data. Optionally, provide `masking_rules` to set initial masking rules for the branch and `start_anonymization` to automatically start anonymization after creation. This combines functionality of updating masking rules and starting anonymization into the branch creation request. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn create_anonymized(
         &self,
-        project_id: String,
-        body: BranchAnonymizedCreateRequest,
+        params: crate::methods::branch::CreateBranchAnonymizedParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<CreateBranchResponse, crate::errors::SdkError> {
-        crate::methods::branch::create_branch_anonymized(&self.config, project_id, body, options)
+        crate::methods::branch::create_branch_anonymized(&self.config, params, options)
     }
     /// Retrieves the total number of branches in the specified project. Supports an optional `search` parameter to count branches matching a name filter.
     pub fn count(
         &self,
-        project_id: String,
-        search: Option<String>,
+        params: crate::methods::branch::CountBranchParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<BranchesCountResponse, crate::errors::SdkError> {
-        crate::methods::branch::count_branch(&self.config, project_id, search, options)
+        crate::methods::branch::count_branch(&self.config, params, options)
     }
     /// Retrieves information about the specified branch. A `branch_id` value has a `br-` prefix. Each Neon project is initially created with a root and default branch named `main`. A project can contain one or more branches. A parent branch is identified by a `parent_id` value, which is the `id` of the parent branch. For related information, see [Manage branches](https://neon.com/docs/manage/branches/).
     pub fn get(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::branch::GetBranchParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<GetBranchResponse, crate::errors::SdkError> {
-        crate::methods::branch::get_branch(&self.config, project_id, branch_id, options)
+        crate::methods::branch::get_branch(&self.config, params, options)
     }
     /// Deletes the specified branch from a project and places all compute endpoints into an idle state, breaking existing client connections. The deletion completes after all operations finish. You cannot delete a project's root or default branch, or a branch that has a child branch. A project must have at least one branch. For related information, see [Manage branches](https://neon.com/docs/manage/branches/).
     pub fn delete(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::branch::DeleteBranchParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<BranchOperations, crate::errors::SdkError> {
-        crate::methods::branch::delete_branch(&self.config, project_id, branch_id, options)
+        crate::methods::branch::delete_branch(&self.config, params, options)
     }
     /// Updates the specified branch. For more information, see [Manage branches](https://neon.com/docs/manage/branches/).
     pub fn update(
         &self,
-        project_id: String,
-        branch_id: String,
-        branch: BranchUpdateRequestBranch,
+        params: crate::methods::branch::UpdateBranchParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<BranchOperations, crate::errors::SdkError> {
-        crate::methods::branch::update_branch(&self.config, project_id, branch_id, branch, options)
+        crate::methods::branch::update_branch(&self.config, params, options)
     }
     /// Restores a branch to an earlier state in its own or another branch's history by specifying an LSN or timestamp. Creates a new branch from the historical state.
     pub fn restore(
@@ -1314,250 +979,148 @@ impl BranchNamespace {
     /// Retrieves the masking rules for the specified anonymized branch. Masking rules define how sensitive data should be anonymized using PostgreSQL Anonymizer. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn get_masking_rules(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::branch::GetMaskingRulesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<MaskingRulesResponse, crate::errors::SdkError> {
-        crate::methods::branch::get_masking_rules(&self.config, project_id, branch_id, options)
+        crate::methods::branch::get_masking_rules(&self.config, params, options)
     }
     /// Updates the masking rules for the specified anonymized branch. Masking rules define how sensitive data should be anonymized using PostgreSQL Anonymizer. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn update_masking_rules(
         &self,
-        project_id: String,
-        branch_id: String,
-        masking_rules: Vec<MaskingRule>,
+        params: crate::methods::branch::UpdateMaskingRulesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<MaskingRulesResponse, crate::errors::SdkError> {
-        crate::methods::branch::update_masking_rules(
-            &self.config,
-            project_id,
-            branch_id,
-            masking_rules,
-            options,
-        )
+        crate::methods::branch::update_masking_rules(&self.config, params, options)
     }
     /// Retrieves the current status of an anonymized branch, including its state and progress information. This endpoint allows you to monitor the anonymization process from initialization through completion. Only anonymized branches will have status information available. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn get_anonymized_status(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::branch::GetAnonymizedBranchStatusParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<AnonymizedBranchStatusResponse, crate::errors::SdkError> {
-        crate::methods::branch::get_anonymized_branch_status(
-            &self.config,
-            project_id,
-            branch_id,
-            options,
-        )
+        crate::methods::branch::get_anonymized_branch_status(&self.config, params, options)
     }
     /// Starts the anonymization process for an anonymized branch that is in the initialized, error, or anonymized state. This will apply all defined masking rules to anonymize sensitive data in the branch databases. The branch must be an anonymized branch to start anonymization. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn start_anonymization(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::branch::StartAnonymizationParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<AnonymizedBranchStatusResponse, crate::errors::SdkError> {
-        crate::methods::branch::start_anonymization(&self.config, project_id, branch_id, options)
+        crate::methods::branch::start_anonymization(&self.config, params, options)
     }
     /// Sets the specified branch as the project's default branch. The default designation is automatically removed from the previous default branch. For more information, see [Manage branches](https://neon.com/docs/manage/branches/).
     pub fn set_default(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::branch::SetBranchDefaultParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<BranchOperations, crate::errors::SdkError> {
-        crate::methods::branch::set_branch_default(&self.config, project_id, branch_id, options)
+        crate::methods::branch::set_branch_default(&self.config, params, options)
     }
     /// Finalizes a branch restore from a snapshot, making the restored branch function as the original branch it replaced. Use this operation only for branches created with `restoreSnapshot` and `finalize_restore` set to `false`; you can optionally provide a replacement name with `name`. The operation reassigns computes to the restored branch, restarting them, and renames both branches.
     ///
     /// Finalize the restore operation for a branch created from a snapshot. This operation updates the branch so it functions as the original branch it replaced. This includes: \- Reassigning any computes from the original branch to the restored branch (this will restart the computes) \- Renaming the restored branch to the original branch's name \- Renaming the original branch so it no longer uses the original name This operation only applies to branches created using the `restoreSnapshot` endpoint with `finalize_restore: false`.
     pub fn finalize_restore(
         &self,
-        project_id: String,
-        branch_id: String,
-        name: Option<String>,
+        params: crate::methods::branch::FinalizeRestoreBranchParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<OperationsResponse, crate::errors::SdkError> {
-        crate::methods::branch::finalize_restore_branch(
-            &self.config,
-            project_id,
-            branch_id,
-            name,
-            options,
-        )
+        crate::methods::branch::finalize_restore_branch(&self.config, params, options)
     }
     /// Retrieves a list of compute endpoints for the specified branch. Neon permits only one read-write compute endpoint per branch. A branch can have multiple read-only compute endpoints.
     pub fn list_endpoints(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::branch::ListBranchEndpointsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EndpointsResponse, crate::errors::SdkError> {
-        crate::methods::branch::list_branch_endpoints(&self.config, project_id, branch_id, options)
+        crate::methods::branch::list_branch_endpoints(&self.config, params, options)
     }
     /// Retrieves a list of databases for the specified branch. A branch can have multiple databases. For related information, see [Manage databases](https://neon.com/docs/manage/databases/).
     pub fn list_databases(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::branch::ListBranchDatabasesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<DatabasesResponse, crate::errors::SdkError> {
-        crate::methods::branch::list_branch_databases(&self.config, project_id, branch_id, options)
+        crate::methods::branch::list_branch_databases(&self.config, params, options)
     }
     /// Creates a database in the specified branch. A branch can have multiple databases. For related information, see [Manage databases](https://neon.com/docs/manage/databases/).
     pub fn create_database(
         &self,
-        project_id: String,
-        branch_id: String,
-        database: DatabaseCreateRequestDatabase,
+        params: crate::methods::branch::CreateBranchDatabaseParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<DatabaseOperations, crate::errors::SdkError> {
-        crate::methods::branch::create_branch_database(
-            &self.config,
-            project_id,
-            branch_id,
-            database,
-            options,
-        )
+        crate::methods::branch::create_branch_database(&self.config, params, options)
     }
     /// Retrieves information about the specified database. For related information, see [Manage databases](https://neon.com/docs/manage/databases/).
     pub fn get_database(
         &self,
-        project_id: String,
-        branch_id: String,
-        database_name: String,
+        params: crate::methods::branch::GetBranchDatabaseParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<DatabaseResponse, crate::errors::SdkError> {
-        crate::methods::branch::get_branch_database(
-            &self.config,
-            project_id,
-            branch_id,
-            database_name,
-            options,
-        )
+        crate::methods::branch::get_branch_database(&self.config, params, options)
     }
     /// Updates the specified database in the branch. For related information, see [Manage databases](https://neon.com/docs/manage/databases/).
     pub fn update_database(
         &self,
-        project_id: String,
-        branch_id: String,
-        database_name: String,
-        database: DatabaseUpdateRequestDatabase,
+        params: crate::methods::branch::UpdateBranchDatabaseParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<DatabaseOperations, crate::errors::SdkError> {
-        crate::methods::branch::update_branch_database(
-            &self.config,
-            project_id,
-            branch_id,
-            database_name,
-            database,
-            options,
-        )
+        crate::methods::branch::update_branch_database(&self.config, params, options)
     }
     /// Deletes the specified database from the branch. For related information, see [Manage databases](https://neon.com/docs/manage/databases/).
     pub fn delete_database(
         &self,
-        project_id: String,
-        branch_id: String,
-        database_name: String,
+        params: crate::methods::branch::DeleteBranchDatabaseParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<DatabaseOperations, crate::errors::SdkError> {
-        crate::methods::branch::delete_branch_database(
-            &self.config,
-            project_id,
-            branch_id,
-            database_name,
-            options,
-        )
+        crate::methods::branch::delete_branch_database(&self.config, params, options)
     }
     /// Retrieves a list of Postgres roles from the specified branch. For related information, see [Manage roles](https://neon.com/docs/manage/roles/).
     pub fn list_roles(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::branch::ListBranchRolesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<RolesResponse, crate::errors::SdkError> {
-        crate::methods::branch::list_branch_roles(&self.config, project_id, branch_id, options)
+        crate::methods::branch::list_branch_roles(&self.config, params, options)
     }
     /// Creates a Postgres role in the specified branch. For related information, see [Manage roles](https://neon.com/docs/manage/roles/). Connections established to the active compute endpoint will be dropped. If the compute endpoint is idle, the endpoint becomes active for a short period of time and is suspended afterward.
     pub fn create_role(
         &self,
-        project_id: String,
-        branch_id: String,
-        role: RoleCreateRequestRole,
+        params: crate::methods::branch::CreateBranchRoleParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<RoleOperations, crate::errors::SdkError> {
-        crate::methods::branch::create_branch_role(
-            &self.config,
-            project_id,
-            branch_id,
-            role,
-            options,
-        )
+        crate::methods::branch::create_branch_role(&self.config, params, options)
     }
     /// Retrieves details about the specified role. In Neon, the terms "role" and "user" are synonymous. For related information, see [Manage roles](https://neon.com/docs/manage/roles/).
     pub fn get_role(
         &self,
-        project_id: String,
-        branch_id: String,
-        role_name: String,
+        params: crate::methods::branch::GetBranchRoleParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<RoleResponse, crate::errors::SdkError> {
-        crate::methods::branch::get_branch_role(
-            &self.config,
-            project_id,
-            branch_id,
-            role_name,
-            options,
-        )
+        crate::methods::branch::get_branch_role(&self.config, params, options)
     }
     /// Deletes the specified Postgres role from the branch. For related information, see [Manage roles](https://neon.com/docs/manage/roles/).
     pub fn delete_role(
         &self,
-        project_id: String,
-        branch_id: String,
-        role_name: String,
+        params: crate::methods::branch::DeleteBranchRoleParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<RoleOperations, crate::errors::SdkError> {
-        crate::methods::branch::delete_branch_role(
-            &self.config,
-            project_id,
-            branch_id,
-            role_name,
-            options,
-        )
+        crate::methods::branch::delete_branch_role(&self.config, params, options)
     }
     /// Retrieves the password for the specified Postgres role, if possible. For related information, see [Manage roles](https://neon.com/docs/manage/roles/).
     pub fn get_role_password(
         &self,
-        project_id: String,
-        branch_id: String,
-        role_name: String,
+        params: crate::methods::branch::GetBranchRolePasswordParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<RolePasswordResponse, crate::errors::SdkError> {
-        crate::methods::branch::get_branch_role_password(
-            &self.config,
-            project_id,
-            branch_id,
-            role_name,
-            options,
-        )
+        crate::methods::branch::get_branch_role_password(&self.config, params, options)
     }
     /// Resets the password for the specified Postgres role. Returns a new password and operations. The new password is ready to use when the last operation finishes. The old password remains valid until last operation finishes. Connections to the compute endpoint are dropped. If idle, the compute endpoint becomes active for a short period of time. For related information, see [Manage roles](https://neon.com/docs/manage/roles/).
     pub fn reset_role_password(
         &self,
-        project_id: String,
-        branch_id: String,
-        role_name: String,
+        params: crate::methods::branch::ResetBranchRolePasswordParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<RoleOperations, crate::errors::SdkError> {
-        crate::methods::branch::reset_branch_role_password(
-            &self.config,
-            project_id,
-            branch_id,
-            role_name,
-            options,
-        )
+        crate::methods::branch::reset_branch_role_password(&self.config, params, options)
     }
 }
 
@@ -1576,59 +1139,42 @@ impl RealtimeNamespace {
     /// Retrieves whether Realtime is enabled for the branch, whether a change is still being applied, and, once provisioned, its invocation URL and allowed origins. The shared secret is returned by `GET /projects/{project_id}/branches/{branch_id}/realtime/secret`.
     pub fn get(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::realtime::GetRealtimeParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<Realtime, crate::errors::SdkError> {
-        crate::methods::realtime::get_realtime(&self.config, project_id, branch_id, options)
+        crate::methods::realtime::get_realtime(&self.config, params, options)
     }
     /// Enables Realtime for the branch, or applies new options to an enabled branch. Provisioning is asynchronous; poll the Realtime state until it is no longer pending.
     pub fn enable(
         &self,
-        project_id: String,
-        branch_id: String,
-        allowed_origins: Option<Vec<String>>,
+        params: crate::methods::realtime::EnableRealtimeParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::realtime::enable_realtime(
-            &self.config,
-            project_id,
-            branch_id,
-            allowed_origins,
-            options,
-        )
+        crate::methods::realtime::enable_realtime(&self.config, params, options)
     }
     /// Disables Realtime for the branch and discards its shared secret. Deprovisioning is asynchronous.
     pub fn disable(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::realtime::DisableRealtimeParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::realtime::disable_realtime(&self.config, project_id, branch_id, options)
+        crate::methods::realtime::disable_realtime(&self.config, params, options)
     }
     /// Retrieves the secret the application backend issues Realtime tokens with. Requires permission to read the project's credentials. Returns 404 while Realtime is disabled or before the secret is provisioned. After a rotation, this returns the previous secret until `pending` is false.
     pub fn get_secret(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::realtime::GetRealtimeSecretParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<RealtimeSecret, crate::errors::SdkError> {
-        crate::methods::realtime::get_realtime_secret(&self.config, project_id, branch_id, options)
+        crate::methods::realtime::get_realtime_secret(&self.config, params, options)
     }
     /// Replaces the branch's Realtime shared secret. Rotation is asynchronous: once the Realtime state is no longer pending, the previous secret stops working and `GET /projects/{project_id}/branches/{branch_id}/realtime/secret` returns the new one.
     pub fn rotate_secret(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::realtime::RotateRealtimeSecretParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::realtime::rotate_realtime_secret(
-            &self.config,
-            project_id,
-            branch_id,
-            options,
-        )
+        crate::methods::realtime::rotate_realtime_secret(&self.config, params, options)
     }
 }
 
@@ -1647,80 +1193,66 @@ impl EndpointNamespace {
     /// Creates a compute endpoint for the specified branch. A compute endpoint is a Neon compute instance. There is a maximum of one read-write compute endpoint per branch. If the specified branch already has a read-write compute endpoint, the operation fails. A branch can have multiple read-only compute endpoints. For more information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
     pub fn create(
         &self,
-        project_id: String,
-        endpoint: EndpointCreateRequestEndpoint,
+        params: crate::methods::endpoint::CreateEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EndpointOperations, crate::errors::SdkError> {
-        crate::methods::endpoint::create_endpoint(&self.config, project_id, endpoint, options)
+        crate::methods::endpoint::create_endpoint(&self.config, params, options)
     }
     /// Retrieves a list of compute endpoints for the specified project. A compute endpoint is a Neon compute instance. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
     pub fn list(
         &self,
-        project_id: String,
+        params: crate::methods::endpoint::ListEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EndpointsResponse, crate::errors::SdkError> {
-        crate::methods::endpoint::list_endpoint(&self.config, project_id, options)
+        crate::methods::endpoint::list_endpoint(&self.config, params, options)
     }
     /// Retrieves information about the specified compute endpoint. A compute endpoint is a Neon compute instance. An `endpoint_id` has an `ep-` prefix. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
     pub fn get(
         &self,
-        project_id: String,
-        endpoint_id: String,
+        params: crate::methods::endpoint::GetEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EndpointResponse, crate::errors::SdkError> {
-        crate::methods::endpoint::get_endpoint(&self.config, project_id, endpoint_id, options)
+        crate::methods::endpoint::get_endpoint(&self.config, params, options)
     }
     /// Deletes the specified compute endpoint. A compute endpoint is a Neon compute instance. Deleting a compute endpoint drops existing network connections to the compute endpoint. The deletion is completed when the last operation in the chain finishes successfully. An `endpoint_id` has an `ep-` prefix. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
     pub fn delete(
         &self,
-        project_id: String,
-        endpoint_id: String,
+        params: crate::methods::endpoint::DeleteEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EndpointOperations, crate::errors::SdkError> {
-        crate::methods::endpoint::delete_endpoint(&self.config, project_id, endpoint_id, options)
+        crate::methods::endpoint::delete_endpoint(&self.config, params, options)
     }
     /// Updates the specified compute endpoint. An `endpoint_id` has an `ep-` prefix. A `branch_id` has a `br-` prefix. For more information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/). If the returned list of operations is not empty, the compute endpoint is not ready to use. The client must wait for the last operation to finish before using the compute endpoint. If the compute endpoint was idle before the update, it becomes active for a short period of time, and the control plane suspends it again after the update.
     pub fn update(
         &self,
-        project_id: String,
-        endpoint_id: String,
-        endpoint: EndpointUpdateRequestEndpoint,
+        params: crate::methods::endpoint::UpdateEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EndpointOperations, crate::errors::SdkError> {
-        crate::methods::endpoint::update_endpoint(
-            &self.config,
-            project_id,
-            endpoint_id,
-            endpoint,
-            options,
-        )
+        crate::methods::endpoint::update_endpoint(&self.config, params, options)
     }
     /// Starts a compute endpoint. The compute endpoint is ready to use after the last operation in the chain finishes successfully. An `endpoint_id` has an `ep-` prefix. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
     pub fn start(
         &self,
-        project_id: String,
-        endpoint_id: String,
+        params: crate::methods::endpoint::StartEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EndpointOperations, crate::errors::SdkError> {
-        crate::methods::endpoint::start_endpoint(&self.config, project_id, endpoint_id, options)
+        crate::methods::endpoint::start_endpoint(&self.config, params, options)
     }
     /// Suspends the specified compute endpoint. An `endpoint_id` has an `ep-` prefix. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
     pub fn suspend(
         &self,
-        project_id: String,
-        endpoint_id: String,
+        params: crate::methods::endpoint::SuspendEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EndpointOperations, crate::errors::SdkError> {
-        crate::methods::endpoint::suspend_endpoint(&self.config, project_id, endpoint_id, options)
+        crate::methods::endpoint::suspend_endpoint(&self.config, params, options)
     }
     /// Restarts the specified compute endpoint by immediately suspending it and then starting it again. An `endpoint_id` has an `ep-` prefix. For information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).
     pub fn restart(
         &self,
-        project_id: String,
-        endpoint_id: String,
+        params: crate::methods::endpoint::RestartEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EndpointOperations, crate::errors::SdkError> {
-        crate::methods::endpoint::restart_endpoint(&self.config, project_id, endpoint_id, options)
+        crate::methods::endpoint::restart_endpoint(&self.config, params, options)
     }
 }
 
@@ -1789,82 +1321,68 @@ impl OrganizationsNamespace {
     /// Retrieves details for the specified organization, including its name, plan, and configuration.
     pub fn get(
         &self,
-        org_id: String,
+        params: crate::methods::organizations::GetOrganizationParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<Organization, crate::errors::SdkError> {
-        crate::methods::organizations::get_organization(&self.config, org_id, options)
+        crate::methods::organizations::get_organization(&self.config, params, options)
     }
     /// Retrieves the API keys for the specified organization. The response does not include API key tokens. A token is only provided when creating an API key. API keys can also be managed in the Neon Console. For more information, see [Manage API keys](https://neon.com/docs/manage/api-keys/).
     pub fn list_api_keys(
         &self,
-        org_id: String,
+        params: crate::methods::organizations::ListOrganizationsApiKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<Vec<OrgApiKeysListResponseItem>, crate::errors::SdkError> {
-        crate::methods::organizations::list_organizations_api_keys(&self.config, org_id, options)
+        crate::methods::organizations::list_organizations_api_keys(&self.config, params, options)
     }
     /// Creates an API key for the specified organization. The `key_name` is a user-specified name for the key. Returns an `id` and `key`; the `key` is a randomly generated, 64-bit token required to access the Neon API. Store the key securely — it is only returned once. API keys can also be managed in the Neon Console. See [Manage API keys](https://neon.com/docs/manage/api-keys/).
     pub fn create_api_key(
         &self,
-        org_id: String,
-        body: OrgApiKeyCreateRequest,
+        params: crate::methods::organizations::CreateOrganizationsApiKeyParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<OrgApiKeyCreateResponse, crate::errors::SdkError> {
-        crate::methods::organizations::create_organizations_api_key(
-            &self.config,
-            org_id,
-            body,
-            options,
-        )
+        crate::methods::organizations::create_organizations_api_key(&self.config, params, options)
     }
     /// Revokes the specified organization API key. An API key that is no longer needed can be revoked. This action cannot be reversed. API keys can also be managed in the Neon Console. See [Manage API keys](https://neon.com/docs/manage/api-keys/).
     pub fn revoke_api_key(
         &self,
-        org_id: String,
-        key_id: i64,
+        params: crate::methods::organizations::RevokeOrganizationsApiKeyParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<OrgApiKeyRevokeResponse, crate::errors::SdkError> {
-        crate::methods::organizations::revoke_organizations_api_key(
-            &self.config,
-            org_id,
-            key_id,
-            options,
-        )
+        crate::methods::organizations::revoke_organizations_api_key(&self.config, params, options)
     }
     /// Returns the configured monthly spending limit for the specified organization. `spending_limit_cents: null` indicates that no limit is currently set. Available to organization members with read access on Launch and Scale plans only.
     pub fn get_spending_limit(
         &self,
-        org_id: String,
+        params: crate::methods::organizations::GetOrganizationSpendingLimitParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<SpendingLimitResponse, crate::errors::SdkError> {
         crate::methods::organizations::get_organization_spending_limit(
             &self.config,
-            org_id,
+            params,
             options,
         )
     }
     /// Sets the monthly spending limit for the specified organization. To remove a previously configured limit, send a DELETE request to this endpoint. When a limit is configured, email notifications are sent at 80% and 100% of the limit. Computes are not suspended when the limit is reached. Available to organization admins on Launch and Scale plans only.
     pub fn set_spending_limit(
         &self,
-        org_id: String,
-        spending_limit_cents: i64,
+        params: crate::methods::organizations::SetOrganizationSpendingLimitParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<SpendingLimitResponse, crate::errors::SdkError> {
         crate::methods::organizations::set_organization_spending_limit(
             &self.config,
-            org_id,
-            spending_limit_cents,
+            params,
             options,
         )
     }
     /// Removes the configured monthly spending limit for the specified organization. Idempotent — removing an already-unset limit still succeeds. Available to organization admins on Launch and Scale plans only.
     pub fn delete_spending_limit(
         &self,
-        org_id: String,
+        params: crate::methods::organizations::DeleteOrganizationSpendingLimitParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EmptyResponse, crate::errors::SdkError> {
         crate::methods::organizations::delete_organization_spending_limit(
             &self.config,
-            org_id,
+            params,
             options,
         )
     }
@@ -1879,158 +1397,112 @@ impl OrganizationsNamespace {
     /// Retrieves information about the specified organization member.
     pub fn get_member(
         &self,
-        org_id: String,
-        member_id: String,
+        params: crate::methods::organizations::GetOrganizationMemberParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<Member, crate::errors::SdkError> {
-        crate::methods::organizations::get_organization_member(
-            &self.config,
-            org_id,
-            member_id,
-            options,
-        )
+        crate::methods::organizations::get_organization_member(&self.config, params, options)
     }
     /// Updates the role of an existing member in the specified organization. The requested role must be valid for the organization. Only organization admins can call this endpoint.
     pub fn update_member(
         &self,
-        org_id: String,
-        member_id: String,
-        role: MemberRole,
+        params: crate::methods::organizations::UpdateOrganizationMemberParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<Member, crate::errors::SdkError> {
-        crate::methods::organizations::update_organization_member(
-            &self.config,
-            org_id,
-            member_id,
-            role,
-            options,
-        )
+        crate::methods::organizations::update_organization_member(&self.config, params, options)
     }
     /// Removes the specified member from the organization. Only organization admins can perform this action. The last admin in an organization cannot be removed.
     pub fn remove_member(
         &self,
-        org_id: String,
-        member_id: String,
+        params: crate::methods::organizations::RemoveOrganizationMemberParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EmptyResponse, crate::errors::SdkError> {
-        crate::methods::organizations::remove_organization_member(
-            &self.config,
-            org_id,
-            member_id,
-            options,
-        )
+        crate::methods::organizations::remove_organization_member(&self.config, params, options)
     }
     /// Retrieves pending and accepted invitations for the specified organization.
     pub fn list_invitations(
         &self,
-        org_id: String,
+        params: crate::methods::organizations::ListOrganizationsInvitationsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<OrganizationInvitationsResponse, crate::errors::SdkError> {
-        crate::methods::organizations::list_organizations_invitations(&self.config, org_id, options)
+        crate::methods::organizations::list_organizations_invitations(&self.config, params, options)
     }
     /// Creates invitations for a specific organization. If the invited user has an existing account, they automatically join as a member. If they don't yet have an account, they are invited to create one, after which they become a member. Each invited user receives an email notification.
     pub fn create_invitations(
         &self,
-        org_id: String,
-        invitations: Vec<OrganizationInviteCreateRequest>,
+        params: crate::methods::organizations::CreateOrganizationInvitationsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<OrganizationInvitationsResponse, crate::errors::SdkError> {
         crate::methods::organizations::create_organization_invitations(
             &self.config,
-            org_id,
-            invitations,
+            params,
             options,
         )
     }
     /// Transfers selected projects, identified by their IDs, from your organization to another specified organization.
     pub fn transfer_projects(
         &self,
-        source_org_id: String,
-        destination_org_id: String,
-        project_ids: Vec<String>,
+        params: crate::methods::organizations::TransferOrganizationsProjectsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EmptyResponse, crate::errors::SdkError> {
         crate::methods::organizations::transfer_organizations_projects(
             &self.config,
-            source_org_id,
-            destination_org_id,
-            project_ids,
+            params,
             options,
         )
     }
     /// Retrieves the list of VPC endpoints for the specified Neon organization across all regions.
     pub fn list_vpc_endpoints_all_regions(
         &self,
-        org_id: String,
+        params: crate::methods::organizations::ListOrganizationVpcEndpointsAllRegionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<VPCEndpointsWithRegionResponse, crate::errors::SdkError> {
         crate::methods::organizations::list_organization_vpc_endpoints_all_regions(
             &self.config,
-            org_id,
+            params,
             options,
         )
     }
     /// Retrieves the list of VPC endpoints for the specified Neon organization.
     pub fn list_vpc_endpoints(
         &self,
-        org_id: String,
-        region_id: String,
+        params: crate::methods::organizations::ListOrganizationVpcEndpointsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<VPCEndpointsResponse, crate::errors::SdkError> {
         crate::methods::organizations::list_organization_vpc_endpoints(
             &self.config,
-            org_id,
-            region_id,
+            params,
             options,
         )
     }
     /// Retrieves the current state and configuration details of a specified VPC endpoint.
     pub fn get_vpc_endpoint(
         &self,
-        org_id: String,
-        region_id: String,
-        vpc_endpoint_id: String,
+        params: crate::methods::organizations::GetOrganizationsVpcEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<VPCEndpointDetails, crate::errors::SdkError> {
-        crate::methods::organizations::get_organizations_vpc_endpoint(
-            &self.config,
-            org_id,
-            region_id,
-            vpc_endpoint_id,
-            options,
-        )
+        crate::methods::organizations::get_organizations_vpc_endpoint(&self.config, params, options)
     }
     /// Assigns a VPC endpoint to a Neon organization or updates its existing assignment.
     pub fn assign_vpc_endpoint(
         &self,
-        org_id: String,
-        region_id: String,
-        vpc_endpoint_id: String,
-        label: String,
+        params: crate::methods::organizations::AssignOrganizationVpcEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::organizations::assign_organization_vpc_endpoint(
             &self.config,
-            org_id,
-            region_id,
-            vpc_endpoint_id,
-            label,
+            params,
             options,
         )
     }
     /// Deletes the VPC endpoint from the specified Neon organization. If you delete a VPC endpoint from a Neon organization, that VPC endpoint cannot be added back to the Neon organization.
     pub fn delete_vpc_endpoint(
         &self,
-        org_id: String,
-        region_id: String,
-        vpc_endpoint_id: String,
+        params: crate::methods::organizations::DeleteOrganizationVpcEndpointParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::organizations::delete_organization_vpc_endpoint(
             &self.config,
-            org_id,
-            region_id,
-            vpc_endpoint_id,
+            params,
             options,
         )
     }
@@ -2051,10 +1523,10 @@ impl RegionNamespace {
     /// Lists supported Neon regions. \*\*Note:\*\* Not all regions are available to all organizations. Pass the `org_id` parameter to get an accurate list of regions available to your organization.
     pub fn get_active(
         &self,
-        org_id: Option<String>,
+        params: crate::methods::region::GetActiveRegionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ActiveRegionsResponse, crate::errors::SdkError> {
-        crate::methods::region::get_active_regions(&self.config, org_id, options)
+        crate::methods::region::get_active_regions(&self.config, params, options)
     }
 }
 
@@ -2091,16 +1563,10 @@ impl UsersNamespace {
     /// This operation is deprecated and may be removed in a future release.
     pub fn transfer_projects(
         &self,
-        destination_org_id: String,
-        project_ids: Vec<String>,
+        params: crate::methods::users::TransferUsersProjectsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EmptyResponse, crate::errors::SdkError> {
-        crate::methods::users::transfer_users_projects(
-            &self.config,
-            destination_org_id,
-            project_ids,
-            options,
-        )
+        crate::methods::users::transfer_users_projects(&self.config, params, options)
     }
     /// Returns authentication details for the credentials used in the request, including the credential type (API key, Bearer token, or OAuth session) and the associated identity.
     pub fn get_auth_details(
@@ -2134,39 +1600,30 @@ impl SnapshotNamespace {
     /// Lists the snapshots for the specified project. Each snapshot represents a point-in-time backup of the project data.
     pub fn list(
         &self,
-        project_id: String,
+        params: crate::methods::snapshot::ListSnapshotsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<crate::methods::snapshot::ListSnapshotsResponse, crate::errors::SdkError> {
-        crate::methods::snapshot::list_snapshots(&self.config, project_id, options)
+        crate::methods::snapshot::list_snapshots(&self.config, params, options)
     }
     /// Deletes a specified snapshot from a project. Use `project_id` and `snapshot_id` to identify the project and snapshot. Deletion is asynchronous; the response includes operation details for tracking progress.
     ///
     /// Deletes the specified snapshot.
     pub fn delete(
         &self,
-        project_id: String,
-        snapshot_id: String,
+        params: crate::methods::snapshot::DeleteSnapshotParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<OperationsResponse, crate::errors::SdkError> {
-        crate::methods::snapshot::delete_snapshot(&self.config, project_id, snapshot_id, options)
+        crate::methods::snapshot::delete_snapshot(&self.config, params, options)
     }
     /// Updates the name or expiration time of a project snapshot. Supply the `snapshot` object with the fields to change; omitting `expires_at` leaves the current expiration unchanged, while sending `null` clears it. A 200 response returns the updated snapshot.
     ///
     /// Updates the specified snapshot.
     pub fn update(
         &self,
-        project_id: String,
-        snapshot_id: String,
-        snapshot: SnapshotUpdateRequestSnapshot,
+        params: crate::methods::snapshot::UpdateSnapshotParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<crate::methods::snapshot::UpdateSnapshotResponse, crate::errors::SdkError> {
-        crate::methods::snapshot::update_snapshot(
-            &self.config,
-            project_id,
-            snapshot_id,
-            snapshot,
-            options,
-        )
+        crate::methods::snapshot::update_snapshot(&self.config, params, options)
     }
     /// Restores the specified snapshot to a new branch, and optionally finalizes the restore operation to replace the original branch.
     pub fn restore(
@@ -2179,32 +1636,18 @@ impl SnapshotNamespace {
     /// Returns the backup schedule for the specified branch, including the configured snapshot frequencies.
     pub fn get_schedule(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::snapshot::GetSnapshotScheduleParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<BackupSchedule, crate::errors::SdkError> {
-        crate::methods::snapshot::get_snapshot_schedule(
-            &self.config,
-            project_id,
-            branch_id,
-            options,
-        )
+        crate::methods::snapshot::get_snapshot_schedule(&self.config, params, options)
     }
     /// Updates the backup schedule for the specified branch. The schedule defines how often automatic snapshots are created (for example, `daily` or `weekly`). Requires a paid plan.
     pub fn set_schedule(
         &self,
-        project_id: String,
-        branch_id: String,
-        schedule: Vec<BackupScheduleItem>,
+        params: crate::methods::snapshot::SetSnapshotScheduleParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<EmptyResponse, crate::errors::SdkError> {
-        crate::methods::snapshot::set_snapshot_schedule(
-            &self.config,
-            project_id,
-            branch_id,
-            schedule,
-            options,
-        )
+        crate::methods::snapshot::set_snapshot_schedule(&self.config, params, options)
     }
 }
 
@@ -2223,45 +1666,26 @@ impl BucketsNamespace {
     /// Creates a new branchable object storage bucket on the specified branch. Buckets are managed by the Neon Platform branchable object storage service. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn create(
         &self,
-        project_id: String,
-        branch_id: String,
-        name: String,
-        access_level: Option<BucketCreateRequestAccessLevelEnum>,
+        params: crate::methods::buckets::CreateBucketsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<BucketResponse, crate::errors::SdkError> {
-        crate::methods::buckets::create_buckets(
-            &self.config,
-            project_id,
-            branch_id,
-            name,
-            access_level,
-            options,
-        )
+        crate::methods::buckets::create_buckets(&self.config, params, options)
     }
     /// Lists branchable object storage buckets visible on the specified branch, including those inherited from ancestor branches. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn list(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::buckets::ListBucketsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<BucketsListResponse, crate::errors::SdkError> {
-        crate::methods::buckets::list_buckets(&self.config, project_id, branch_id, options)
+        crate::methods::buckets::list_buckets(&self.config, params, options)
     }
     /// Deletes the named bucket from the specified branch. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn delete(
         &self,
-        project_id: String,
-        branch_id: String,
-        bucket_name: String,
+        params: crate::methods::buckets::DeleteBucketsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::buckets::delete_buckets(
-            &self.config,
-            project_id,
-            branch_id,
-            bucket_name,
-            options,
-        )
+        crate::methods::buckets::delete_buckets(&self.config, params, options)
     }
     /// Lists objects visible in the named bucket on the specified branch, including those inherited from ancestor branches. Listing is served by the user's session (no customer S3 credentials required). When `delimiter` is supplied (typically `/`), keys are collapsed into common prefixes (`folders`) so callers can render a folder-style browser; keys that do not contain the delimiter after `prefix` are returned as `objects`. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn list_objects(
@@ -2288,56 +1712,26 @@ impl BucketsNamespace {
     /// Deletes the named object from the bucket on the specified branch. Served by the user's session (no customer S3 credentials required). \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn delete_object(
         &self,
-        project_id: String,
-        branch_id: String,
-        bucket_name: String,
-        object_key: String,
+        params: crate::methods::buckets::DeleteBucketsObjectParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::buckets::delete_buckets_object(
-            &self.config,
-            project_id,
-            branch_id,
-            bucket_name,
-            object_key,
-            options,
-        )
+        crate::methods::buckets::delete_buckets_object(&self.config, params, options)
     }
     /// Streams the raw bytes of the named object from the bucket on the specified branch, including objects inherited from ancestor branches. Served by the user's session (no customer S3 credentials required). The body is returned as `application/octet-stream` so a browser treats it as a download; the `Content-Length` and `ETag` response headers echo the stored object metadata. BINARY-STREAM EXCEPTION TO THE BUILD-GENERATED-TYPES RULE (#7029): the successful 200 body is the raw object stream, proxied verbatim from the platform object storage admin endpoint. It is modeled as an `application/octet-stream` binary body (not a JSON response schema) and is streamed without buffering the whole object in memory. Error responses still use the generated `GeneralError` shape. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn get_object(
         &self,
-        project_id: String,
-        branch_id: String,
-        bucket_name: String,
-        object_key: String,
+        params: crate::methods::buckets::GetBucketsObjectParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<Vec<u8>, crate::errors::SdkError> {
-        crate::methods::buckets::get_buckets_object(
-            &self.config,
-            project_id,
-            branch_id,
-            bucket_name,
-            object_key,
-            options,
-        )
+        crate::methods::buckets::get_buckets_object(&self.config, params, options)
     }
     /// Soft-deletes every object on the specified branch whose key starts with `prefix`, in a single call. Intended to back a "delete folder" action in an object browser: a `prefix` of `app/avatars/` removes every object beneath that folder. Served by the user's session (no customer S3 credentials required). `prefix` must be non-empty, end with `/`, be at most 1024 bytes, and contain no control characters \- a partial-segment prefix cannot accidentally delete sibling keys. Returns the number of objects soft-deleted (`deleted`), which may be 0 when no live object matched the prefix on this branch. Only objects physically present on this branch are tombstoned; objects inherited from an ancestor branch via copy-on-write (not materialized on this branch) are out of scope. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn delete_objects_by_prefix(
         &self,
-        project_id: String,
-        branch_id: String,
-        bucket_name: String,
-        prefix: String,
+        params: crate::methods::buckets::DeleteBucketsObjectsByPrefixParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<BucketObjectsDeletePrefixResponse, crate::errors::SdkError> {
-        crate::methods::buckets::delete_buckets_objects_by_prefix(
-            &self.config,
-            project_id,
-            branch_id,
-            bucket_name,
-            prefix,
-            options,
-        )
+        crate::methods::buckets::delete_buckets_objects_by_prefix(&self.config, params, options)
     }
     /// Returns a presigned URL that transfers bytes directly to or from the object's bucket on the specified branch, without the caller ever handling S3 credentials. The `operation` field selects the direction: \- `upload` returns a presigned `PUT` URL (the caller `PUT`s the file bytes straight to `url` with the returned `headers`). Authorized with project write access. \- `download` returns a presigned `GET` URL (the caller `GET`s the bytes straight from `url`). Authorized with project read access. The platform mints a short-lived credential and builds the SigV4-signed URL against the branch's S3 data-plane host, returning it together with the HTTP method, any headers the caller must echo, and the URL's expiry. Served by the user's session (no customer S3 credentials required). \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn presign_object(
@@ -2364,11 +1758,10 @@ impl StorageNamespace {
     /// Returns whether branchable object storage is usable for the specified branch. A 200 response means the branch is registered in the object storage service and the S3 data plane will accept requests for it. A 404 response includes a `reason` field indicating why object storage is unavailable. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn get(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::storage::GetStorageParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<BranchStorage, crate::errors::SdkError> {
-        crate::methods::storage::get_storage(&self.config, project_id, branch_id, options)
+        crate::methods::storage::get_storage(&self.config, params, options)
     }
 }
 
@@ -2387,11 +1780,10 @@ impl AiGatewayNamespace {
     /// Returns the AI Gateway endpoint host for the specified branch, used to render code-snippet base URLs. A 200 response means the branch is registered and this region serves the AI gateway. A 404 response includes a `reason` field indicating why the gateway is unavailable. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn get(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::ai_gateway::GetAiGatewayParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<BranchAiGateway, crate::errors::SdkError> {
-        crate::methods::ai_gateway::get_ai_gateway(&self.config, project_id, branch_id, options)
+        crate::methods::ai_gateway::get_ai_gateway(&self.config, params, options)
     }
 }
 
@@ -2418,11 +1810,10 @@ impl LogsNamespace {
     /// Lists the low-cardinality log fields observed on this branch whose distinct values can be discovered with the log field-values endpoint. The set is computed per branch and grows as new fields are observed, so treat it as data rather than a fixed list: discover a field here, then pass it as `field_name` to the field-values endpoint. \*\*Note\*\*: This endpoint is currently in Private Beta.
     pub fn list_fields(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::logs::ListLogsFieldsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ProjectBranchLogFieldsResponse, crate::errors::SdkError> {
-        crate::methods::logs::list_logs_fields(&self.config, project_id, branch_id, options)
+        crate::methods::logs::list_logs_fields(&self.config, params, options)
     }
     /// Lists the distinct values observed for a low-cardinality log field in the requested time range. Call the log fields endpoint first to learn which `field_name` values this branch supports; a field that branch has never emitted is rejected with `unknown_field`. Give the window either as `since` or as an explicit `start_time`; supplying both is rejected. If neither is given, the previous six hours are used. The maximum supported time range is seven days. \*\*Note\*\*: This endpoint is currently in Private Beta.
     pub fn list_field_values(
@@ -2459,59 +1850,34 @@ impl CredentialsNamespace {
     /// Returns metadata for customer-issued credentials on the branch. Secrets are never included. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn list(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::credentials::ListCredentialsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ListCredentialsResponse, crate::errors::SdkError> {
-        crate::methods::credentials::list_credentials(&self.config, project_id, branch_id, options)
+        crate::methods::credentials::list_credentials(&self.config, params, options)
     }
     /// Soft-deletes the credential. Idempotent. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn revoke(
         &self,
-        project_id: String,
-        branch_id: String,
-        token_id: String,
+        params: crate::methods::credentials::RevokeCredentialParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::credentials::revoke_credential(
-            &self.config,
-            project_id,
-            branch_id,
-            token_id,
-            options,
-        )
+        crate::methods::credentials::revoke_credential(&self.config, params, options)
     }
     /// Returns the live `api_token` and `s3_secret_access_key` of an existing credential, so a credential whose issuance response was lost can be recovered without minting a new one. This is a POST with an explicit `/reveal` verb so the secrets never ride a GET, where they would land in access logs, browser history and proxy caches. Revoked and expired credentials return 404, as does a `token_id` that does not belong to this project. A credential issued before secret retrieval was supported has no recoverable secret and returns 409 — rotate it to obtain one. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn reveal(
         &self,
-        project_id: String,
-        branch_id: String,
-        token_id: String,
+        params: crate::methods::credentials::RevealCredentialParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<CredentialSecret, crate::errors::SdkError> {
-        crate::methods::credentials::reveal_credential(
-            &self.config,
-            project_id,
-            branch_id,
-            token_id,
-            options,
-        )
+        crate::methods::credentials::reveal_credential(&self.config, params, options)
     }
     /// Replaces the secret material on an existing scoped credential in place. `token_id` is preserved — it is the `AWS_ACCESS_KEY_ID` for S3-compatible clients, so the access key id your application already holds keeps working and only the secret changes. This is the analog of resetting a Postgres password, not of issuing a second credential. The response carries the new `api_token` and `s3_secret_access_key` exactly once. Rotation is \*\*not\*\* idempotent: retrying after an ambiguous timeout mints another secret and supersedes the previous replacement, so a retry does not recover a lost response — it only invalidates the secret you did not receive. If you lose the response, issue a replacement credential and revoke this one. The old secret stops authenticating as soon as the rotation commits. Where a region caches credentials on its data-plane verifiers, a replica may briefly keep accepting the old secret — and rejecting the new one — until its cache entry expires; where it does not, the cutover is immediate apart from requests already in flight. Either way the changeover is not atomic across replicas, so retry an unexpected authentication failure right after rotating rather than treating the new secret as bad. `last_used_at` continues to report the logical credential's prior usage and says nothing about whether the new secret has been used yet. Only a live, unexpired, unrevoked customer-managed (`user`) credential on a live project and live branch is eligible. Anything else — including the platform-internal `function` and `system` credentials — is reported as not found, indistinguishable from an unknown `token_id`. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn rotate(
         &self,
-        project_id: String,
-        branch_id: String,
-        token_id: String,
+        params: crate::methods::credentials::RotateCredentialParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<RotateCredentialResponse, crate::errors::SdkError> {
-        crate::methods::credentials::rotate_credential(
-            &self.config,
-            project_id,
-            branch_id,
-            token_id,
-            options,
-        )
+        crate::methods::credentials::rotate_credential(&self.config, params, options)
     }
 }
 
@@ -2530,64 +1896,34 @@ impl FunctionsNamespace {
     /// Lists functions on the specified branch. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn list(
         &self,
-        project_id: String,
-        branch_id: String,
-        cursor: Option<String>,
-        limit: Option<i64>,
+        params: crate::methods::functions::ListFunctionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ListFunctionsResponse, crate::errors::SdkError> {
-        crate::methods::functions::list_functions(
-            &self.config,
-            project_id,
-            branch_id,
-            cursor,
-            limit,
-            options,
-        )
+        crate::methods::functions::list_functions(&self.config, params, options)
     }
     /// Returns the function identified by its slug. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn get(
         &self,
-        project_id: String,
-        branch_id: String,
-        slug: String,
+        params: crate::methods::functions::GetFunctionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonFunctionResponse, crate::errors::SdkError> {
-        crate::methods::functions::get_functions(&self.config, project_id, branch_id, slug, options)
+        crate::methods::functions::get_functions(&self.config, params, options)
     }
     /// Updates the function's mutable metadata — currently only the display `name`. A string sets the display name; `null` clears it, after which the function's `name` falls back to its slug. Leading and trailing whitespace is trimmed; a whitespace-only name is rejected. Acts only on a function owned by the branch: a slug that is only inherited from an ancestor branch returns 404 — rename it on the branch that owns it. Like every other change on a branch, a rename is isolated per branch: a branch forked before the rename keeps the name it had at fork time. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn update(
         &self,
-        project_id: String,
-        branch_id: String,
-        slug: String,
-        name: Option<String>,
+        params: crate::methods::functions::UpdateFunctionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<NeonFunctionResponse, crate::errors::SdkError> {
-        crate::methods::functions::update_functions(
-            &self.config,
-            project_id,
-            branch_id,
-            slug,
-            name,
-            options,
-        )
+        crate::methods::functions::update_functions(&self.config, params, options)
     }
     /// Deletes the function identified by its slug. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn delete(
         &self,
-        project_id: String,
-        branch_id: String,
-        slug: String,
+        params: crate::methods::functions::DeleteFunctionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::functions::delete_functions(
-            &self.config,
-            project_id,
-            branch_id,
-            slug,
-            options,
-        )
+        crate::methods::functions::delete_functions(&self.config, params, options)
     }
     /// Creates a deployment for a function on a branch. Supply at least one of `zip`, `environment`, or `runtime`; omitted fields inherit the function's latest version. The first deployment must include `zip`, and the newest deployment becomes active.
     ///
@@ -2602,86 +1938,46 @@ impl FunctionsNamespace {
     /// Lists the complete project-bounded set of triggers visible on the branch, ordered by `trigger_id`. An inherited trigger keeps its project-wide ID and configuration, and is disabled on the child until explicitly enabled there. The supported trigger types are `schedule` and `storage_object_created`. A storage-object-created trigger watches one exact bucket and fires only after an object upload succeeds. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn list_triggers(
         &self,
-        project_id: String,
-        branch_id: String,
+        params: crate::methods::functions::ListFunctionsTriggersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<TriggersListResponse, crate::errors::SdkError> {
-        crate::methods::functions::list_functions_triggers(
-            &self.config,
-            project_id,
-            branch_id,
-            options,
-        )
+        crate::methods::functions::list_functions_triggers(&self.config, params, options)
     }
     /// Creates a trigger for a function visible on a branch. Set `type` to `schedule` or `storage_object_created` and provide the matching configuration; schedule expressions use five numeric cron fields interpreted in UTC. The trigger name must be unique among triggers visible on the branch, including inherited triggers.
     ///
     /// Creates a trigger for a Function visible on the branch. The required `type` discriminator selects the trigger-specific configuration. The supported types are `schedule` and `storage_object_created`. A schedule trigger uses a numeric five-field cron expression interpreted in UTC. A storage-object-created trigger fires only after a successful upload to one exact bucket and may narrow matches to an object-key prefix. The name must be unique among triggers visible on the branch, including inherited triggers. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn create_trigger(
         &self,
-        project_id: String,
-        branch_id: String,
-        body: TriggerCreateRequest,
+        params: crate::methods::functions::CreateFunctionsTriggerParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<TriggerResponse, crate::errors::SdkError> {
-        crate::methods::functions::create_functions_trigger(
-            &self.config,
-            project_id,
-            branch_id,
-            body,
-            options,
-        )
+        crate::methods::functions::create_functions_trigger(&self.config, params, options)
     }
     /// Returns the trigger visible on the branch. The supported trigger types are `schedule` and `storage_object_created`. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn get_trigger(
         &self,
-        project_id: String,
-        branch_id: String,
-        trigger_id: TriggerID,
+        params: crate::methods::functions::GetFunctionsTriggerParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<TriggerResponse, crate::errors::SdkError> {
-        crate::methods::functions::get_functions_trigger(
-            &self.config,
-            project_id,
-            branch_id,
-            trigger_id,
-            options,
-        )
+        crate::methods::functions::get_functions_trigger(&self.config, params, options)
     }
     /// Updates a branch trigger using a partial configuration. Set `type` to the existing trigger kind and provide at least one other field to change; supported kinds are `schedule` and `storage_object_created`. Editing an inherited trigger creates a child-local shadow that remains disabled unless you explicitly enable it; disabling a trigger does not cancel occurrences already committed for delivery.
     ///
     /// Applies a partial update. The required `type` discriminator must identify the existing trigger kind. The supported types are `schedule` and `storage_object_created`. Editing an inherited trigger creates a child-local shadow with the same `trigger_id`; it remains disabled unless this request explicitly enables it. For a schedule trigger, updating the schedule or enabled state increments `version` and recomputes `next_run_at`. Disabling stops future scheduling but does not cancel occurrences already committed for delivery. For `storage_object_created`, the configuration selects one exact bucket. An omitted object-key prefix matches every key in that bucket; a present prefix is matched byte-for-byte and case-sensitively against the full key, without path normalization or a path-segment boundary. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn update_trigger(
         &self,
-        project_id: String,
-        branch_id: String,
-        trigger_id: TriggerID,
-        body: TriggerUpdateRequest,
+        params: crate::methods::functions::UpdateFunctionTriggerParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<TriggerResponse, crate::errors::SdkError> {
-        crate::methods::functions::update_functions_trigger(
-            &self.config,
-            project_id,
-            branch_id,
-            trigger_id,
-            body,
-            options,
-        )
+        crate::methods::functions::update_function_trigger(&self.config, params, options)
     }
     /// Deletes a branch-local trigger or writes a branch-local tombstone for an inherited trigger so it does not reappear. Deletion stops future scheduling or storage-event matching but does not cancel invocations already committed for delivery. The supported trigger types are `schedule` and `storage_object_created`. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn delete_trigger(
         &self,
-        project_id: String,
-        branch_id: String,
-        trigger_id: TriggerID,
+        params: crate::methods::functions::DeleteFunctionsTriggerParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::functions::delete_functions_trigger(
-            &self.config,
-            project_id,
-            branch_id,
-            trigger_id,
-            options,
-        )
+        crate::methods::functions::delete_functions_trigger(&self.config, params, options)
     }
     /// Registers a customer-owned domain (for example `dashboard.acme.com`) on the branch and points it at a target entity, chosen by `entity_type` \+ `entity_id`. In v1 only `entity_type: function` is supported (an unsupported type is rejected with `400`), where `entity_id` is the function slug and the function must already exist on the branch (else `404`). The response includes the `cname_target` the customer must point their domain at with a CNAME record; the domain goes live only once that DNS resolves and a certificate is issued on the first request. A domain already registered to another resource is rejected with `409` and no detail about the owner. Re-registering the same domain for the same entity is idempotent. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn register_custom_domain(
@@ -2694,36 +1990,18 @@ impl FunctionsNamespace {
     /// Lists all custom domains registered on the branch, across every target entity. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn list_custom_domains(
         &self,
-        project_id: String,
-        branch_id: String,
-        cursor: Option<String>,
-        limit: Option<i64>,
+        params: crate::methods::functions::ListFunctionsCustomDomainsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ListFunctionsCustomDomainsResponse, crate::errors::SdkError> {
-        crate::methods::functions::list_functions_custom_domains(
-            &self.config,
-            project_id,
-            branch_id,
-            cursor,
-            limit,
-            options,
-        )
+        crate::methods::functions::list_functions_custom_domains(&self.config, params, options)
     }
     /// Removes a custom domain registered on the branch and stops routing it. \*\*Note\*\*: This endpoint is currently in Beta.
     pub fn delete_custom_domain(
         &self,
-        project_id: String,
-        branch_id: String,
-        domain: String,
+        params: crate::methods::functions::DeleteFunctionsCustomDomainParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::functions::delete_functions_custom_domain(
-            &self.config,
-            project_id,
-            branch_id,
-            domain,
-            options,
-        )
+        crate::methods::functions::delete_functions_custom_domain(&self.config, params, options)
     }
 }
 
