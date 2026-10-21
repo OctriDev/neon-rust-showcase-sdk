@@ -29,7 +29,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ..Default::default()
     };
     let client = Neon::new(config);
-    let result = client.branch.get_masking_rules("a".to_string(), "a".to_string(), None)?;
+    let result = client.branch.get_masking_rules(octridev_neon::methods::branch::GetMaskingRulesParams { project_id: "a".to_string(), branch_id: "a".to_string() }, None)?;
     println!("{result:#?}");
     Ok(())
 }

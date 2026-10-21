@@ -118,6 +118,12 @@ pub fn create_credential(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListCredentialsParams {
+    pub project_id: String,
+    pub branch_id: String,
+}
+
 /// Returns metadata for customer-issued credentials on the branch. Secrets are never included. \*\*Note\*\*: This endpoint is currently in Beta.
 ///
 /// # Arguments
@@ -126,10 +132,13 @@ pub fn create_credential(
 /// * `branch_id` - The Neon branch ID
 pub fn list_credentials(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
+    params: ListCredentialsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ListCredentialsResponse, SdkError> {
+    let ListCredentialsParams {
+        project_id,
+        branch_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -152,6 +161,13 @@ pub fn list_credentials(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct RevokeCredentialParams {
+    pub project_id: String,
+    pub branch_id: String,
+    pub token_id: String,
+}
+
 /// Soft-deletes the credential. Idempotent. \*\*Note\*\*: This endpoint is currently in Beta.
 ///
 /// # Arguments
@@ -161,11 +177,14 @@ pub fn list_credentials(
 /// * `token_id` - The opaque credential id (e.g. nak_live_<32hex\>).
 pub fn revoke_credential(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
-    token_id: String,
+    params: RevokeCredentialParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let RevokeCredentialParams {
+        project_id,
+        branch_id,
+        token_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -189,6 +208,13 @@ pub fn revoke_credential(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct RevealCredentialParams {
+    pub project_id: String,
+    pub branch_id: String,
+    pub token_id: String,
+}
+
 /// Returns the live `api_token` and `s3_secret_access_key` of an existing credential, so a credential whose issuance response was lost can be recovered without minting a new one. This is a POST with an explicit `/reveal` verb so the secrets never ride a GET, where they would land in access logs, browser history and proxy caches. Revoked and expired credentials return 404, as does a `token_id` that does not belong to this project. A credential issued before secret retrieval was supported has no recoverable secret and returns 409 — rotate it to obtain one. \*\*Note\*\*: This endpoint is currently in Beta.
 ///
 /// # Arguments
@@ -198,11 +224,14 @@ pub fn revoke_credential(
 /// * `token_id` - The opaque credential id (e.g. nak_live_<32hex\>).
 pub fn reveal_credential(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
-    token_id: String,
+    params: RevealCredentialParams,
     options: Option<&RequestOptions>,
 ) -> Result<CredentialSecret, SdkError> {
+    let RevealCredentialParams {
+        project_id,
+        branch_id,
+        token_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -230,6 +259,13 @@ pub fn reveal_credential(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct RotateCredentialParams {
+    pub project_id: String,
+    pub branch_id: String,
+    pub token_id: String,
+}
+
 /// Replaces the secret material on an existing scoped credential in place. `token_id` is preserved — it is the `AWS_ACCESS_KEY_ID` for S3-compatible clients, so the access key id your application already holds keeps working and only the secret changes. This is the analog of resetting a Postgres password, not of issuing a second credential. The response carries the new `api_token` and `s3_secret_access_key` exactly once. Rotation is \*\*not\*\* idempotent: retrying after an ambiguous timeout mints another secret and supersedes the previous replacement, so a retry does not recover a lost response — it only invalidates the secret you did not receive. If you lose the response, issue a replacement credential and revoke this one. The old secret stops authenticating as soon as the rotation commits. Where a region caches credentials on its data-plane verifiers, a replica may briefly keep accepting the old secret — and rejecting the new one — until its cache entry expires; where it does not, the cutover is immediate apart from requests already in flight. Either way the changeover is not atomic across replicas, so retry an unexpected authentication failure right after rotating rather than treating the new secret as bad. `last_used_at` continues to report the logical credential's prior usage and says nothing about whether the new secret has been used yet. Only a live, unexpired, unrevoked customer-managed (`user`) credential on a live project and live branch is eligible. Anything else — including the platform-internal `function` and `system` credentials — is reported as not found, indistinguishable from an unknown `token_id`. \*\*Note\*\*: This endpoint is currently in Beta.
 ///
 /// # Arguments
@@ -239,11 +275,14 @@ pub fn reveal_credential(
 /// * `token_id` - The opaque credential id (e.g. nak_live_<32hex\>).
 pub fn rotate_credential(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
-    token_id: String,
+    params: RotateCredentialParams,
     options: Option<&RequestOptions>,
 ) -> Result<RotateCredentialResponse, SdkError> {
+    let RotateCredentialParams {
+        project_id,
+        branch_id,
+        token_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 

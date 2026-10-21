@@ -49,6 +49,12 @@ pub fn get_current_user_organizations(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct TransferUsersProjectsParams {
+    pub destination_org_id: String,
+    pub project_ids: Vec<String>,
+}
+
 /// Deprecated. Personal accounts have been migrated to organizations, so this operation no longer applies. Removal scheduled for July 1, 2026.
 ///
 /// # Arguments
@@ -62,10 +68,13 @@ pub fn get_current_user_organizations(
 /// This operation is deprecated and may be removed in a future release.
 pub fn transfer_users_projects(
     config: &ClientConfig,
-    destination_org_id: String,
-    project_ids: Vec<String>,
+    params: TransferUsersProjectsParams,
     options: Option<&RequestOptions>,
 ) -> Result<EmptyResponse, SdkError> {
+    let TransferUsersProjectsParams {
+        destination_org_id,
+        project_ids,
+    } = params;
     validate_pattern(
         "destination_org_id",
         &destination_org_id,

@@ -7,6 +7,12 @@ use crate::errors::SdkError;
 use crate::types::BranchStorage;
 use crate::validation::validate_pattern;
 
+#[derive(Debug, Clone, Default)]
+pub struct GetStorageParams {
+    pub project_id: String,
+    pub branch_id: String,
+}
+
 /// Returns whether branchable object storage is usable for the specified branch. A 200 response means the branch is registered in the object storage service and the S3 data plane will accept requests for it. A 404 response includes a `reason` field indicating why object storage is unavailable. \*\*Note\*\*: This endpoint is currently in Beta.
 ///
 /// # Arguments
@@ -15,10 +21,13 @@ use crate::validation::validate_pattern;
 /// * `branch_id` - The Neon branch ID
 pub fn get_storage(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
+    params: GetStorageParams,
     options: Option<&RequestOptions>,
 ) -> Result<BranchStorage, SdkError> {
+    let GetStorageParams {
+        project_id,
+        branch_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 

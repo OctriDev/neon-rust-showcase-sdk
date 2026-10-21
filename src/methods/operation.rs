@@ -7,6 +7,12 @@ use crate::errors::SdkError;
 use crate::types::{ListOperationResponse, OperationResponse};
 use crate::validation::{validate_pattern, validate_range, validate_uuid, RangeOpts};
 
+#[derive(Debug, Clone, Default)]
+pub struct GetOperationParams {
+    pub project_id: String,
+    pub operation_id: String,
+}
+
 /// Retrieves details for the specified operation. An operation is an action performed on a Neon project resource.
 ///
 /// # Arguments
@@ -15,10 +21,13 @@ use crate::validation::{validate_pattern, validate_range, validate_uuid, RangeOp
 /// * `operation_id` - The operation ID
 pub fn get_operation(
     config: &ClientConfig,
-    project_id: String,
-    operation_id: String,
+    params: GetOperationParams,
     options: Option<&RequestOptions>,
 ) -> Result<OperationResponse, SdkError> {
+    let GetOperationParams {
+        project_id,
+        operation_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_uuid("operation_id", &operation_id)?;
 
@@ -41,6 +50,13 @@ pub fn get_operation(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListOperationParams {
+    pub project_id: String,
+    pub cursor: Option<String>,
+    pub limit: Option<i64>,
+}
+
 /// Retrieves a list of operations for the specified Neon project. The number of operations returned can be large. To paginate the response, issue an initial request with a `limit` value. Then, add the `cursor` value that was returned in the response to the next request. Operations older than 6 months may be deleted from our systems. If you need more history than that, you should store your own history.
 ///
 /// # Arguments
@@ -52,11 +68,14 @@ pub fn get_operation(
 ///   the response
 pub fn list_operation(
     config: &ClientConfig,
-    project_id: String,
-    cursor: Option<String>,
-    limit: Option<i64>,
+    params: ListOperationParams,
     options: Option<&RequestOptions>,
 ) -> Result<ListOperationResponse, SdkError> {
+    let ListOperationParams {
+        project_id,
+        cursor,
+        limit,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     if let Some(ref limit_v) = limit {
         validate_range(

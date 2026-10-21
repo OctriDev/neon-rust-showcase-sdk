@@ -120,6 +120,11 @@ pub fn create_snapshot(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListSnapshotsParams {
+    pub project_id: String,
+}
+
 /// Lists the snapshots for the specified project. Each snapshot represents a point-in-time backup of the project data.
 ///
 /// # Arguments
@@ -127,9 +132,10 @@ pub fn create_snapshot(
 /// * `project_id` - The Neon project ID
 pub fn list_snapshots(
     config: &ClientConfig,
-    project_id: String,
+    params: ListSnapshotsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ListSnapshotsResponse, SdkError> {
+    let ListSnapshotsParams { project_id } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
 
     Ok(sdk_request::<ListSnapshotsResponse>(
@@ -150,6 +156,12 @@ pub fn list_snapshots(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSnapshotParams {
+    pub project_id: String,
+    pub snapshot_id: String,
+}
+
 /// Deletes a specified snapshot from a project. Use `project_id` and `snapshot_id` to identify the project and snapshot. Deletion is asynchronous; the response includes operation details for tracking progress.
 ///
 /// Deletes the specified snapshot.
@@ -160,10 +172,13 @@ pub fn list_snapshots(
 /// * `snapshot_id` - The snapshot ID
 pub fn delete_snapshot(
     config: &ClientConfig,
-    project_id: String,
-    snapshot_id: String,
+    params: DeleteSnapshotParams,
     options: Option<&RequestOptions>,
 ) -> Result<OperationsResponse, SdkError> {
+    let DeleteSnapshotParams {
+        project_id,
+        snapshot_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("snapshot_id", &snapshot_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -186,6 +201,13 @@ pub fn delete_snapshot(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateSnapshotParams {
+    pub project_id: String,
+    pub snapshot_id: String,
+    pub snapshot: SnapshotUpdateRequestSnapshot,
+}
+
 /// Updates the name or expiration time of a project snapshot. Supply the `snapshot` object with the fields to change; omitting `expires_at` leaves the current expiration unchanged, while sending `null` clears it. A 200 response returns the updated snapshot.
 ///
 /// Updates the specified snapshot.
@@ -198,11 +220,14 @@ pub fn delete_snapshot(
 ///   `name` and `expires_at`.
 pub fn update_snapshot(
     config: &ClientConfig,
-    project_id: String,
-    snapshot_id: String,
-    snapshot: SnapshotUpdateRequestSnapshot,
+    params: UpdateSnapshotParams,
     options: Option<&RequestOptions>,
 ) -> Result<UpdateSnapshotResponse, SdkError> {
+    let UpdateSnapshotParams {
+        project_id,
+        snapshot_id,
+        snapshot,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("snapshot_id", &snapshot_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -344,6 +369,12 @@ pub fn restore_snapshot(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct GetSnapshotScheduleParams {
+    pub project_id: String,
+    pub branch_id: String,
+}
+
 /// Returns the backup schedule for the specified branch, including the configured snapshot frequencies.
 ///
 /// # Arguments
@@ -352,10 +383,13 @@ pub fn restore_snapshot(
 /// * `branch_id` - The branch ID
 pub fn get_snapshot_schedule(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
+    params: GetSnapshotScheduleParams,
     options: Option<&RequestOptions>,
 ) -> Result<BackupSchedule, SdkError> {
+    let GetSnapshotScheduleParams {
+        project_id,
+        branch_id,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
@@ -378,6 +412,13 @@ pub fn get_snapshot_schedule(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct SetSnapshotScheduleParams {
+    pub project_id: String,
+    pub branch_id: String,
+    pub schedule: Vec<BackupScheduleItem>,
+}
+
 /// Updates the backup schedule for the specified branch. The schedule defines how often automatic snapshots are created (for example, `daily` or `weekly`). Requires a paid plan.
 ///
 /// # Arguments
@@ -388,11 +429,14 @@ pub fn get_snapshot_schedule(
 ///   least one entry is required.
 pub fn set_snapshot_schedule(
     config: &ClientConfig,
-    project_id: String,
-    branch_id: String,
-    schedule: Vec<BackupScheduleItem>,
+    params: SetSnapshotScheduleParams,
     options: Option<&RequestOptions>,
 ) -> Result<EmptyResponse, SdkError> {
+    let SetSnapshotScheduleParams {
+        project_id,
+        branch_id,
+        schedule,
+    } = params;
     validate_pattern("project_id", &project_id, "^[a-z0-9-]{1,60}$")?;
     validate_pattern("branch_id", &branch_id, "^[a-z0-9-]{1,60}$")?;
 
